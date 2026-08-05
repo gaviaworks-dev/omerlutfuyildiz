@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Görsel kaynakları — işlenmemiş JPG/PNG buraya iner, yalnızca WebP yayınlanır
+img-src/
+
+# Editör
+.vscode/
