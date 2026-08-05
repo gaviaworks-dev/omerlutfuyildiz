@@ -106,3 +106,51 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   bu başlıkların stok karşılıkları öncesi/sonrası ve hasta ağzı görselleri.
 - **Sosyal medya hesabı** doğrulanmadı; mevcut sitedeki ikonların href'i boştu,
   footer'a konmadı.
+
+### Verilen kararlar (gözden geçirilecek)
+
+- **KARAR:** Hero görseli Pexels'ten (Fr3nks, 305567), export'ta 0.45 parlaklığa
+  karartıldı; overlay yalnızca marka tonu veriyor.
+  *Gerekçe:* orijinal parlaklıkta beyaz metni AA'da tutmak için overlay alpha
+  0.88 gerekiyordu, bu da görseli tamamen yutup "diş kliniği" mesajını yok
+  ediyordu. Karartılmış dosyanın gerçek pikselleri üzerinde en kötü durum
+  5.8:1. *Gözden geçirilecek:* müşterinin kendi hero fotoğrafı gelince.
+
+- **KARAR:** Hero'daki iki buton beyaz dolgulu + beyaz kenarlıklı cam; "koyu
+  dolu + turkuaz outline" ikilisi hero'da kullanılmadı.
+  *Gerekçe:* hero overlay'i koyu turkuaz; hem `#08635a` dolgu hem `#10afa0`
+  kenarlık aynı renk ailesinden olduğu için zeminden ayrışmıyordu. İstenen
+  ikili açık zeminli bölümlerde geçerli. *Gözden geçirilecek:* evet.
+
+- **KARAR:** Odak halkası `#10afa0` yerine `#0b7c71`.
+  *Gerekçe:* `#10afa0` beyaz üstünde 2.74:1; WCAG 1.4.11'in UI bileşeni için
+  istediği 3:1'i geçmiyor. *Gözden geçirilecek:* hayır, ölçüm kesin.
+
+- **KARAR:** "İki ayrı tedavi odası" ifadesi kullanıldı.
+  *Gerekçe:* müşterinin kendi fotoğraflarında (portfolio-2/2 ve 2/5) belirgin
+  biçimde farklı iki tedavi odası görünüyor. Metinde yazılı kaynak yok, görsel
+  kanıta dayanıyor. *Gözden geçirilecek:* evet, müşteri teyit etmeli.
+
+- **KARAR:** Klinik bölümünden "toplu taşımaya yakın" ve "asansörle erişim"
+  ifadeleri çıkarıldı. *Gerekçe:* hiçbir kaynakta doğrulanmıyor.
+  *Gözden geçirilecek:* müşteri doğrularsa eklenebilir.
+
+- **KARAR:** Tedavi kartları fotoğrafsız, ikon + metin.
+  *Gerekçe:* bu başlıkların stok karşılıkları neredeyse tamamen öncesi/sonrası
+  ve hasta ağzı görselleri; görsel politikası bunları yasaklıyor.
+  *Gözden geçirilecek:* müşterinin kendi vaka fotoğrafları gelirse.
+
+- **KARAR:** `background/3.jpg` (kliniğin gerçek bekleme salonu) hero'da
+  kullanılmadı. *Gerekçe:* "otel lobisi" okuyor, ilk ekranda diş hekimliği
+  mesajı vermiyor. Aynı mekân `clinic-lounge` olarak yayında.
+  *Gözden geçirilecek:* evet.
+
+- **KARAR:** İletişim formu konmadı.
+  *Gerekçe:* mevcut sitedeki `email.php` GitHub Pages'te çalışmaz; mesajı
+  sessizce yutan form, formsuz sayfadan kötüdür. *Gözden geçirilecek:* harici
+  servis (Formspree vb.) onaylanırsa eklenebilir — harici bağımlılık kuralına
+  istisna açar.
+
+- **KARAR:** Alt çizgiyle başlayan kök dosyalar (`_*`) `.gitignore`'da.
+  *Gerekçe:* ölçüm ve ekran görüntüsü araçları; public Pages adresinde
+  durmamalı. *Gözden geçirilecek:* hayır.

@@ -1,8 +1,4 @@
-/* ==========================================================================
-   Dt. Ömer Lütfü Yıldız — Etkileşimler
-   Bağımlılık yok. DOM seçimi data-* öznitelikleri üzerinden yapılır,
-   stil sınıflarına tutunulmaz.
-   ========================================================================== */
+/* Etkileşimler — bağımlılık yok. DOM seçimi data-* ile. */
 
 (function () {
   'use strict';
@@ -11,36 +7,33 @@
     'a[href], button:not([disabled]), input:not([disabled]), ' +
     'select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-  /* ------------------------------------------------------------------------
-     1. Header — hero üzerinde şeffaf, kaydırınca opak
-     ---------------------------------------------------------------------- */
+  var slice = Function.prototype.call.bind(Array.prototype.slice);
 
+  /* 1. Header — hero üzerinde şeffaf, kaydırınca opak */
   function initHeaderState() {
     var header = document.querySelector('[data-header]');
     if (!header) return;
 
-    var threshold = 40;
     var ticking = false;
 
     function apply() {
-      header.classList.toggle('site-top--scrolled', window.scrollY > threshold);
+      header.classList.toggle('site-top--scrolled', window.scrollY > 40);
       ticking = false;
     }
 
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(apply);
-    }
-
     apply();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(apply);
+      },
+      { passive: true }
+    );
   }
 
-  /* ------------------------------------------------------------------------
-     2. Mobil menü — aria-expanded, ESC, focus trap, dış tıklama
-     ---------------------------------------------------------------------- */
-
+  /* 2. Mobil menü — aria-expanded, ESC, focus trap, dış tıklama */
   function initMobileNav() {
     var header = document.querySelector('[data-header]');
     var toggle = document.querySelector('[data-nav-toggle]');
@@ -50,54 +43,48 @@
     var isOpen = false;
     var lastFocused = null;
 
-    function focusableItems() {
-      return Array.prototype.filter.call(
-        nav.querySelectorAll(FOCUSABLE),
-        function (el) {
-          return el.offsetParent !== null;
-        }
-      );
+    /* offsetParent null ise öğe gizli — masaüstünde tuzağa girmesin */
+    function items() {
+      return slice(nav.querySelectorAll(FOCUSABLE)).filter(function (el) {
+        return el.offsetParent !== null;
+      });
     }
 
-    function open() {
-      if (isOpen) return;
-      isOpen = true;
-      lastFocused = document.activeElement;
-      nav.setAttribute('data-open', 'true');
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Menüyü kapat');
-      header.classList.add('site-top--menu-open');
-      document.body.classList.add('is-nav-open');
+    function setOpen(open, returnFocus) {
+      if (open === isOpen) return;
+      isOpen = open;
+      nav.setAttribute('data-open', open ? 'true' : 'false');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Menüyü kapat' : 'Menüyü aç');
+      header.classList.toggle('site-top--menu-open', open);
+      document.body.classList.toggle('is-nav-open', open);
 
-      var items = focusableItems();
-      if (items.length) items[0].focus();
-    }
-
-    function close(returnFocus) {
-      if (!isOpen) return;
-      isOpen = false;
-      nav.setAttribute('data-open', 'false');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Menüyü aç');
-      header.classList.remove('site-top--menu-open');
-      document.body.classList.remove('is-nav-open');
-
-      if (returnFocus) {
-        (lastFocused && lastFocused.focus ? lastFocused : toggle).focus();
+      if (open) {
+        /* Safari'de buton tıklamayla odak almaz; body'yi saklamak yerine
+           toggle'a düşülür ki ESC sonrası odak kaybolmasın. */
+        var prev = document.activeElement;
+        lastFocused = prev && prev !== document.body ? prev : toggle;
+        /* Panel bu anda açık; görünürlük filtresi geçiş sırasında boş
+           dönebildiği için ilk bağlantı doğrudan seçilir. */
+        var first = nav.querySelector(FOCUSABLE);
+        if (first) first.focus();
+      } else if (returnFocus) {
+        lastFocused.focus();
       }
     }
 
     toggle.addEventListener('click', function () {
-      if (isOpen) {
-        close(true);
-      } else {
-        open();
-      }
+      setOpen(!isOpen, isOpen);
     });
 
-    /* Menü içindeki bir bağlantıya gidildiğinde panel kapanır */
     nav.addEventListener('click', function (event) {
-      if (event.target.closest('a')) close(false);
+      if (event.target.closest('a')) setOpen(false, false);
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!isOpen) return;
+      if (nav.contains(event.target) || toggle.contains(event.target)) return;
+      setOpen(false, false);
     });
 
     document.addEventListener('keydown', function (event) {
@@ -105,18 +92,15 @@
 
       if (event.key === 'Escape') {
         event.preventDefault();
-        close(true);
+        setOpen(false, true);
         return;
       }
-
       if (event.key !== 'Tab') return;
 
-      /* Focus trap: odak paneli terk edemez */
-      var items = focusableItems();
-      if (!items.length) return;
-
-      var first = items[0];
-      var last = items[items.length - 1];
+      var list = items();
+      if (!list.length) return;
+      var first = list[0];
+      var last = list[list.length - 1];
       var active = document.activeElement;
 
       if (!nav.contains(active)) {
@@ -131,37 +115,20 @@
       }
     });
 
-    /* Panel dışına tıklanınca kapan */
-    document.addEventListener('click', function (event) {
-      if (!isOpen) return;
-      if (nav.contains(event.target) || toggle.contains(event.target)) return;
-      close(false);
-    });
-
-    /* Masaüstü genişliğine geçildiğinde panel durumu sıfırlanır */
     var desktop = window.matchMedia('(min-width: 64rem)');
-    var onChange = function (event) {
-      if (event.matches) close(false);
+    var reset = function (e) {
+      if (e.matches) setOpen(false, false);
     };
-
-    if (typeof desktop.addEventListener === 'function') {
-      desktop.addEventListener('change', onChange);
-    } else if (typeof desktop.addListener === 'function') {
-      desktop.addListener(onChange);
-    }
+    if (desktop.addEventListener) desktop.addEventListener('change', reset);
+    else if (desktop.addListener) desktop.addListener(reset);
   }
 
-  /* ------------------------------------------------------------------------
-     3. Tedavi süreci akordeonu
-     ---------------------------------------------------------------------- */
-
+  /* 3. Akordeon — başlangıç durumu markup'tan okunur */
   function initAccordion() {
     var root = document.querySelector('[data-accordion]');
     if (!root) return;
 
-    var triggers = Array.prototype.slice.call(
-      root.querySelectorAll('.accordion__trigger')
-    );
+    var triggers = slice(root.querySelectorAll('.accordion__trigger'));
     if (!triggers.length) return;
 
     function setState(trigger, open) {
@@ -170,12 +137,9 @@
       if (panel) panel.setAttribute('data-open', open ? 'true' : 'false');
     }
 
-    /* Başlangıç durumu markup'tan okunur */
     triggers.forEach(function (trigger) {
       setState(trigger, trigger.getAttribute('aria-expanded') === 'true');
-    });
 
-    triggers.forEach(function (trigger) {
       trigger.addEventListener('click', function () {
         var willOpen = trigger.getAttribute('aria-expanded') !== 'true';
         triggers.forEach(function (other) {
@@ -183,32 +147,111 @@
         });
       });
 
-      /* Ok tuşlarıyla başlıklar arasında dolaşım */
       trigger.addEventListener('keydown', function (event) {
-        var index = triggers.indexOf(trigger);
+        var i = triggers.indexOf(trigger);
         var next = null;
-
-        if (event.key === 'ArrowDown') next = triggers[index + 1] || triggers[0];
+        if (event.key === 'ArrowDown') next = triggers[i + 1] || triggers[0];
         else if (event.key === 'ArrowUp')
-          next = triggers[index - 1] || triggers[triggers.length - 1];
+          next = triggers[i - 1] || triggers[triggers.length - 1];
         else if (event.key === 'Home') next = triggers[0];
         else if (event.key === 'End') next = triggers[triggers.length - 1];
-
-        if (next) {
-          event.preventDefault();
-          next.focus();
-        }
+        if (!next) return;
+        event.preventDefault();
+        next.focus();
       });
     });
   }
 
-  /* ---------------------------------------------------------------------- */
+  /* 4. Aktif menü maddesi — en çok görünen bölüm kazanır */
+  function initScrollSpy() {
+    if (!('IntersectionObserver' in window)) return;
+
+    var links = slice(document.querySelectorAll('[data-nav] a[href^="#"]'));
+    var byId = {};
+    var sections = [];
+
+    links.forEach(function (link) {
+      var id = link.getAttribute('href').slice(1);
+      var section = id && document.getElementById(id);
+      if (!section) return;
+      byId[id] = link;
+      sections.push(section);
+    });
+    if (!sections.length) return;
+
+    var ratios = {};
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          ratios[entry.target.id] = entry.isIntersecting
+            ? entry.intersectionRatio
+            : 0;
+        });
+
+        var bestId = null;
+        var best = 0;
+        sections.forEach(function (section) {
+          var r = ratios[section.id] || 0;
+          if (r > best) {
+            best = r;
+            bestId = section.id;
+          }
+        });
+        if (!bestId) return;
+
+        links.forEach(function (link) {
+          link.removeAttribute('aria-current');
+        });
+        byId[bestId].setAttribute('aria-current', 'true');
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    sections.forEach(function (section) {
+      observer.observe(section);
+    });
+  }
+
+  /* 5. Bölüm girişi — fade-up. JS yoksa içerik zaten görünür kalır. */
+  function initReveal() {
+    var items = slice(document.querySelectorAll('[data-reveal]'));
+    if (!items.length) return;
+
+    var reduced =
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduced || !('IntersectionObserver' in window)) {
+      items.forEach(function (el) {
+        el.setAttribute('data-revealed', 'true');
+      });
+      return;
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.setAttribute('data-revealed', 'true');
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
+    );
+
+    items.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
 
   function init() {
     document.documentElement.classList.add('js');
     initHeaderState();
     initMobileNav();
     initAccordion();
+    initScrollSpy();
+    initReveal();
   }
 
   if (document.readyState === 'loading') {

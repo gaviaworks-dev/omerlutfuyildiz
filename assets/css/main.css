@@ -344,7 +344,10 @@ ul {
 
 .site-nav__link {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  /* Dokunma hedefi 44x44 — yalnızca padding ile 42px'te kalıyordu */
+  min-height: var(--tap-target);
   padding-block: var(--space-2xs);
   color: var(--header-fg);
   font-size: var(--font-size-sm);
@@ -527,6 +530,13 @@ ul {
 
   .site-nav {
     display: block;
+  }
+
+  /* Kısa etiketler ("Klinik") 44px genişliğe ulaşmıyordu. Yalnızca
+     masaüstünde: mobil menüde maddeler tam genişlik ve sola hizalı kalır. */
+  .site-nav__link {
+    justify-content: center;
+    min-width: var(--tap-target);
   }
 }
 
@@ -1369,7 +1379,11 @@ ul {
 .site-footer__nav a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  /* Kısa etiketler ("Klinik") 44px genişliğe ulaşmıyordu */
+  min-width: var(--tap-target);
   min-height: var(--tap-target);
+  padding-inline: var(--space-2xs);
   color: var(--color-text-inverse-muted);
   font-size: var(--font-size-sm);
   text-decoration: none;
@@ -1396,4 +1410,28 @@ ul {
 
 .site-footer :focus-visible {
   outline-color: var(--color-focus-inverse);
+}
+
+/* ==========================================================================
+   14. Bölüm girişi — fade-up
+   ========================================================================== */
+
+/* Yalnızca JS çalışıyorken gizle — JS yoksa içerik her zaman görünür kalır. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity var(--transition-slow) var(--ease),
+    transform var(--transition-slow) var(--ease);
+}
+
+.js [data-reveal][data-revealed='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }

@@ -4,9 +4,9 @@
 # Görsel kaynakları — işlenmemiş JPG/PNG buraya iner, yalnızca WebP yayınlanır
 img-src/
 
-# Geliştirme araçları — yayına girmez (alt çizgiyle başlayan kök dosyalar)
-_frame.html
-_probe.html
+# Geliştirme araçları — yayına girmez.
+# Alt çizgiyle başlayan her kök dosya: ölçüm/ekran görüntüsü aracı, üretim değil.
+_*
 
 # Çalışma brief'i — üretim dosyası değil
 omerlutfuyildiz-CC-PROMPT.md
