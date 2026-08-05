@@ -707,3 +707,205 @@ ul {
     display: none;
   }
 }
+
+/* ==========================================================================
+   6. Ortak bölüm iskeleti
+   ========================================================================== */
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.section--light {
+  background-color: var(--color-background);
+}
+
+.section--surface {
+  background-color: var(--color-surface);
+}
+
+.section--alt {
+  background-color: var(--color-surface-alt);
+}
+
+/* Eyebrow: marka turkuazı çizgisi + koyu turkuaz metin.
+   Metin #0b7c71 (AA), çizgi #10afa0 (dolgu). */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-block-end: var(--space-xs);
+  color: var(--color-primary-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: '';
+  flex-shrink: 0;
+  width: var(--space-md);
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-pill);
+}
+
+.section__title {
+  max-width: 24ch;
+  font-size: var(--font-size-2xl);
+}
+
+.section__head {
+  margin-block-end: var(--space-xl);
+}
+
+.section__head--center {
+  display: grid;
+  justify-items: center;
+  max-width: 46rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section__head--center .section__title {
+  max-width: 30ch;
+}
+
+.section__lead {
+  margin-block-start: var(--space-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ==========================================================================
+   7. Hakkımda
+   ========================================================================== */
+
+.about__grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 64rem) {
+  .about__grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+}
+
+.about__media {
+  position: relative;
+  padding-block-end: var(--space-2xl);
+  padding-inline-end: var(--space-md);
+}
+
+.about__photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.about__badge {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  display: grid;
+  gap: var(--space-3xs);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-primary-deep);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Rozetin üstündeki marka turkuazı çizgi */
+.about__badge::before {
+  content: '';
+  width: var(--space-lg);
+  height: 3px;
+  margin-block-end: var(--space-3xs);
+  background-color: var(--color-primary);
+  border-radius: var(--radius-pill);
+}
+
+.about__badge-title {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+}
+
+.about__badge-text {
+  color: var(--color-text-inverse-muted);
+  font-size: var(--font-size-sm);
+}
+
+.about__text + .about__text {
+  margin-block-start: var(--space-sm);
+}
+
+.about__facts {
+  display: grid;
+  gap: var(--space-md);
+  margin-block: var(--space-lg);
+  padding-block: var(--space-lg);
+  border-block: 1px solid var(--color-border);
+}
+
+@media (min-width: 30rem) {
+  .about__facts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about__fact {
+  display: grid;
+  gap: var(--space-3xs);
+  padding-inline-start: var(--space-sm);
+  border-inline-start: 3px solid var(--color-primary);
+}
+
+.about__fact-value {
+  color: var(--color-ink);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+}
+
+.about__fact-label {
+  font-size: var(--font-size-sm);
+}
+
+.about__signature {
+  display: grid;
+  gap: var(--space-3xs);
+  padding-inline-start: var(--space-md);
+  border-inline-start: 1px solid var(--color-border);
+}
+
+.about__signature-name {
+  color: var(--color-ink);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-medium);
+}
+
+.about__signature-role {
+  font-size: var(--font-size-sm);
+}
