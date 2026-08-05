@@ -983,3 +983,70 @@ ul {
 .treatment-card__text {
   font-size: var(--font-size-sm);
 }
+
+/* ==========================================================================
+   9. Klinik
+   ========================================================================== */
+
+.clinic__grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 64rem) {
+  .clinic__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+}
+
+.clinic__list {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-lg);
+}
+
+.clinic__list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2xs);
+}
+
+/* Madde işareti marka turkuazı */
+.clinic__list-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-block-start: 0.2em;
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.clinic__gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.clinic__figure {
+  margin: 0;
+}
+
+.clinic__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.clinic__caption {
+  margin-block-start: var(--space-2xs);
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+}
