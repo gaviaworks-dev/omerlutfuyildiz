@@ -249,3 +249,461 @@ ul {
 .button--on-dark:focus-visible {
   outline-color: var(--color-focus-inverse);
 }
+
+/* ==========================================================================
+   4. Header ve navigasyon
+   ========================================================================== */
+
+/* Header hero üzerinde şeffaf, kaydırınca opak beyaz olur.
+   Renk değişimi bu üç lokal token üzerinden yürür — altındaki kuralların
+   hiçbiri tekrar yazılmaz. */
+.site-top {
+  --header-fg: var(--color-text-inverse);
+  --header-rule: transparent;
+
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--z-header);
+  background-color: transparent;
+  transition: background-color var(--transition-slow) var(--ease),
+    box-shadow var(--transition-slow) var(--ease);
+}
+
+.site-top--scrolled,
+.site-top--menu-open {
+  --header-fg: var(--color-ink);
+  --header-rule: var(--color-border);
+
+  background-color: var(--surface-glass);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-header {
+  border-block-end: 1px solid var(--header-rule);
+  transition: border-color var(--transition-slow) var(--ease);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: var(--header-height);
+}
+
+/* --- Tipografik yazmarka (logo dosyası yok) --- */
+
+.site-header__logo {
+  display: grid;
+  flex-shrink: 0;
+  align-content: center;
+  gap: var(--space-3xs);
+  min-height: var(--tap-target);
+  color: var(--header-fg);
+  text-decoration: none;
+  transition: color var(--transition-slow) var(--ease);
+}
+
+.site-header__logo-name {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-heading);
+  white-space: nowrap;
+}
+
+/* Marka turkuazı yazmarkanın soyadında. Şeffaf header koyu fotoğraf
+   üzerindeyken #10afa0 yeterince ayrışmıyor, orada beyaza döner. */
+.site-header__logo-accent {
+  color: var(--color-primary);
+}
+
+.site-top:not(.site-top--scrolled):not(.site-top--menu-open)
+  .site-header__logo-accent {
+  color: var(--color-text-inverse);
+}
+
+.site-header__logo-role {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* --- Navigasyon --- */
+
+.site-nav__list {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--space-2xs), 1.6vw, var(--space-md));
+}
+
+.site-nav__link {
+  position: relative;
+  display: block;
+  padding-block: var(--space-2xs);
+  color: var(--header-fg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--transition-base) var(--ease);
+}
+
+/* Alt çizgi marka turkuazı — dolgu, metin değil */
+.site-nav__link::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--transition-base) var(--ease);
+}
+
+.site-nav__link:hover::after,
+.site-nav__link[aria-current='true']::after {
+  transform: scaleX(1);
+}
+
+.site-top--scrolled .site-nav__link[aria-current='true'] {
+  color: var(--color-primary-text);
+}
+
+/* --- Sağdaki aksiyon --- */
+
+.site-header__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.site-header__cta {
+  min-height: var(--tap-target);
+  padding-inline: var(--space-md);
+}
+
+/* Şeffaf header koyu fotoğraf üzerinde: cam buton, beyaz metin */
+.site-top:not(.site-top--scrolled):not(.site-top--menu-open) .site-header__cta {
+  border-color: var(--glass-border);
+  background-color: var(--glass-fill);
+  color: var(--color-text-inverse);
+  box-shadow: none;
+}
+
+.site-top:not(.site-top--scrolled):not(.site-top--menu-open)
+  .site-header__cta:hover {
+  border-color: var(--color-text-inverse);
+  background-color: var(--glass-fill-hover);
+}
+
+/* Koyu fotoğraf üzerindeki header'da odak halkası beyaz */
+.site-top:not(.site-top--scrolled):not(.site-top--menu-open) :focus-visible {
+  outline-color: var(--color-focus-inverse);
+}
+
+/* --- Hamburger --- */
+
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--header-fg);
+  cursor: pointer;
+  transition: color var(--transition-base) var(--ease),
+    background-color var(--transition-base) var(--ease);
+}
+
+.nav-toggle__bars {
+  display: grid;
+  gap: var(--space-3xs);
+  width: 1.375rem;
+}
+
+.nav-toggle__bar {
+  height: 2px;
+  background-color: currentColor;
+  border-radius: var(--radius-pill);
+  transition: transform var(--transition-base) var(--ease),
+    opacity var(--transition-fast) var(--ease);
+}
+
+/* çubuk 2px + aralık 4px → merkezden merkeze 6px */
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* --- Mobil düzen --- */
+
+@media (max-width: 63.999rem) {
+  .site-nav {
+    position: fixed;
+    inset-block-start: var(--header-total);
+    inset-inline: 0;
+    z-index: var(--z-nav-panel);
+    max-height: calc(100svh - var(--header-total));
+    padding: var(--space-md) 0 var(--space-xl);
+    overflow-y: auto;
+    background-color: var(--color-background);
+    border-block-end: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.75rem);
+    transition: opacity var(--transition-base) var(--ease),
+      transform var(--transition-base) var(--ease),
+      visibility var(--transition-base) var(--ease);
+  }
+
+  .site-nav[data-open='true'] {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .site-nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .site-nav__item + .site-nav__item {
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .site-nav__link {
+    padding: var(--space-sm) var(--container-pad);
+    color: var(--color-ink);
+    font-size: var(--font-size-lg);
+  }
+
+  .site-nav__link::after {
+    display: none;
+  }
+
+  .site-nav__link[aria-current='true'] {
+    color: var(--color-primary-text);
+  }
+
+  .site-header__cta {
+    display: none;
+  }
+
+  .site-nav__cta {
+    margin: var(--space-md) var(--container-pad) 0;
+  }
+}
+
+/* --- Masaüstü düzen --- */
+
+@media (min-width: 64rem) {
+  .nav-toggle,
+  .site-nav__cta {
+    display: none;
+  }
+
+  .site-nav {
+    display: block;
+  }
+}
+
+/* Mobil menü açıkken arka planın kaymasını engelle */
+.is-nav-open {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   5. Hero
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center stretch;
+  min-height: 100vh;
+  min-height: 100svh;
+  isolation: isolate;
+  text-align: center;
+}
+
+/* Boşluk hero'ya değil iç sarmalayıcıya verilir: absolute konumlanan
+   .hero__media parent'ın padding box'ına göre yerleşir, hero'da padding
+   olsaydı görsel aşağı kayardı. */
+.hero__inner {
+  padding-block: calc(var(--header-total) + var(--space-2xl)) var(--space-3xl);
+}
+
+.hero__media,
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__media {
+  z-index: 0;
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 45% center;
+}
+
+.hero__overlay {
+  z-index: var(--z-hero-overlay);
+  background-image: var(--overlay-hero);
+}
+
+.hero__content {
+  position: relative;
+  z-index: var(--z-hero-content);
+  max-width: var(--hero-content-max);
+  margin-inline: auto;
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-block-end: var(--space-sm);
+  color: var(--color-text-inverse-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+}
+
+/* Eyebrow'un iki yanındaki çizgi: koyu turkuaz overlay üzerinde marka
+   turkuazı ayrışmadığı için beyaz. Metin iki satıra düştüğünde çizgiler
+   dikey ortada asılı kaldığı için dar ekranda kaldırılır. */
+@media (min-width: 30rem) {
+  .hero__eyebrow::before,
+  .hero__eyebrow::after {
+    content: '';
+    width: var(--space-md);
+    height: 2px;
+    background-color: var(--color-rule-inverse);
+    border-radius: var(--radius-pill);
+  }
+}
+
+.hero__title {
+  margin-block-end: var(--space-md);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-tight);
+}
+
+.hero__text {
+  max-width: 46rem;
+  margin-inline: auto;
+  color: var(--color-text-inverse-muted);
+  font-size: var(--font-size-lg);
+}
+
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-block-start: var(--space-xl);
+}
+
+@media (min-width: 30rem) {
+  .hero__actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .hero__actions .button {
+    min-width: 12rem;
+  }
+}
+
+/* Hero'nun ikincil butonu: koyu turkuaz overlay üzerinde beyaz kenarlıklı
+   cam buton. Beyaz metin overlay üzerinde 5.39:1.
+   Turkuaz outline burada kullanılmaz — #10afa0 aynı aileden overlay üzerinde
+   ayrışmıyor; turkuaz outline açık zeminli bölümlerde geçerli. */
+.button--ghost-light {
+  border-color: var(--glass-border);
+  background-color: var(--glass-fill);
+  color: var(--color-text-inverse);
+  backdrop-filter: blur(4px);
+}
+
+.button--ghost-light:hover {
+  border-color: var(--color-text-inverse);
+  background-color: var(--glass-fill-hover);
+}
+
+/* --- Scroll göstergesi --- */
+
+.hero__scroll-hint {
+  position: absolute;
+  inset-block-end: var(--space-md);
+  inset-inline: 0;
+  z-index: var(--z-hero-content);
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2xs);
+  color: var(--color-text-inverse-subtle);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 2.5rem;
+  overflow: hidden;
+  background-color: var(--color-rule-inverse);
+}
+
+.hero__scroll-line::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 45%;
+  background-color: var(--color-text-inverse);
+  animation: hero-scroll-cue 2.4s var(--ease) infinite;
+}
+
+@keyframes hero-scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(240%);
+  }
+}
+
+@media (max-height: 34rem) {
+  .hero__scroll-hint {
+    display: none;
+  }
+}

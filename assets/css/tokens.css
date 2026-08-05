@@ -122,16 +122,22 @@
   --surface-glass: rgb(255 255 255 / 0.93);
 
   /* --- Hero overlay -------------------------------------------------------
-     Hero fotoğrafı parlak ve soğuk beyaz, bu yüzden overlay opak.
-     Saf beyaz fotoğraf bölgesi üzerinde ölçülen beyaz metin kontrastı:
-       alpha 0.88 → 5.39:1   ·   alpha 0.84 → ~4.9:1   ·   alpha 0.92 → ~5.8:1
-     Hepsi AA (4.5) üstünde. Alfalar düşürülmeden önce yeniden ölçülmeli.
+     Kaynak fotoğraf çok parlak. Tek başına overlay ile güvenli kontrast için
+     alpha 0.88 gerekiyordu, o da fotoğrafı tamamen yutuyordu. Bunun yerine
+     karartma export'ta yapılıyor (hero WebP'leri 0.45 parlaklıkla üretildi),
+     overlay yalnızca marka tonunu veriyor.
+
+     Karartılmış fotoğrafın GERÇEK pikselleri üzerinde ölçüldü (en kötü piksel):
+       alpha 0.42 → 5.81:1   ·   alpha 0.50 → 6.01:1
+     Aşağıdaki üç durak bu aralıkta; en kötü durum ~5.8:1, AA sınırının
+     (4.5) belirgin üstünde. Alfalar düşürülecekse hero WebP'nin karartması
+     da birlikte gözden geçirilmeli — ikisi tek sistem.
      ---------------------------------------------------------------------- */
   --overlay-hero: linear-gradient(
     180deg,
-    rgb(8 99 90 / 0.88) 0%,
-    rgb(8 99 90 / 0.84) 45%,
-    rgb(8 99 90 / 0.92) 100%
+    rgb(8 99 90 / 0.5) 0%,
+    rgb(8 99 90 / 0.42) 45%,
+    rgb(8 99 90 / 0.52) 100%
   );
 
   /* --- Spacing ölçeği ---------------------------------------------------- */
