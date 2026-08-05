@@ -151,12 +151,64 @@
     }
   }
 
+  /* ------------------------------------------------------------------------
+     3. Tedavi süreci akordeonu
+     ---------------------------------------------------------------------- */
+
+  function initAccordion() {
+    var root = document.querySelector('[data-accordion]');
+    if (!root) return;
+
+    var triggers = Array.prototype.slice.call(
+      root.querySelectorAll('.accordion__trigger')
+    );
+    if (!triggers.length) return;
+
+    function setState(trigger, open) {
+      var panel = document.getElementById(trigger.getAttribute('aria-controls'));
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (panel) panel.setAttribute('data-open', open ? 'true' : 'false');
+    }
+
+    /* Başlangıç durumu markup'tan okunur */
+    triggers.forEach(function (trigger) {
+      setState(trigger, trigger.getAttribute('aria-expanded') === 'true');
+    });
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        var willOpen = trigger.getAttribute('aria-expanded') !== 'true';
+        triggers.forEach(function (other) {
+          setState(other, other === trigger ? willOpen : false);
+        });
+      });
+
+      /* Ok tuşlarıyla başlıklar arasında dolaşım */
+      trigger.addEventListener('keydown', function (event) {
+        var index = triggers.indexOf(trigger);
+        var next = null;
+
+        if (event.key === 'ArrowDown') next = triggers[index + 1] || triggers[0];
+        else if (event.key === 'ArrowUp')
+          next = triggers[index - 1] || triggers[triggers.length - 1];
+        else if (event.key === 'Home') next = triggers[0];
+        else if (event.key === 'End') next = triggers[triggers.length - 1];
+
+        if (next) {
+          event.preventDefault();
+          next.focus();
+        }
+      });
+    });
+  }
+
   /* ---------------------------------------------------------------------- */
 
   function init() {
     document.documentElement.classList.add('js');
     initHeaderState();
     initMobileNav();
+    initAccordion();
   }
 
   if (document.readyState === 'loading') {

@@ -1050,3 +1050,141 @@ ul {
   color: var(--color-text);
   font-size: var(--font-size-xs);
 }
+
+/* ==========================================================================
+   10. Tedavi süreci + akordeon
+   ========================================================================== */
+
+.process__grid {
+  display: grid;
+  gap: var(--space-2xl);
+}
+
+@media (min-width: 64rem) {
+  .process__grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+}
+
+.process__media {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.process__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.accordion {
+  margin-block-start: var(--space-lg);
+  border-block-start: 1px solid var(--color-border);
+}
+
+.accordion__item {
+  border-block-end: 1px solid var(--color-border);
+}
+
+.accordion__heading {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  letter-spacing: normal;
+}
+
+.accordion__trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  min-height: 3.5rem;
+  padding: var(--space-sm) 0;
+  border: 0;
+  background: none;
+  text-align: start;
+  cursor: pointer;
+  transition: color var(--transition-base) var(--ease);
+}
+
+.accordion__trigger:hover {
+  color: var(--color-primary-text);
+}
+
+.accordion__index {
+  flex-shrink: 0;
+  color: var(--color-primary-text);
+  font-family: var(--font-family-heading);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-weight-medium);
+}
+
+.accordion__label {
+  flex: 1;
+  color: var(--color-ink);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-heading);
+}
+
+/* +/− işareti iki çizgiden üretilir; dikey çizgi açılınca kaybolur.
+   Çizgiler marka turkuazı. */
+.accordion__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.accordion__icon::before,
+.accordion__icon::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: 1rem;
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  transform: translate(-50%, -50%);
+  transition: transform var(--transition-base) var(--ease),
+    opacity var(--transition-fast) var(--ease);
+}
+
+.accordion__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.accordion__trigger[aria-expanded='true'] .accordion__icon::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+/* Panel yüksekliği JS ile değil grid satırıyla açılır */
+.accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-base) var(--ease);
+}
+
+.accordion__panel[data-open='true'] {
+  grid-template-rows: 1fr;
+}
+
+.accordion__content {
+  overflow: hidden;
+  font-size: var(--font-size-sm);
+}
+
+.accordion__content > p {
+  padding-block-end: var(--space-md);
+  padding-inline-start: calc(var(--space-sm) + 1.5ch);
+}
