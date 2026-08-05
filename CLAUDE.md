@@ -101,7 +101,7 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 - **Çalışma saatleri bilgisi yok**, İletişim bölümünde konmadı.
 - **Tedavi süreci akordeon metinleri** mevcut sitede yok; prosedürel ve
   garantisiz yazıldı, müşteri onayı bekliyor.
-- **`og:image`** Pages adresi kesinleşince mutlak URL'e çevrilecek.
+- ~~`og:image` mutlak URL'e çevrilecek~~ — yapıldı (Pages adresi).
 - **Tedavi kartı fotoğrafları** yok; kartlar ikon + metin. Stok konmadı çünkü
   bu başlıkların stok karşılıkları öncesi/sonrası ve hasta ağzı görselleri.
 - **Sosyal medya hesabı** doğrulanmadı; mevcut sitedeki ikonların href'i boştu,
