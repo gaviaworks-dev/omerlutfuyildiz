@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Dt. Ömer Lütfü Yıldız — Tasarım Token'ları
+   Projedeki TEK renk / ölçü / tipografi kaynağı.
+   main.css içinde ham hex, ham px spacing veya ham gölge bulunmaz.
+   ========================================================================== */
+
+/* --- Fontlar: self-host (Google Fonts CDN kullanılmaz) -------------------
+   Türkçe karakter dağılımı doğrulandı:
+     latin      → ı (U+0131), ö ü ç Ö Ü Ç (U+0000-00FF)
+     latin-ext  → ğ Ğ ş Ş İ (U+0100-02BA)
+   İki subset de zorunlu; biri eksikse Türkçe metin fallback fonta düşer.
+   ------------------------------------------------------------------------ */
+
+/* Poppins — yalnızca 600. Başlıklar her yerde 600 kullanır; başka ağırlık
+   istenirse tarayıcı sentetik bold üretir, bu yüzden 600 dışına çıkılmaz. */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/poppins-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/poppins-600-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+/* Nunito — variable, 400–700 tek dosyada */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/nunito-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/nunito-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+:root {
+  /* --- Renk paleti --------------------------------------------------------
+     Kaynak: mevcut sitenin scheme-01.css dosyası (--primary-color: #10afa0)
+     ve style.css içindeki #2b313f / #35404e / #515c6a / #f6f6f6 değerleri.
+
+     ÖLÇÜLEN KONTRAST DEĞERLERİ — beyaz (#ffffff) üzerinde:
+       #10afa0   2.74:1   METİN VE METİN ZEMİNİ OLARAK KULLANILAMAZ
+       #0c8a7e   4.24:1   METİN ZEMİNİ OLARAK KULLANILAMAZ (AA sınırı 4.5)
+       #0b7c71   5.08:1   AA geçer — turkuaz metin/link/kenarlık burada
+       #08635a   7.14:1   AA geçer — beyaz metinli buton ve koyu blok zemini
+       #515c6a   6.80:1   AA geçer — gövde metni
+       #2b313f  13.01:1   AA geçer — başlık
+       #35404e  10.53:1   AA geçer
+
+     Bu sayılar ölçülerek yazıldı. "Biraz açalım" denirse önce yeniden ölçülür.
+     ---------------------------------------------------------------------- */
+
+  /* Marka turkuazı. Sayfanın baskın rengidir: eyebrow çizgileri, kart
+     ikonları, başlık altı vurgu çizgileri, kart hover kenarlığı, akordeon
+     + işareti, footer ayracı, outline buton kenarlığı. ASLA metin rengi
+     ve ASLA metin taşıyan zemin değil. */
+  --color-primary: #10afa0;
+
+  /* Turkuazın metin/link/ince-kenarlık için AA geçen varyantı */
+  --color-primary-text: #0b7c71;
+
+  /* Koyu turkuaz — hover ve orta koyulukta turkuaz bloklar.
+     Beyaz metin ALTINA konmaz (4.24:1). */
+  --color-primary-dark: #0c8a7e;
+
+  /* En koyu turkuaz — beyaz metinli buton zemini, koyu turkuaz CTA bandı,
+     hero overlay tabanı, footer. Beyaz metin 7.14:1. */
+  --color-primary-deep: #08635a;
+
+  --color-ink: #2b313f;
+  --color-ink-soft: #35404e;
+  --color-text: #515c6a;
+
+  --color-background: #ffffff;
+  --color-surface: #f6f6f6;
+  --color-surface-alt: #eef8f7;
+
+  --color-border: #e3e8eb;
+  --color-border-strong: #c9d3d7;
+
+  --color-text-inverse: #ffffff;
+
+  /* Odak halkası. #10afa0 beyaz üstünde 2.74:1 — WCAG 1.4.11'in UI bileşeni
+     için istediği 3:1'i geçmiyor, bu yüzden halka turkuazın koyu varyantı. */
+  --color-focus: var(--color-primary-text);
+  --color-focus-inverse: #ffffff;
+
+  /* Koyu görsel üzerindeki metin ve cam yüzeyler */
+  --color-text-inverse-muted: rgb(255 255 255 / 0.9);
+  --color-text-inverse-subtle: rgb(255 255 255 / 0.86);
+  --color-rule-inverse: rgb(255 255 255 / 0.28);
+  --glass-fill: rgb(255 255 255 / 0.1);
+  --glass-fill-hover: rgb(255 255 255 / 0.18);
+  --glass-border: rgb(255 255 255 / 0.55);
+  --surface-glass: rgb(255 255 255 / 0.93);
+
+  /* --- Hero overlay -------------------------------------------------------
+     Hero fotoğrafı parlak ve soğuk beyaz, bu yüzden overlay opak.
+     Saf beyaz fotoğraf bölgesi üzerinde ölçülen beyaz metin kontrastı:
+       alpha 0.88 → 5.39:1   ·   alpha 0.84 → ~4.9:1   ·   alpha 0.92 → ~5.8:1
+     Hepsi AA (4.5) üstünde. Alfalar düşürülmeden önce yeniden ölçülmeli.
+     ---------------------------------------------------------------------- */
+  --overlay-hero: linear-gradient(
+    180deg,
+    rgb(8 99 90 / 0.88) 0%,
+    rgb(8 99 90 / 0.84) 45%,
+    rgb(8 99 90 / 0.92) 100%
+  );
+
+  /* --- Spacing ölçeği ---------------------------------------------------- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 5rem;
+  --space-section: clamp(3.5rem, 2rem + 6vw, 7rem);
+
+  /* --- Tipografi ---------------------------------------------------------- */
+  --font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-base: 'Nunito', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --font-size-xs: 0.8125rem;
+  --font-size-sm: 0.9375rem;
+  --font-size-base: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --font-size-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --font-size-xl: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --font-size-2xl: clamp(1.625rem, 1.35rem + 1.35vw, 2.5rem);
+  --font-size-3xl: clamp(2.125rem, 1.35rem + 3.4vw, 4rem);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.15;
+  --line-height-heading: 1.22;
+  --line-height-body: 1.7;
+
+  --letter-spacing-eyebrow: 0.16em;
+  --letter-spacing-heading: -0.01em;
+
+  /* --- Dokunma hedefi ----------------------------------------------------- */
+  --tap-target: 2.75rem;
+
+  /* --- Kenar yuvarlaklığı -------------------------------------------------- */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-pill: 999px;
+
+  /* --- Gölge — ink renginden türetildi (43 49 63) --------------------------- */
+  --shadow-sm: 0 1px 2px rgb(43 49 63 / 0.05), 0 2px 8px rgb(43 49 63 / 0.05);
+  --shadow-md: 0 2px 4px rgb(43 49 63 / 0.05), 0 8px 24px rgb(43 49 63 / 0.09);
+  --shadow-lg: 0 4px 8px rgb(43 49 63 / 0.06), 0 18px 48px rgb(43 49 63 / 0.14);
+
+  /* --- Geçiş ---------------------------------------------------------------- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 160ms;
+  --transition-base: 240ms;
+  --transition-slow: 400ms;
+
+  /* --- Yerleşim ------------------------------------------------------------- */
+  --container-max: 75rem;
+  --container-pad: clamp(1.25rem, 4vw, 3rem);
+  --header-height: 4rem;
+  --header-total: var(--header-height);
+  --hero-content-max: 53.125rem;
+
+  /* --- Katman sırası -------------------------------------------------------- */
+  --z-hero-overlay: 1;
+  --z-hero-content: 2;
+  --z-header: 100;
+  --z-nav-panel: 200;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --header-height: 4.75rem;
+  }
+}
