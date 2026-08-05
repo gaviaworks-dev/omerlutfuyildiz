@@ -909,3 +909,77 @@ ul {
 .about__signature-role {
   font-size: var(--font-size-sm);
 }
+
+/* ==========================================================================
+   8. Tedaviler
+   ========================================================================== */
+
+.treatments__grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+@media (min-width: 40rem) {
+  .treatments__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .treatments__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Kartlar detay sayfasına gitmiyor (detay sayfası yok), bu yüzden <a> değil.
+   Ölü link konmaz. */
+.treatment-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: 100%;
+  padding: var(--space-lg) var(--space-md);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-base) var(--ease),
+    transform var(--transition-base) var(--ease),
+    box-shadow var(--transition-base) var(--ease);
+}
+
+/* Hover'da kenarlık marka turkuazına döner */
+.treatment-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+/* İkon kutusu — marka turkuazı dolgu, içindeki simge beyaz.
+   Simge metin değil, çizim; kontrast kuralı metne uygulanır. */
+.treatment-card__icon-box {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-md);
+}
+
+.treatment-card__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: var(--color-text-inverse);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.treatment-card__title {
+  font-size: var(--font-size-lg);
+}
+
+.treatment-card__text {
+  font-size: var(--font-size-sm);
+}
