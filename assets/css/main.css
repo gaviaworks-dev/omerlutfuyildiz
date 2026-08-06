@@ -1357,17 +1357,42 @@ html.js
    11. Randevu CTA bandı
    ========================================================================== */
 
-/* Fotoğraf zemin ve koyu katman kaldırıldı; bant artık açık gri zemin
-   üzerinde ortalanmış metin. */
+/* Fotoğraf zeminli bant — hero ve yasal banner ile aynı kurgu: kliniğin
+   tedavi odası karesi, üstünde nötr koyu gri overlay, beyaz metin. */
 .cta {
+  position: relative;
   padding-block: var(--space-section);
-  background-color: var(--color-bg-alt);
+  color: var(--color-text-inverse);
+  isolation: isolate;
   text-align: center;
+}
+
+.cta__media,
+.cta__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.cta__media {
+  z-index: -2;
+}
+
+.cta__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cta__overlay {
+  z-index: -1;
+  background-image: var(--overlay-cta);
 }
 
 .cta__title {
   max-width: 24ch;
   margin-inline: auto;
+  color: var(--color-text-inverse);
   font-size: var(--font-size-2xl);
 }
 
@@ -1375,11 +1400,25 @@ html.js
   max-width: 52ch;
   margin-inline: auto;
   margin-block-start: var(--space-sm);
-  color: var(--color-text-muted);
+  color: var(--color-text-inverse-muted);
 }
 
 .cta__button {
   margin-block-start: var(--space-xl);
+}
+
+/* Koyu zeminde birincil buton ters çevrilir: beyaz dolgu, koyu metin. */
+.cta .button--primary {
+  background-color: var(--color-text-inverse);
+  color: var(--color-text);
+}
+
+.cta .button--primary:hover {
+  background-color: var(--color-bg-alt);
+}
+
+.cta :focus-visible {
+  outline-color: var(--color-focus-inverse);
 }
 
 @media (max-width: 29.999rem) {

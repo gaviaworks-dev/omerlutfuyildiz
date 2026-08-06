@@ -146,6 +146,18 @@
     rgb(42 45 50 / 0.82) 100%
   );
 
+  /* --- Randevu CTA bandı overlay'i ----------------------------------------
+     Aynı nötr koyu gri taban. Görsel export'ta 0.5 parlaklığa karartılmıştı,
+     bu yüzden alfalar hero ile banner'ın arasında. Gerçek pikseller üzerinde
+     en kötü durum: beyaz 8.42:1, %72 muted metin 5.31:1.
+     ---------------------------------------------------------------------- */
+  --overlay-cta: linear-gradient(
+    180deg,
+    rgb(42 45 50 / 0.66) 0%,
+    rgb(42 45 50 / 0.62) 50%,
+    rgb(42 45 50 / 0.72) 100%
+  );
+
   /* --- Spacing ölçeği ---------------------------------------------------- */
   --space-3xs: 0.25rem;
   --space-2xs: 0.5rem;
