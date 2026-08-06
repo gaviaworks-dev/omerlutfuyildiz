@@ -112,8 +112,10 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 - **Tedavi süreci akordeon metinleri** mevcut sitede yok; prosedürel ve
   garantisiz yazıldı, müşteri onayı bekliyor.
 - ~~`og:image` mutlak URL'e çevrilecek~~ — yapıldı (Pages adresi).
-- **Tedavi kartı fotoğrafları** yok; kartlar ikon + metin. Stok konmadı çünkü
-  bu başlıkların stok karşılıkları öncesi/sonrası ve hasta ağzı görselleri.
+- **Tedavi kartı fotoğrafları stok.** Faz 11'de nesne/model/ekipman karesi
+  eklendi (renk skalası, 3B model, implant, artikülatör, kaplama). Müşterinin
+  kendi vaka fotoğrafları gelince değişecek — `CREDITS.md`'de "GEÇİCİ".
+  Öncesi/sonrası ve hasta ağzı görseli hiçbir koşulda konmaz.
 - **Sosyal medya hesabı** doğrulanmadı; mevcut sitedeki ikonların href'i boştu,
   footer'a konmadı.
 - **Şirket künyesi eksik.** Ticaret unvanı, VKN, MERSİS ve KEP adresi
