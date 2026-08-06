@@ -62,84 +62,76 @@
 
 :root {
   /* --- Renk paleti --------------------------------------------------------
-     Kaynak: mevcut sitenin scheme-01.css dosyası (--primary-color: #10afa0)
-     ve style.css içindeki #2b313f / #35404e / #515c6a / #f6f6f6 değerleri.
+     Site AÇIK. Kömür siyahı ve türevleri paletten tamamen çıkarıldı; geriye
+     yalnızca iki zemin tonu kaldı. Tek istisna hero: fotoğraf üzerindeki
+     beyaz metin için overlay gerekiyor, o da nötr koyu griden türetildi.
 
      ÖLÇÜLEN KONTRAST DEĞERLERİ (hepsi hesaplanarak doğrulandı)
 
-     Koyu zemin #15171a üzerinde:
-       beyaz                17.96:1   AA
-       beyaz %72 muted       9.65:1   AA
-       #10afa0 turkuaz       6.55:1   AA — koyu zeminde METİN OLARAK DA kullanılabilir
-
-     Açık zemin (beyaz / #f6f6f6 / #eef8f7) üzerinde:
-       #2a2d32 gövde        13.8 / 12.8 / 12.8   AA
-       #15171a başlık       18.0 / 16.6 / 16.6   AA
-       #0b7c71 turkuaz      5.08 / 4.70 / 4.69   AA
-       #10afa0 turkuaz       2.74               GEÇMEZ — açık zeminde metin değil
+     Zemin              #ffffff   #f5f5f5
+     #2a2d32 metin       13.82     12.67   AA
+     #5a6169 ikincil      6.27      5.75   AA
+     #0b7c71 turkuaz      5.08      4.66   AA
+     #10afa0 turkuaz      2.74      2.51   GEÇMEZ — yalnızca dekoratif dolgu
+     #e6e6e6 çizgi        1.25      1.14   dekoratif ayraç, metin taşımaz
 
      Butonlar:
-       koyu zeminde: beyaz dolgu + #15171a metin   17.96:1
-       açık zeminde: #15171a dolgu + beyaz metin   17.96:1
+       birincil   #2a2d32 dolgu + beyaz metin              13.82:1
+       birincil hover #5a6169 dolgu + beyaz metin           6.27:1
+       outline    şeffaf + #2a2d32 kenarlık/metin   13.82 (beyaz) · 12.67 (alt)
+       outline hover  #2a2d32 dolgu + beyaz metin          13.82:1
+       hero birincil  beyaz dolgu + #2a2d32 metin          13.82:1
+       hero ikincil   şeffaf + beyaz kenarlık/metin   overlay üzerinde 8.52:1
 
      Bu sayılar ölçülerek yazıldı. "Biraz açalım" denirse önce yeniden ölçülür.
      ---------------------------------------------------------------------- */
 
-  /* Kömür siyahı — ana koyu zemin. Nötr ton, mavi kaçık yok. */
-  --color-ink: #15171a;
-  /* İkincil koyu blok — koyu zemindeki kart ve ayrım yüzeyleri */
-  --color-ink-soft: #1c1f23;
-  /* Koyu zeminde ayırıcı çizgi */
-  --color-ink-line: rgb(255 255 255 / 0.12);
+  /* İki zemin tonu — sitede başka zemin yoktur */
+  --color-bg: #ffffff;
+  --color-bg-alt: #f5f5f5;
 
-  /* Marka turkuazı — KISILDI. Geniş yüzeyde kullanılmaz. Kalan yerler:
-     aktif nav alt çizgisi, odak halkası, akordeon + işareti, hover vurgusu,
-     eyebrow çizgisi. Açık zeminde metin olarak kullanılmaz (2.74:1). */
-  --color-primary: #10afa0;
-  /* Açık zeminde turkuaz metin/link gerektiğinde AA geçen varyant */
-  --color-primary-text: #0b7c71;
-
-  /* Açık bölümlerde gövde metni. Eski #515c6a mavi hissi veriyordu; nötr
-     siyaha çekildi. */
+  /* Gövde metni ve başlık. Siyah kalktığı için başlık da bu tonu kullanır;
+     hiyerarşi Poppins 600 ve punto ile kurulur. */
   --color-text: #2a2d32;
-
-  --color-background: #ffffff;
-  --color-surface: #f6f6f6;
-  --color-surface-alt: #eef8f7;
-
-  --color-border: #e3e8eb;
-  --color-border-strong: #c9d3d7;
-
+  /* İkincil metin: spot, etiket, alt yazı, footer */
+  --color-text-muted: #5a6169;
+  /* Yalnızca hero overlay'i üstünde ve koyu buton içinde */
   --color-text-inverse: #ffffff;
 
-  /* Odak halkası — turkuazın kalan görevlerinden biri. Açık zeminde koyu
-     varyant (5.08:1), koyu zeminde marka turkuazı doğrudan (6.55:1). */
+  /* Tek ayırıcı çizgi rengi */
+  --color-line: #e6e6e6;
+
+  /* Marka turkuazı — KISIK. Geniş zemin olarak kullanılmaz. Kalan yerler:
+     eyebrow çizgisi, kart ikonu, madde imi, hover vurgusu, footer ayracı.
+     Açık zeminde metin ya da durum göstergesi olarak kullanılmaz (2.74:1),
+     o görevlerde --color-primary-text geçerlidir. */
+  --color-primary: #10afa0;
+  /* Turkuazın metin/odak/durum varyantı — açık zeminde AA geçer */
+  --color-primary-text: #0b7c71;
+
   --color-focus: var(--color-primary-text);
   --color-focus-inverse: #ffffff;
 
-  /* Koyu zemin üzerindeki metin ve cam yüzeyler */
+  /* Hero overlay'i üzerindeki metin ve cam yüzeyler — başka yerde kullanılmaz */
   --color-text-inverse-muted: rgb(255 255 255 / 0.72);
   --color-text-inverse-subtle: rgb(255 255 255 / 0.86);
   --color-rule-inverse: rgb(255 255 255 / 0.28);
-  --glass-fill: rgb(255 255 255 / 0.1);
-  --glass-fill-hover: rgb(255 255 255 / 0.18);
+  --glass-fill-hover: rgb(255 255 255 / 0.16);
   --glass-border: rgb(255 255 255 / 0.55);
-  --surface-glass: rgb(255 255 255 / 0.93);
 
   /* --- Hero overlay -------------------------------------------------------
-     Taban artık turkuaz-deep değil kömür siyahı. Hero WebP'leri zaten 0.45
-     parlaklıkla üretildi; overlay yalnızca kontrastı ve kurumsal koyu tonu
-     veriyor.
+     Taban siyah değil nötr koyu gri (42 45 50) — sayfanın kendi metin tonu.
+     Böylece overlay, açık sayfanın geri kalanıyla aynı nötr aileden kalıyor.
+     Hero WebP'leri zaten 0.45 parlaklıkla üretildi.
 
      Karartılmış fotoğrafın GERÇEK pikselleri üzerinde ölçüldü (en kötü piksel):
-       alpha 0.58 → 10.7:1  ·   alpha 0.66 → 11.9:1  ·   alpha 0.72 → ~12.8:1
-     Daha açık alfalar da AA geçiyordu; kurumsal koyu kimlik için derinleştirildi.
+       beyaz metin 8.52:1  ·  %72 muted metin 5.36:1  — ikisi de AA üstünde.
      ---------------------------------------------------------------------- */
   --overlay-hero: linear-gradient(
     180deg,
-    rgb(21 23 26 / 0.66) 0%,
-    rgb(21 23 26 / 0.58) 45%,
-    rgb(21 23 26 / 0.72) 100%
+    rgb(42 45 50 / 0.66) 0%,
+    rgb(42 45 50 / 0.58) 45%,
+    rgb(42 45 50 / 0.72) 100%
   );
 
   /* --- Spacing ölçeği ---------------------------------------------------- */
@@ -189,10 +181,10 @@
   --radius-xl: 1.75rem;
   --radius-pill: 999px;
 
-  /* --- Gölge — ink renginden türetildi (21 23 26) --------------------------- */
-  --shadow-sm: 0 1px 2px rgb(21 23 26 / 0.05), 0 2px 8px rgb(21 23 26 / 0.05);
-  --shadow-md: 0 2px 4px rgb(21 23 26 / 0.05), 0 8px 24px rgb(21 23 26 / 0.09);
-  --shadow-lg: 0 4px 8px rgb(21 23 26 / 0.06), 0 18px 48px rgb(21 23 26 / 0.14);
+  /* --- Gölge — metin renginden türetildi (42 45 50) ------------------------- */
+  --shadow-sm: 0 1px 2px rgb(42 45 50 / 0.05), 0 2px 8px rgb(42 45 50 / 0.05);
+  --shadow-md: 0 2px 4px rgb(42 45 50 / 0.05), 0 8px 24px rgb(42 45 50 / 0.09);
+  --shadow-lg: 0 4px 8px rgb(42 45 50 / 0.06), 0 18px 48px rgb(42 45 50 / 0.14);
 
   /* --- Geçiş ---------------------------------------------------------------- */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);

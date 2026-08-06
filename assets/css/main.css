@@ -20,19 +20,12 @@ html {
   scroll-padding-top: var(--header-total);
 }
 
-/* Yüzey lokal token'ları. Varsayılan açık zemin; .section--dark bunları
-   koyu değerlerle ezer, böylece bileşen kuralları iki kez yazılmaz. */
+/* Site tek yüzey ailesinde: beyaz ve açık gri. Koyu bölüm kalmadığı için
+   yüzeye göre değişen lokal token katmanı da kaldırıldı; bileşenler doğrudan
+   --color-* token'larını kullanır. */
 body {
-  --surface-bg: var(--color-background);
-  --surface-fg: var(--color-text);
-  --surface-heading: var(--color-ink);
-  --surface-line: var(--color-border);
-  --surface-card: var(--color-background);
-  --surface-icon: var(--color-ink);
-  --surface-accent: var(--color-primary-text);
-
   margin: 0;
-  background-color: var(--color-background);
+  background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
@@ -56,7 +49,7 @@ h2,
 h3,
 h4 {
   margin: 0;
-  color: var(--surface-heading, var(--color-ink));
+  color: var(--color-text);
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-heading);
@@ -147,7 +140,7 @@ ul {
   z-index: calc(var(--z-header) + 1);
   padding: var(--space-2xs) var(--space-sm);
   transform: translateY(-200%);
-  background-color: var(--color-background);
+  background-color: var(--color-bg);
   color: var(--color-primary-text);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-md);
@@ -216,84 +209,67 @@ ul {
   stroke-linejoin: round;
 }
 
-/* Birincil — AÇIK zeminde: kömür dolgu, beyaz metin. Ölçülen 17.96:1. */
+/* Birincil — koyu dolgu, beyaz metin. Ölçülen 13.82:1.
+   Hover için yeni renk üretilmedi: paletteki ikincil metin tonu dolgu olarak
+   kullanılır, beyaz metinle 6.27:1. */
 .button--primary {
-  background-color: var(--color-ink);
+  background-color: var(--color-text);
   color: var(--color-text-inverse);
   box-shadow: var(--shadow-sm);
 }
 
 .button--primary:hover {
-  background-color: var(--color-ink-soft);
+  background-color: var(--color-text-muted);
   box-shadow: var(--shadow-md);
 }
 
-/* Birincil — KOYU zeminde ters çevrilir: beyaz dolgu, kömür metin. 17.96:1.
-   .section--dark ve header/hero/cta/footer içinde bu kural geçerlidir. */
-.section--dark .button--primary,
-.site-top--scrolled .button--primary,
-.hero .button--primary,
-.cta .button--primary,
-.site-footer .button--primary {
-  background-color: var(--color-text-inverse);
-  color: var(--color-ink);
-}
-
-.section--dark .button--primary:hover,
-.site-top--scrolled .button--primary:hover,
-.hero .button--primary:hover,
-.cta .button--primary:hover,
-.site-footer .button--primary:hover {
-  background-color: var(--color-surface);
-}
-
-/* İkincil — şeffaf zemin, bulunduğu yüzeyin rengine göre kenarlık ve metin.
-   Açık zeminde kömür (17.96:1), koyu zeminde beyaz (17.96:1). */
+/* İkincil — şeffaf zemin, koyu kenarlık ve metin (13.82 / 12.67).
+   Hover'da dolar: koyu dolgu + beyaz metin, 13.82:1. Böylece hover her iki
+   zemin tonunda da görünür — açık gri bölümde "beyaza dolma" işe yaramıyordu. */
 .button--outline {
-  border-color: var(--surface-line-strong, var(--color-border-strong));
+  border-color: var(--color-text);
   background-color: transparent;
-  color: var(--surface-heading, var(--color-ink));
+  color: var(--color-text);
 }
 
 .button--outline:hover {
-  border-color: var(--surface-heading, var(--color-ink));
-  background-color: var(--surface-hover, var(--color-surface));
+  background-color: var(--color-text);
+  color: var(--color-text-inverse);
+}
+
+/* Hero istisnası — koyu overlay üzerinde birincil buton ters çevrilir:
+   beyaz dolgu, koyu metin (13.82:1). */
+.hero .button--primary {
+  background-color: var(--color-text-inverse);
+  color: var(--color-text);
+}
+
+.hero .button--primary:hover {
+  background-color: var(--color-bg-alt);
 }
 
 /* ==========================================================================
    4. Header ve navigasyon
    ========================================================================== */
 
-/* Header hero üzerinde şeffaf, kaydırınca opak beyaz olur.
-   Renk değişimi bu üç lokal token üzerinden yürür — altındaki kuralların
-   hiçbiri tekrar yazılmaz. */
+/* Header her durumda açık gri. Kaydırınca koyulaşmaz; içerikten ayrımı ince
+   alt çizgi, kaydırıldığında ek olarak hafif gölge verir. */
 .site-top {
-  --header-fg: var(--color-text-inverse);
-  --header-rule: transparent;
-
   position: fixed;
   inset-block-start: 0;
   inset-inline: 0;
   z-index: var(--z-header);
-  background-color: transparent;
-  transition: background-color var(--transition-slow) var(--ease),
-    box-shadow var(--transition-slow) var(--ease);
+  background-color: var(--color-bg-alt);
+  transition: box-shadow var(--transition-slow) var(--ease);
 }
 
-/* Kaydırınca header kömür siyahına oturur — beyaz cam değil. */
 .site-top--scrolled,
 .site-top--menu-open {
-  --header-fg: var(--color-text-inverse);
-  --header-rule: var(--color-ink-line);
-
-  background-color: rgb(21 23 26 / 0.94);
-  backdrop-filter: blur(14px) saturate(1.2);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .site-header {
-  border-block-end: 1px solid var(--header-rule);
-  transition: border-color var(--transition-slow) var(--ease);
+  border-block-end: 1px solid var(--color-line);
 }
 
 .site-header__inner {
@@ -304,7 +280,9 @@ ul {
   min-height: var(--header-height);
 }
 
-/* --- Tipografik yazmarka (logo dosyası yok) --- */
+/* --- Tipografik yazmarka (logo dosyası yok) ---
+   Yazmarka aynı zamanda ana sayfa linkidir; nav'da ayrı "Anasayfa" maddesi
+   yoktur. */
 
 .site-header__logo {
   display: grid;
@@ -312,9 +290,8 @@ ul {
   align-content: center;
   gap: var(--space-3xs);
   min-height: var(--tap-target);
-  color: var(--header-fg);
+  color: var(--color-text);
   text-decoration: none;
-  transition: color var(--transition-slow) var(--ease);
 }
 
 .site-header__logo-name {
@@ -326,21 +303,18 @@ ul {
   white-space: nowrap;
 }
 
-/* Marka turkuazı yazmarkanın soyadında. Şeffaf header koyu fotoğraf
-   üzerindeyken #10afa0 yeterince ayrışmıyor, orada beyaza döner. */
+/* Soyadı turkuaz. Metin olduğu için marka turkuazı değil AA geçen varyant
+   kullanılır — #10afa0 açık gri üzerinde 2.51:1. */
 .site-header__logo-accent {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
-/* Şeffaf header koyu fotoğraf üzerindeyken de turkuaz okunur (6.55:1),
-   bu yüzden ayrı bir beyaza dönme kuralı gerekmez. */
-
 .site-header__logo-role {
+  color: var(--color-text-muted);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   letter-spacing: var(--letter-spacing-eyebrow);
   text-transform: uppercase;
-  opacity: 0.75;
 }
 
 /* --- Navigasyon --- */
@@ -358,7 +332,7 @@ ul {
   /* Dokunma hedefi 44x44 — yalnızca padding ile 42px'te kalıyordu */
   min-height: var(--tap-target);
   padding-block: var(--space-2xs);
-  color: var(--header-fg);
+  color: var(--color-text);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   text-decoration: none;
@@ -366,7 +340,9 @@ ul {
   transition: color var(--transition-base) var(--ease);
 }
 
-/* Alt çizgi marka turkuazı — dolgu, metin değil */
+/* Alt çizgi + aktif renk aynı turkuaz olmalı: ikisi birlikte "aktif bölüm"
+   durumunu gösterdiği için WCAG 1.4.11'e göre 3:1 gerekiyor. #10afa0 açık
+   gri üzerinde 2.51:1 kalıyor, bu yüzden koyu varyant kullanılır (4.66:1). */
 .site-nav__link::after {
   content: '';
   position: absolute;
@@ -374,7 +350,7 @@ ul {
   inset-inline-start: 0;
   width: 100%;
   height: 2px;
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-text);
   border-radius: var(--radius-pill);
   transform: scaleX(0);
   transform-origin: left center;
@@ -387,7 +363,7 @@ ul {
 }
 
 .site-nav__link[aria-current='true'] {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 /* --- Sağdaki aksiyon --- */
@@ -404,25 +380,6 @@ ul {
   padding-inline: var(--space-md);
 }
 
-/* Şeffaf header koyu fotoğraf üzerinde: cam buton, beyaz metin */
-.site-top:not(.site-top--scrolled):not(.site-top--menu-open) .site-header__cta {
-  border-color: var(--glass-border);
-  background-color: var(--glass-fill);
-  color: var(--color-text-inverse);
-  box-shadow: none;
-}
-
-.site-top:not(.site-top--scrolled):not(.site-top--menu-open)
-  .site-header__cta:hover {
-  border-color: var(--color-text-inverse);
-  background-color: var(--glass-fill-hover);
-}
-
-/* Koyu fotoğraf üzerindeki header'da odak halkası beyaz */
-.site-top:not(.site-top--scrolled):not(.site-top--menu-open) :focus-visible {
-  outline-color: var(--color-focus-inverse);
-}
-
 /* --- Hamburger --- */
 
 .nav-toggle {
@@ -435,7 +392,7 @@ ul {
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   background-color: transparent;
-  color: var(--header-fg);
+  color: var(--color-text);
   cursor: pointer;
   transition: color var(--transition-base) var(--ease),
     background-color var(--transition-base) var(--ease);
@@ -479,8 +436,8 @@ ul {
     max-height: calc(100svh - var(--header-total));
     padding: var(--space-md) 0 var(--space-xl);
     overflow-y: auto;
-    background-color: var(--color-ink);
-    border-block-end: 1px solid var(--color-ink-line);
+    background-color: var(--color-bg-alt);
+    border-block-end: 1px solid var(--color-line);
     box-shadow: var(--shadow-lg);
     visibility: hidden;
     opacity: 0;
@@ -503,21 +460,16 @@ ul {
   }
 
   .site-nav__item + .site-nav__item {
-    border-block-start: 1px solid var(--color-ink-line);
+    border-block-start: 1px solid var(--color-line);
   }
 
   .site-nav__link {
     padding: var(--space-sm) var(--container-pad);
-    color: var(--color-text-inverse);
     font-size: var(--font-size-lg);
   }
 
   .site-nav__link::after {
     display: none;
-  }
-
-  .site-nav__link[aria-current='true'] {
-    color: var(--color-primary);
   }
 
   .site-header__cta {
@@ -597,6 +549,12 @@ ul {
   background-image: var(--overlay-hero);
 }
 
+/* Hero, koyu overlay'in kaldığı tek yer: odak halkası orada beyaz olur,
+   koyu turkuaz halka bu zeminde ayrışmıyor. */
+.hero :focus-visible {
+  outline-color: var(--color-focus-inverse);
+}
+
 .hero__content {
   position: relative;
   z-index: var(--z-hero-content);
@@ -662,15 +620,12 @@ ul {
   }
 }
 
-/* Hero'nun ikincil butonu: koyu turkuaz overlay üzerinde beyaz kenarlıklı
-   cam buton. Beyaz metin overlay üzerinde 5.39:1.
-   Turkuaz outline burada kullanılmaz — #10afa0 aynı aileden overlay üzerinde
-   ayrışmıyor; turkuaz outline açık zeminli bölümlerde geçerli. */
+/* Hero'nun ikincil butonu: şeffaf zemin, beyaz kenarlık ve beyaz metin.
+   Overlay üzerinde ölçülen en kötü durum 8.52:1. */
 .button--ghost-light {
   border-color: var(--glass-border);
-  background-color: var(--glass-fill);
+  background-color: transparent;
   color: var(--color-text-inverse);
-  backdrop-filter: blur(4px);
 }
 
 .button--ghost-light:hover {
@@ -735,37 +690,15 @@ ul {
   padding-block: var(--space-section);
 }
 
-.section--light {
-  background-color: var(--color-background);
+/* Bölüm zemini yalnızca iki değer alır. Sıra dönüşümlüdür:
+   header/Hakkımda → alt, Tedaviler → beyaz, Klinik → alt, Süreç → beyaz,
+   CTA → alt, İletişim → beyaz, footer → alt. */
+.section--bg {
+  background-color: var(--color-bg);
 }
 
-.section--surface {
-  background-color: var(--color-surface);
-}
-
-.section--alt {
-  background-color: var(--color-surface-alt);
-}
-
-/* Koyu bölüm. Lokal token'ları ezer; altındaki bileşen kuralları
-   değişmeden koyu zemine uyar. */
-.section--dark {
-  --surface-bg: var(--color-ink);
-  --surface-fg: var(--color-text-inverse-muted);
-  --surface-heading: var(--color-text-inverse);
-  --surface-line: var(--color-ink-line);
-  --surface-line-strong: var(--color-rule-inverse);
-  --surface-card: var(--color-ink-soft);
-  --surface-icon: var(--color-text-inverse);
-  --surface-accent: var(--color-primary);
-  --surface-hover: var(--color-ink-soft);
-
-  background-color: var(--color-ink);
-  color: var(--color-text-inverse-muted);
-}
-
-.section--dark :focus-visible {
-  outline-color: var(--color-primary);
+.section--bg-alt {
+  background-color: var(--color-bg-alt);
 }
 
 /* Eyebrow: marka turkuazı çizgisi + koyu turkuaz metin.
@@ -775,7 +708,7 @@ ul {
   align-items: center;
   gap: var(--space-2xs);
   margin-block-end: var(--space-xs);
-  color: var(--surface-accent, var(--color-primary-text));
+  color: var(--color-primary-text);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-eyebrow);
@@ -814,7 +747,7 @@ ul {
 
 .section__lead {
   margin-block-start: var(--space-sm);
-  color: var(--surface-fg, var(--color-text));
+  color: var(--color-text-muted);
   font-size: var(--font-size-lg);
 }
 
@@ -868,9 +801,8 @@ ul {
   display: grid;
   gap: var(--space-3xs);
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-ink-soft);
-  color: var(--color-text-inverse);
-  border: 1px solid var(--color-ink-line);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
 }
@@ -893,7 +825,7 @@ ul {
 }
 
 .about__badge-text {
-  color: var(--color-text-inverse-muted);
+  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
 
@@ -906,7 +838,7 @@ ul {
   gap: var(--space-md);
   margin-block: var(--space-lg);
   padding-block: var(--space-lg);
-  border-block: 1px solid var(--surface-line, var(--color-border));
+  border-block: 1px solid var(--color-line);
 }
 
 @media (min-width: 30rem) {
@@ -923,10 +855,6 @@ ul {
 }
 
 .about__fact-value {
-  color: var(--surface-heading, var(--color-ink));
-}
-
-.about__fact-value {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
@@ -934,6 +862,7 @@ ul {
 }
 
 .about__fact-label {
+  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
 
@@ -941,16 +870,16 @@ ul {
   display: grid;
   gap: var(--space-3xs);
   padding-inline-start: var(--space-md);
-  border-inline-start: 1px solid var(--surface-line, var(--color-border));
+  border-inline-start: 1px solid var(--color-line);
 }
 
 .about__signature-name {
-  color: var(--surface-heading, var(--color-ink));
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
 }
 
 .about__signature-role {
+  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
 
@@ -989,10 +918,10 @@ ul {
   width: var(--tap-target);
   height: var(--tap-target);
   padding: 0;
-  border: 1px solid var(--surface-line, var(--color-border));
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-pill);
   background-color: transparent;
-  color: var(--surface-heading, var(--color-ink));
+  color: var(--color-text);
   cursor: pointer;
   transition: border-color var(--transition-base) var(--ease),
     background-color var(--transition-base) var(--ease),
@@ -1056,8 +985,8 @@ ul {
   gap: var(--space-sm);
   height: 100%;
   padding: var(--space-md);
-  background-color: var(--surface-card, var(--color-background));
-  border: 1px solid var(--surface-line, var(--color-border));
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
   transition: border-color var(--transition-base) var(--ease),
@@ -1077,22 +1006,21 @@ ul {
   border-radius: var(--radius-lg);
 }
 
-/* İkon kutusu — turkuaz dolgu kaldırıldı. İkon, bulunduğu yüzeyin
-   rengiyle çizilir: açık zeminde kömür, koyu zeminde beyaz. */
 .treatment-card__icon-box {
   display: grid;
   place-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid var(--surface-line, var(--color-border));
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
 }
 
+/* İkon marka turkuazı — dekoratif, yanındaki başlık aynı bilgiyi taşır. */
 .treatment-card__icon {
   width: 1.25rem;
   height: 1.25rem;
   fill: none;
-  stroke: var(--surface-icon, var(--color-ink));
+  stroke: var(--color-primary);
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1141,14 +1069,14 @@ ul {
   gap: var(--space-2xs);
 }
 
-/* Madde işareti yüzey rengiyle çizilir */
+/* Madde işareti marka turkuazı — dekoratif, bilgi yanındaki metinde */
 .clinic__list-icon {
   flex-shrink: 0;
   width: 1.25rem;
   height: 1.25rem;
   margin-block-start: 0.2em;
   fill: none;
-  stroke: var(--surface-icon, var(--color-ink));
+  stroke: var(--color-primary);
   stroke-width: 2.25;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1175,7 +1103,7 @@ ul {
 
 .clinic__caption {
   margin-block-start: var(--space-2xs);
-  color: var(--color-text);
+  color: var(--color-text-muted);
   font-size: var(--font-size-xs);
 }
 
@@ -1212,11 +1140,11 @@ ul {
 
 .accordion {
   margin-block-start: var(--space-lg);
-  border-block-start: 1px solid var(--surface-line, var(--color-border));
+  border-block-start: 1px solid var(--color-line);
 }
 
 .accordion__item {
-  border-block-end: 1px solid var(--surface-line, var(--color-border));
+  border-block-end: 1px solid var(--color-line);
 }
 
 .accordion__heading {
@@ -1243,12 +1171,12 @@ ul {
 }
 
 .accordion__trigger:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .accordion__index {
   flex-shrink: 0;
-  color: var(--surface-accent, var(--color-primary-text));
+  color: var(--color-primary-text);
   font-family: var(--font-family-heading);
   font-variant-numeric: tabular-nums;
   font-weight: var(--font-weight-medium);
@@ -1256,7 +1184,6 @@ ul {
 
 .accordion__label {
   flex: 1;
-  color: var(--surface-heading, var(--color-ink));
   font-family: var(--font-family-heading);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
@@ -1264,7 +1191,8 @@ ul {
 }
 
 /* +/− işareti iki çizgiden üretilir; dikey çizgi açılınca kaybolur.
-   Çizgiler marka turkuazı. */
+   Açık/kapalı durumunu gösterdiği için WCAG 1.4.11 gereği 3:1 şart —
+   marka turkuazı beyaz üstünde 2.74:1 kaldığından koyu varyant kullanılır. */
 .accordion__icon {
   position: relative;
   flex-shrink: 0;
@@ -1280,7 +1208,7 @@ ul {
   inset-inline-start: 50%;
   width: 1rem;
   height: 3px;
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-text);
   border-radius: var(--radius-pill);
   transform: translate(-50%, -50%);
   transition: transform var(--transition-base) var(--ease),
@@ -1321,54 +1249,17 @@ ul {
    11. Randevu CTA bandı
    ========================================================================== */
 
+/* Fotoğraf zemin ve koyu katman kaldırıldı; bant artık açık gri zemin
+   üzerinde ortalanmış metin. */
 .cta {
-  position: relative;
   padding-block: var(--space-section);
-  background-color: var(--color-ink);
-  color: var(--color-text-inverse-muted);
-  isolation: isolate;
+  background-color: var(--color-bg-alt);
   text-align: center;
-}
-
-.cta__media {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-
-.cta__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-/* Fotoğraf üstü katman: kömür gradyan + ince doku + kısık turkuaz vurgu.
-   Görsel export'ta 0.5 parlaklığa karartıldı; bu alfalarda gerçek pikseller
-   üzerinde ölçülen en kötü durum beyaz metinde 10.6:1, %72 muted metinde
-   5.7:1 — ikisi de AA üstünde. */
-.cta__pattern {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: repeating-linear-gradient(
-      115deg,
-      rgb(255 255 255 / 0.045) 0 1px,
-      transparent 1px 26px
-    ),
-    radial-gradient(circle at 82% 18%, rgb(16 175 160 / 0.16), transparent 58%),
-    linear-gradient(
-      180deg,
-      rgb(21 23 26 / 0.66) 0%,
-      rgb(21 23 26 / 0.62) 50%,
-      rgb(21 23 26 / 0.72) 100%
-    );
 }
 
 .cta__title {
   max-width: 24ch;
   margin-inline: auto;
-  color: var(--color-text-inverse);
   font-size: var(--font-size-2xl);
 }
 
@@ -1376,15 +1267,11 @@ ul {
   max-width: 52ch;
   margin-inline: auto;
   margin-block-start: var(--space-sm);
-  color: var(--color-text-inverse-muted);
+  color: var(--color-text-muted);
 }
 
 .cta__button {
   margin-block-start: var(--space-xl);
-}
-
-.cta :focus-visible {
-  outline-color: var(--color-focus-inverse);
 }
 
 @media (max-width: 29.999rem) {
@@ -1413,8 +1300,8 @@ ul {
   align-content: start;
   gap: var(--space-2xs);
   padding: var(--space-lg) var(--space-md);
-  background-color: var(--surface-card, var(--color-background));
-  border: 1px solid var(--surface-line, var(--color-border));
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
 }
@@ -1425,7 +1312,7 @@ ul {
   width: 2.75rem;
   height: 2.75rem;
   margin-block-end: var(--space-2xs);
-  border: 1px solid var(--surface-line, var(--color-border));
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
 }
 
@@ -1433,7 +1320,7 @@ ul {
   width: 1.375rem;
   height: 1.375rem;
   fill: none;
-  stroke: var(--surface-icon, var(--color-ink));
+  stroke: var(--color-primary);
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1444,6 +1331,7 @@ ul {
 }
 
 .contact-card__line {
+  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
 
@@ -1478,8 +1366,8 @@ ul {
 
 .site-footer {
   padding-block: var(--space-2xl) var(--space-lg);
-  background-color: var(--color-ink);
-  color: var(--color-text-inverse-muted);
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   text-align: center;
 }
@@ -1491,7 +1379,7 @@ ul {
 }
 
 .site-footer__brand {
-  color: var(--color-text-inverse);
+  color: var(--color-text);
   font-family: var(--font-family-heading);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
@@ -1524,13 +1412,13 @@ ul {
   min-width: var(--tap-target);
   min-height: var(--tap-target);
   padding-inline: var(--space-2xs);
-  color: var(--color-text-inverse-muted);
+  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   text-decoration: none;
 }
 
 .site-footer__nav a:hover {
-  color: var(--color-text-inverse);
+  color: var(--color-text);
   text-decoration: underline;
 }
 
@@ -1539,17 +1427,13 @@ ul {
   gap: var(--space-2xs);
   width: 100%;
   padding-block-start: var(--space-md);
-  border-block-start: 1px solid var(--color-ink-line);
+  border-block-start: 1px solid var(--color-line);
   font-size: var(--font-size-xs);
 }
 
 .site-footer__disclaimer {
   max-width: 76ch;
   margin-inline: auto;
-}
-
-.site-footer :focus-visible {
-  outline-color: var(--color-focus-inverse);
 }
 
 /* ==========================================================================
@@ -1593,10 +1477,6 @@ ul {
 }
 
 .cookie__inner {
-  --surface-heading: var(--color-text-inverse);
-  --surface-line-strong: var(--color-rule-inverse);
-  --surface-hover: var(--color-ink);
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1605,23 +1485,14 @@ ul {
   max-width: var(--container-max);
   margin-inline: auto;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-ink-soft);
-  border: 1px solid var(--color-ink-line);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  color: var(--color-text-inverse-muted);
-}
-
-.cookie__inner a {
-  color: var(--color-primary);
-}
-
-.cookie__inner :focus-visible {
-  outline-color: var(--color-primary);
+  color: var(--color-text-muted);
 }
 
 .cookie__title {
-  color: var(--color-text-inverse);
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
 }
@@ -1647,57 +1518,14 @@ ul {
    16. Alt sayfa banner'ı
    ========================================================================== */
 
-/* Yasal sayfalarda fotoğraf kullanılmaz — banner marka renginden kurulur,
-   böylece klinik görselleri hukuki metinlerin başlığına indirgenmez. */
+/* Yasal sayfa başlık bandı. Fotoğraf ve koyu katman kullanılmaz: hero
+   dışında koyu blok bırakılmadı, banner da açık gri zemine oturdu. */
 .page-banner {
-  position: relative;
   display: grid;
   align-items: end;
-  min-height: 34svh;
   padding-block: calc(var(--header-total) + var(--space-2xl)) var(--space-xl);
-  background-color: var(--color-ink);
-  color: var(--color-text-inverse);
-  isolation: isolate;
-}
-
-.page-banner__media,
-.page-banner__overlay {
-  position: absolute;
-  inset: 0;
-}
-
-.page-banner__media {
-  z-index: -2;
-}
-
-.page-banner__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-/* Banner overlay — kömür tabanlı, başlık her fotoğrafta okunur kalsın. */
-.page-banner__overlay {
-  z-index: -1;
-  background-image: linear-gradient(
-    180deg,
-    rgb(21 23 26 / 0.68) 0%,
-    rgb(21 23 26 / 0.60) 45%,
-    rgb(21 23 26 / 0.78) 100%
-  );
-}
-
-.page-banner__pattern {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: repeating-linear-gradient(
-      115deg,
-      rgb(255 255 255 / 0.045) 0 1px,
-      transparent 1px 26px
-    ),
-    radial-gradient(circle at 84% 20%, rgb(16 175 160 / 0.14), transparent 60%);
+  background-color: var(--color-bg-alt);
+  border-block-end: 1px solid var(--color-line);
 }
 
 .page-banner__eyebrow {
@@ -1705,7 +1533,7 @@ ul {
   align-items: center;
   gap: var(--space-2xs);
   margin-block-end: var(--space-2xs);
-  color: var(--color-text-inverse-muted);
+  color: var(--color-primary-text);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-eyebrow);
@@ -1721,12 +1549,7 @@ ul {
 }
 
 .page-banner__title {
-  color: var(--color-text-inverse);
   font-size: var(--font-size-2xl);
-}
-
-.page-banner :focus-visible {
-  outline-color: var(--color-focus-inverse);
 }
 
 /* ==========================================================================
@@ -1786,7 +1609,7 @@ ul {
 .legal-updated {
   display: inline-block;
   padding: var(--space-3xs) var(--space-xs);
-  background-color: var(--color-surface);
+  background-color: var(--color-bg-alt);
   border-radius: var(--radius-pill);
   font-size: var(--font-size-xs);
 }
@@ -1794,7 +1617,7 @@ ul {
 .table-wrap {
   margin-block-start: var(--space-sm);
   overflow-x: auto;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
 }
 
@@ -1813,19 +1636,19 @@ ul {
 
 .legal-table tbody tr + tr th,
 .legal-table tbody tr + tr td {
-  border-block-start: 1px solid var(--color-border);
+  border-block-start: 1px solid var(--color-line);
 }
 
 .legal-table tbody th {
   width: 12rem;
-  color: var(--color-ink);
+  color: var(--color-text);
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
 }
 
 .sidebar {
   padding: var(--space-lg) var(--space-md);
-  background-color: var(--color-surface-alt);
+  background-color: var(--color-bg-alt);
   border-radius: var(--radius-xl);
 }
 
@@ -1861,7 +1684,8 @@ ul {
 
 .sidebar__note {
   padding-block-start: var(--space-sm);
-  border-block-start: 1px solid var(--color-border);
+  border-block-start: 1px solid var(--color-line);
+  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
 
@@ -1881,12 +1705,12 @@ ul {
   align-items: center;
   min-height: var(--tap-target);
   padding-inline: var(--space-2xs);
-  color: var(--color-text-inverse-muted);
+  color: var(--color-text-muted);
   font-size: var(--font-size-xs);
   text-decoration: none;
 }
 
 .site-footer__legal a:hover {
-  color: var(--color-text-inverse);
+  color: var(--color-text);
   text-decoration: underline;
 }
