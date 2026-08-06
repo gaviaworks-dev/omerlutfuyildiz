@@ -43,11 +43,15 @@ tutulur; repoda yalnızca WebP çıktılar bulunur.
 | `treatment-smile-design-720.webp` | Pexels | https://www.pexels.com/photo/dental-model-on-articulator-for-dental-lab-33748023/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 | `treatment-veneer-480.webp` | Pexels | https://www.pexels.com/photo/dental-mold-with-artificial-teeth-on-black-surface-33748062/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 | `treatment-veneer-720.webp` | Pexels | https://www.pexels.com/photo/dental-mold-with-artificial-teeth-on-black-surface-33748062/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
-| `legal-banner-768.webp` | Pexels | https://www.pexels.com/photo/detailed-dental-mold-on-black-background-33748049/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
-| `legal-banner-1440.webp` | Pexels | https://www.pexels.com/photo/detailed-dental-mold-on-black-background-33748049/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 | `cta-treatment-room-768.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 | `cta-treatment-room-1440.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 | `cta-treatment-room-1920.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `banner-kvkk-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/3.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-kvkk-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/3.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-gizlilik-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/6.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-gizlilik-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/6.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-cerez-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/4.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-cerez-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/4.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
 
 ## Değiştirilecek görseller
 
@@ -63,7 +67,6 @@ korunursa `index.html` içinde değişiklik gerekmez.
 | `treatment-implant-{480,720}.webp` | Tedavi kartı — Dental İmplant | Klinikteki implant seti ya da model |
 | `treatment-smile-design-{480,720}.webp` | Tedavi kartı — Gülüş Tasarımı | Klinikte hazırlanan alçı/mum model |
 | `treatment-veneer-{480,720}.webp` | Tedavi kartı — Diş Estetiği | Klinikte hazırlanan kaplama örnekleri |
-| `legal-banner-{768,1440}.webp` | Yasal sayfa banner'ı | Kliniğin kendi mekânından yatay, geniş bir kare |
 | `cta-treatment-room-{768,1440,1920}.webp` | Randevu CTA bandı | Kliniğin tedavi odasından geniş, yatay kare |
 
 Tedavi kartı görselleri **nesne/model/ekipman** karesidir: hasta ağzı, öncesi
