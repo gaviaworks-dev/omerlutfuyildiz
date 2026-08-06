@@ -33,7 +33,7 @@
     );
   }
 
-  /* 2. Mobil menü — aria-expanded, ESC, focus trap, dış tıklama */
+  /* 2. Mobil menü — ESC, focus trap, dış tıklama */
   function initMobileNav() {
     var header = document.querySelector('[data-header]');
     var toggle = document.querySelector('[data-nav-toggle]');
@@ -43,7 +43,7 @@
     var isOpen = false;
     var lastFocused = null;
 
-    /* offsetParent null ise öğe gizli — masaüstünde tuzağa girmesin */
+    /* Gizli öğeler tuzağa girmesin */
     function items() {
       return slice(nav.querySelectorAll(FOCUSABLE)).filter(function (el) {
         return el.offsetParent !== null;
@@ -60,12 +60,11 @@
       document.body.classList.toggle('is-nav-open', open);
 
       if (open) {
-        /* Safari'de buton tıklamayla odak almaz; body'yi saklamak yerine
-           toggle'a düşülür ki ESC sonrası odak kaybolmasın. */
+        /* Safari'de buton tıklamayla odak almaz; body yerine toggle
+           saklanır ki ESC sonrası odak kaybolmasın. */
         var prev = document.activeElement;
         lastFocused = prev && prev !== document.body ? prev : toggle;
-        /* Panel bu anda açık; görünürlük filtresi geçiş sırasında boş
-           dönebildiği için ilk bağlantı doğrudan seçilir. */
+        /* Görünürlük filtresi geçiş sırasında boş dönebilir */
         var first = nav.querySelector(FOCUSABLE);
         if (first) first.focus();
       } else if (returnFocus) {
@@ -213,7 +212,7 @@
     });
   }
 
-  /* 5. Bölüm girişi — fade-up. JS yoksa içerik zaten görünür kalır. */
+  /* 5. Bölüm girişi — fade-up. JS yoksa içerik görünür kalır. */
   function initReveal() {
     var items = slice(document.querySelectorAll('[data-reveal]'));
     if (!items.length) return;
@@ -245,6 +244,44 @@
     });
   }
 
+  /* 6. Çerez bildirimi. Depolama kapalıysa okuma 'unavailable' döner:
+     bildirim gösterilmez, hata da atmaz. */
+  function initCookieNotice() {
+    var notice = document.querySelector('[data-cookie]');
+    var accept = document.querySelector('[data-cookie-accept]');
+    if (!notice || !accept) return;
+
+    var KEY = 'omerlutfuyildiz:cookie-consent';
+
+    function read() {
+      try {
+        return window.localStorage.getItem(KEY);
+      } catch (error) {
+        return 'unavailable';
+      }
+    }
+
+    function applyOffset() {
+      document.body.style.paddingBottom = notice.offsetHeight + 'px';
+    }
+
+    if (read()) return;
+
+    notice.hidden = false;
+    applyOffset();
+    window.addEventListener('resize', applyOffset);
+
+    accept.addEventListener('click', function () {
+      try {
+        window.localStorage.setItem(KEY, 'accepted');
+      } catch (error) {
+        /* Depolama yoksa bildirim yalnızca bu oturumda kapanır. */
+      }
+      notice.hidden = true;
+      document.body.style.paddingBottom = '';
+    });
+  }
+
   function init() {
     document.documentElement.classList.add('js');
     initHeaderState();
@@ -252,6 +289,7 @@
     initAccordion();
     initScrollSpy();
     initReveal();
+    initCookieNotice();
   }
 
   if (document.readyState === 'loading') {
