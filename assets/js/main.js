@@ -161,7 +161,9 @@
     });
   }
 
-  /* 4. Aktif menü maddesi — en çok görünen bölüm kazanır */
+  /* 4. Aktif menü maddesi — en çok görünen bölüm kazanır.
+     Nav'da "Anasayfa" maddesi yok (yazmarka onun görevini üstlendi), bu
+     yüzden hero ekrandayken hiçbir madde aktif değildir. */
   function initScrollSpy() {
     if (!('IntersectionObserver' in window)) return;
 
@@ -197,12 +199,10 @@
             bestId = section.id;
           }
         });
-        if (!bestId) return;
-
         links.forEach(function (link) {
           link.removeAttribute('aria-current');
         });
-        byId[bestId].setAttribute('aria-current', 'true');
+        if (bestId) byId[bestId].setAttribute('aria-current', 'true');
       },
       { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
