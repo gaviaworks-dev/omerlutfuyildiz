@@ -244,18 +244,23 @@
     });
   }
 
-  /* 6. Çerez bildirimi. Depolama kapalıysa okuma 'unavailable' döner:
-     bildirim gösterilmez, hata da atmaz. */
+  /* 6. Çerez bildirimi. Kabul kalıcı (localStorage), ret kalıcı değil
+     (sessionStorage) — reddeden kullanıcının cihazında iz bırakmamak için.
+     Depolama kapalıysa okuma 'unavailable' döner: bildirim gösterilmez,
+     hata da atmaz. */
   function initCookieNotice() {
     var notice = document.querySelector('[data-cookie]');
     var accept = document.querySelector('[data-cookie-accept]');
-    if (!notice || !accept) return;
+    var reject = document.querySelector('[data-cookie-reject]');
+    if (!notice || !accept || !reject) return;
 
     var KEY = 'omerlutfuyildiz:cookie-consent';
 
     function read() {
       try {
-        return window.localStorage.getItem(KEY);
+        return (
+          window.localStorage.getItem(KEY) || window.sessionStorage.getItem(KEY)
+        );
       } catch (error) {
         return 'unavailable';
       }
@@ -271,14 +276,26 @@
     applyOffset();
     window.addEventListener('resize', applyOffset);
 
-    accept.addEventListener('click', function () {
+    /* Depolamaya erişimin kendisi de hata atabilir (tarayıcı ayarı),
+       bu yüzden seçim try içinde yapılır. */
+    function close(kind, value) {
       try {
-        window.localStorage.setItem(KEY, 'accepted');
+        var store =
+          kind === 'local' ? window.localStorage : window.sessionStorage;
+        store.setItem(KEY, value);
       } catch (error) {
-        /* Depolama yoksa bildirim yalnızca bu oturumda kapanır. */
+        /* Depolama yoksa bildirim yalnızca bu sayfada kapanır. */
       }
       notice.hidden = true;
       document.body.style.paddingBottom = '';
+    }
+
+    accept.addEventListener('click', function () {
+      close('local', 'accepted');
+    });
+
+    reject.addEventListener('click', function () {
+      close('session', 'rejected');
     });
   }
 

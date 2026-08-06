@@ -1660,13 +1660,20 @@ html.js
   font-size: var(--font-size-sm);
 }
 
-.cookie__accept {
+.cookie__actions {
+  display: flex;
   flex-shrink: 0;
-  min-width: 11rem;
+  gap: var(--space-2xs);
 }
 
+.cookie__button {
+  min-width: 8rem;
+}
+
+/* Dar ekranda iki buton alt alta ve tam genişlik */
 @media (max-width: 29.999rem) {
-  .cookie__accept {
+  .cookie__actions {
+    flex-direction: column;
     width: 100%;
   }
 }

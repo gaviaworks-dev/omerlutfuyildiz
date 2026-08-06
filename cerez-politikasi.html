@@ -129,24 +129,28 @@
 
             <h2 class="article__heading">Bu Sitede Kullanılanlar</h2>
             <p>
-              Bu sitede <strong>çerez kullanılmamaktadır</strong>. Yalnızca tek
-              bir kayıt tutulur ve bu da çerez değil, tarayıcınızın yerel
-              depolamasındaki bir kayıttır:
+              Bu sitede <strong>çerez kullanılmamaktadır</strong>. Yalnızca
+              bildirimdeki tercihiniz kaydedilir ve bu da çerez değil,
+              tarayıcınızın depolamasındaki bir kayıttır. Hangi düğmeye
+              bastığınıza göre iki farklı durum oluşur:
             </p>
             <div class="table-wrap">
               <table class="legal-table">
-                <caption class="visually-hidden">Sitede kullanılan yerel depolama kaydı</caption>
+                <caption class="visually-hidden">Sitede kullanılan depolama kayıtları</caption>
                 <tbody>
-                  <tr><th scope="row">Kayıt adı</th><td><code>omerlutfuyildiz:cookie-consent</code></td></tr>
-                  <tr><th scope="row">Türü</th><td>Yerel depolama (localStorage)</td></tr>
-                  <tr><th scope="row">Amacı</th><td>Çerez bildirimini kapattığınızı hatırlamak</td></tr>
-                  <tr><th scope="row">İçeriği</th><td>Yalnızca "accepted" değeri</td></tr>
-                  <tr><th scope="row">Oluşma anı</th><td>Siz "Kabul Ediyorum" düğmesine bastığınızda</td></tr>
-                  <tr><th scope="row">Süresi</th><td>Siz tarayıcı verilerinizi silene kadar</td></tr>
+                  <tr><th scope="row">Kayıt adı</th><td><code>omerlutfuyildiz:cookie-consent</code> (her iki durumda da aynı)</td></tr>
+                  <tr><th scope="row">"Kabul Ediyorum"</th><td>Yerel depolamaya (localStorage) "accepted" değeri yazılır; siz tarayıcı verilerinizi silene kadar kalır ve bildirim bir daha görünmez</td></tr>
+                  <tr><th scope="row">"Reddet"</th><td>Oturum depolamasına (sessionStorage) "rejected" değeri yazılır; <strong>tarayıcıyı kapattığınızda kendiliğinden silinir</strong>, cihazınızda kalıcı iz bırakmaz</td></tr>
+                  <tr><th scope="row">Amacı</th><td>Bildirimi kapattığınızı hatırlamak — başka hiçbir amaç yok</td></tr>
                   <tr><th scope="row">Kliniğe iletilir mi?</th><td>Hayır, cihazınızdan çıkmaz</td></tr>
                 </tbody>
               </table>
             </div>
+            <p>
+              Reddetmeniz sitenin hiçbir özelliğini kapatmaz: zaten izleme
+              yapılmadığı için reddedilecek bir izleme aracı yoktur. Fark
+              yalnızca tercihinizin ne kadar süre hatırlanacağıdır.
+            </p>
             <p>
               Bu sitede <strong>analitik çerezi, reklam çerezi, sosyal medya
               izleme pikseli ve profilleme aracı bulunmaz</strong>. Ziyaretçi
@@ -276,20 +280,30 @@
         <div>
           <p class="cookie__title" id="cookie-title">Çerez bilgilendirmesi</p>
           <p class="cookie__text" id="cookie-text">
-            Bu sitede analitik ve reklam çerezi kullanılmaz. Yalnızca bu
-            bildirimi bir daha göstermemek için tercihiniz tarayıcınızın yerel
-            depolamasında saklanır. Ayrıntı için
-            <a href="cerez-politikasi.html">Çerez Politikası</a> sayfasına
+            Bu sitede analitik ve reklam çerezi kullanılmaz. Kabul ederseniz
+            bu bildirimi bir daha göstermemek için tercihiniz tarayıcınızın
+            yerel depolamasında saklanır; reddederseniz kalıcı hiçbir kayıt
+            tutulmaz, bildirim yalnızca bu oturum boyunca gizlenir. Ayrıntı
+            için <a href="cerez-politikasi.html">Çerez Politikası</a> sayfasına
             bakabilirsiniz.
           </p>
         </div>
-        <button
-          class="button button--primary cookie__accept"
-          type="button"
-          data-cookie-accept
-        >
-          Kabul Ediyorum
-        </button>
+        <div class="cookie__actions">
+          <button
+            class="button button--outline cookie__button"
+            type="button"
+            data-cookie-reject
+          >
+            Reddet
+          </button>
+          <button
+            class="button button--primary cookie__button"
+            type="button"
+            data-cookie-accept
+          >
+            Kabul Ediyorum
+          </button>
+        </div>
       </div>
     </div>
 

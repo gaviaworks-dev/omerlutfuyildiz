@@ -807,20 +807,30 @@
         <div>
           <p class="cookie__title" id="cookie-title">Çerez bilgilendirmesi</p>
           <p class="cookie__text" id="cookie-text">
-            Bu sitede analitik ve reklam çerezi kullanılmaz. Yalnızca bu
-            bildirimi bir daha göstermemek için tercihiniz tarayıcınızın yerel
-            depolamasında saklanır. Ayrıntı için
-            <a href="cerez-politikasi.html">Çerez Politikası</a> sayfasına
+            Bu sitede analitik ve reklam çerezi kullanılmaz. Kabul ederseniz
+            bu bildirimi bir daha göstermemek için tercihiniz tarayıcınızın
+            yerel depolamasında saklanır; reddederseniz kalıcı hiçbir kayıt
+            tutulmaz, bildirim yalnızca bu oturum boyunca gizlenir. Ayrıntı
+            için <a href="cerez-politikasi.html">Çerez Politikası</a> sayfasına
             bakabilirsiniz.
           </p>
         </div>
-        <button
-          class="button button--primary cookie__accept"
-          type="button"
-          data-cookie-accept
-        >
-          Kabul Ediyorum
-        </button>
+        <div class="cookie__actions">
+          <button
+            class="button button--outline cookie__button"
+            type="button"
+            data-cookie-reject
+          >
+            Reddet
+          </button>
+          <button
+            class="button button--primary cookie__button"
+            type="button"
+            data-cookie-accept
+          >
+            Kabul Ediyorum
+          </button>
+        </div>
       </div>
     </div>
 
