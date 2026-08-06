@@ -93,14 +93,26 @@ için taşma sayılmaz — prob bunu `closest('[data-slider-track]')` ile eler.
 ## 5. Deploy
 
 ```
-git push origin main          # .github/workflows/pages.yml çalışır
+git push origin main          # legacy (branch) build kendiliğinden çalışır
 ```
 
-Yayın **legacy (branch) build değil**, `actions/deploy-pages` ile yapılır.
-Faz 12'de geçildi: legacy `pages-build-deployment` çalışmaları kilitlendi,
-build her seferinde başarılıyken deploy adımı `deployment_queued` durumunda
-10 dakika bekleyip zaman aşımına düştü; iki çalışma GitHub'ın kendisinin bile
-iptal edemediği bir duruma girip deployment kilidini tuttu.
+Faz 12'de bu akış bir saat boyunca kilitlendi: build her seferinde
+başarılıyken deploy adımı `deployment_queued` durumunda 10 dakika bekleyip
+zaman aşımına düştü, iki çalışma GitHub'ın kendisinin bile iptal edemediği
+bir duruma girip deployment kilidini tuttu, Pages API sitenin durumunu
+`errored` gösterdi. `actions/deploy-pages` ile modern yola geçmek de
+çözmedi — aynı kuyrukta bekledi.
+
+**Çözen tek şey:** Pages sitesini silip yeniden kurmak.
+
+```
+gh api -X DELETE repos/gaviaworks-dev/omerlutfuyildiz/pages
+gh api -X POST   repos/gaviaworks-dev/omerlutfuyildiz/pages \
+  -f "source[branch]=main" -f "source[path]=/"
+```
+
+Site aynı adresle geri gelir, durum `errored` yerine `building` olur.
+Silme ile yeniden kurma arasında adres kısa süre 404 verir.
 
 **Tuzaklar — sırayla yaşandı:**
 
