@@ -106,6 +106,14 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   bu başlıkların stok karşılıkları öncesi/sonrası ve hasta ağzı görselleri.
 - **Sosyal medya hesabı** doğrulanmadı; mevcut sitedeki ikonların href'i boştu,
   footer'a konmadı.
+- **Şirket künyesi eksik.** Ticaret unvanı, VKN, MERSİS ve KEP adresi
+  bilinmiyor; `kvkk.html` içindeki tek künye tablosunda `—` olarak duruyor.
+  Bilgi gelince yalnızca o tablo güncellenecek — diğer iki yasal sayfa bu
+  tabloya link veriyor, veri tekrarı yok.
+- **Yasal metinler hukukçu onayından geçmedi.** KVKK, Gizlilik ve Çerez
+  metinleri sitenin gerçek işleyişine göre yazıldı (form yok, analitik yok,
+  reklam çerezi yok, gömülü üçüncü taraf içerik yok, sağlık verisi
+  toplanmıyor) ancak **yayına alınmadan önce avukat incelemesi gerekir**.
 
 ### Verilen kararlar (gözden geçirilecek)
 
@@ -154,3 +162,16 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 - **KARAR:** Alt çizgiyle başlayan kök dosyalar (`_*`) `.gitignore`'da.
   *Gerekçe:* ölçüm ve ekran görüntüsü araçları; public Pages adresinde
   durmamalı. *Gözden geçirilecek:* hayır.
+
+- **KARAR:** JS bütçesi 8 KB'den 9.03 KB'ye çıktı (ham). *Gerekçe:* çerez
+  bildirimi sonradan istendi; bütçeye sığdırmanın tek yolu scrollspy'ı
+  (`aria-current`) silmek ya da yorumları tamamen boşaltmaktı. İkisi de
+  çalışan bir a11y davranışını veya okunabilirliği feda ediyordu. Dosya
+  minify edilmiyor; GitHub Pages gzip ile servis ettiği için hat üzerindeki
+  boyut **2.70 KB**. *Gözden geçirilecek:* bütçe ham dosya yerine gzip
+  üzerinden tanımlanabilir.
+
+- **KARAR:** Yasal sayfaların banner'ında fotoğraf kullanılmadı; marka
+  renginden dokulu bir blok kuruldu. *Gerekçe:* kliniğin sınırlı sayıdaki
+  gerçek fotoğrafını hukuki metin başlığına harcamamak ve yeni stok görsel
+  eklememek. *Gözden geçirilecek:* hayır.
