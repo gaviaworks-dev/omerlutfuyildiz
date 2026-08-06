@@ -980,6 +980,10 @@ ul {
 }
 
 .treatment-card {
+  /* İkon kutusu ölçüsü tek yerde: hem kutu hem başlığın hizalama yüksekliği
+     bu değeri kullanır. */
+  --icon-box: 2.5rem;
+
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
@@ -1006,11 +1010,22 @@ ul {
   border-radius: var(--radius-lg);
 }
 
+/* İkon başlığın solunda, aynı satırda. Başlık iki satıra düşerse ikon
+   yukarıda hizalı kalır: satır flex-start ile hizalanır, başlık ise kendi
+   içinde ikon kutusu yüksekliğinde dikey ortalanır. Tek satırlık başlık
+   ikonla ortalanmış görünür, iki satırlık başlık üstten hizalanır. */
+.treatment-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
 .treatment-card__icon-box {
   display: grid;
+  flex-shrink: 0;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: var(--icon-box);
+  height: var(--icon-box);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
 }
@@ -1027,6 +1042,9 @@ ul {
 }
 
 .treatment-card__title {
+  display: flex;
+  align-items: center;
+  min-height: var(--icon-box);
   font-size: var(--font-size-lg);
 }
 
