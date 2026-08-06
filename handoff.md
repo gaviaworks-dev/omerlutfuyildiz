@@ -17,9 +17,9 @@ Tek sayfa (`index.html`) + üç yasal sayfa. Faz 0–12 bitti.
 | Sayfa | Durum |
 |---|---|
 | `index.html` | Hero · Hakkımda · Tedaviler (slider) · Klinik · Tedavi Süreci · Randevu CTA · İletişim |
-| `kvkk.html` · `gizlilik-politikasi.html` · `cerez-politikasi.html` | Yasal metinler, açık gri başlık bandı |
+| `kvkk.html` · `gizlilik-politikasi.html` · `cerez-politikasi.html` | Yasal metinler, kendi fotoğraflı banner'ları |
 
-**Varlıklar:** 37 WebP (~932 KB, 9'u Faz 12'den beri kullanılmıyor),
+**Varlıklar:** 37 WebP (~932 KB, 3'ü Faz 12'den beri kullanılmıyor),
 4 woff2 (88 KB), `main.css` 39.4 KB, `main.js` 10.6 KB (gzip 3.2 KB),
 `tokens.css` 8.4 KB.
 
@@ -43,9 +43,10 @@ Tedavi Süreci bg · Randevu CTA alt · İletişim bg · footer alt
 **Yeni bir bölüm eklerken:** komşusunun tersini ver — `.section--bg` ya da
 `.section--bg-alt`. Başka zemin sınıfı yok, üretilmesi de istenmiyor.
 
-**Tek koyu yüzey hero overlay'i.** Tabanı siyah değil nötr koyu gri
-(42 45 50) — sayfanın kendi metin tonu. Overlay üzerindeki beyaz metin,
-karartılmış fotoğrafın gerçek pikselleri üzerinde 8.52:1, %72 muted 5.36:1.
+**Koyu yüzey yalnızca fotoğraf üstünde:** hero ve yasal sayfa banner'ı.
+İkisinin de overlay tabanı siyah değil nötr koyu gri (42 45 50) — sayfanın
+kendi metin tonu. Gerçek pikseller üzerinde ölçüldü: hero beyaz 8.52:1 /
+%72 muted 5.36:1, banner beyaz 6.63:1 / %86 eyebrow 5.43:1.
 
 ---
 
@@ -120,9 +121,9 @@ silinen varlıklar 404.
 | 7 | **Sosyal medya** doğrulanmadı | Eski sitedeki 4 ikonun href'i boştu |
 | 8 | **İletişim formu yok** | `email.php` Pages'te çalışmaz; harici servis onay ister |
 
-Klinik galerisi, Hakkımda ve Tedavi Süreci görselleri **müşterinin kendi
-fotoğrafları** — kalıcı. Yasal sayfa banner'ları Faz 12'de kaldırıldı;
-dosyalar `KULLANILMIYOR` olarak repoda duruyor.
+Klinik galerisi, Hakkımda, Tedavi Süreci görselleri ve yasal sayfa
+banner'ları **müşterinin kendi fotoğrafları** — kalıcı, değişmesi
+gerekmiyor.
 
 ---
 
@@ -133,9 +134,9 @@ dosyalar `KULLANILMIYOR` olarak repoda duruyor.
   yorumları boşaltmaktı; ikisi de çalışan bir şeyi feda ediyordu. Kütüphane
   kullanılmadı, kaydırma tamamen CSS. **Gzip'li 3.1 KB** — bütçenin gzip
   üzerinden tanımlanması öneriliyor.
-- **Dokuz görsel kullanılmıyor** (`cta-treatment-room-*`, `banner-*`).
-  Faz 12'de CTA bandı ve yasal banner'lar fotoğrafsız kurgulandı. Dosyalar
-  silinmedi; karar netleşince ya geri konur ya silinir.
+- **Üç görsel kullanılmıyor** (`cta-treatment-room-*`). Faz 12'de CTA bandı
+  fotoğrafsız kurgulandı. Dosyalar silinmedi; bant tekrar fotoğraflı
+  istenirse hazırlar.
 - **Hero görseli export'ta karartıldı** (0.45). Overlay'i ağırlaştırmak
   fotoğrafı tamamen yutuyordu. Alfaları düşürecek olan, karartmayı da
   birlikte gözden geçirmeli — ikisi tek sistem.

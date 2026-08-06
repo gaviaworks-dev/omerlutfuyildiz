@@ -108,9 +108,8 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 - **Stok görseller müşterinin gerçek klinik fotoğraflarıyla değişecek.**
   Değişecek dosyaların listesi `assets/img/CREDITS.md` içinde, Durum sütunu
   "GEÇİCİ — değişecek" olan satırlar.
-- **Dokuz görsel Faz 12'den beri kullanılmıyor** (`cta-treatment-room-*`,
-  `banner-*`). Silinmediler; CTA bandına ya da yasal banner'lara fotoğraf
-  geri istenirse hazırlar. Karar verilince ya kullanılacak ya silinecek.
+- **Üç görsel Faz 12'den beri kullanılmıyor** (`cta-treatment-room-*`).
+  Silinmediler; CTA bandına fotoğraf geri istenirse hazırlar.
 - **Logo dosyası müşteriden istenecek**; şimdilik tipografik yazmarka
   (Poppins, "Yıldız" turkuaz aksanlı).
 - **Çalışma saatleri bilgisi yok**, İletişim bölümünde konmadı.
@@ -134,12 +133,14 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 
 ### Verilen kararlar (gözden geçirilecek)
 
-- **KARAR (Faz 12):** Yasal sayfa banner'larından fotoğraf kaldırıldı; banner
-  açık gri bant oldu. *Gerekçe:* "hero tek istisna" talimatı. Fotoğraf +
-  koyu overlay, hero ile aynı kurgu olduğu için tartışmalıydı; talimatın
-  lafzı tek istisna dediği için banner'lar açığa çekildi. `banner-*.webp`
-  dosyaları repoda duruyor, geri istenirse tek commit'lik iş.
-  *Gözden geçirilecek:* evet.
+- **KARAR (Faz 12):** Yasal sayfa banner'ları **fotoğraflı kalır.** Bir ara
+  "hero tek istisna" talimatı lafzen okunup banner'lar açık gri banda
+  çevrildi; müşteri bunu reddetti, fotoğraflar geri kondu. Banner hero ile
+  aynı kurgudur: kliniğin kendi mekân fotoğrafı + nötr koyu gri overlay.
+  Overlay `--overlay-banner` token'ında, alfalar üç görselin gerçek
+  pikselleri üzerinde ölçüldü (beyaz başlık 6.63:1, %86 eyebrow 5.43:1).
+  Eyebrow %72 yerine %86 beyaz — %72 bu görsellerde 4.37:1'de kalıyordu.
+  *Gözden geçirilecek:* hayır.
 
 - **KARAR (Faz 12):** Randevu CTA bandındaki fotoğraf ve doku katmanı
   kaldırıldı. *Gerekçe:* talimatta "Randevu CTA → #f5f5f5" açıkça yazıyordu;
@@ -233,7 +234,7 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 
 - ~~**KARAR:** Yasal sayfaların banner'ında fotoğraf kullanılmadı; marka
   renginden dokulu bir blok kuruldu.~~ — Faz 11'de fotoğraflı banner'a
-  dönüldü, Faz 12'de banner tamamen açık gri bant oldu. Geçersiz.
+  dönüldü. Geçersiz.
 
 - **KARAR (Faz 10):** Turkuaz kart ikonu dolguları kaldırıldı; ikonlar yüzey
   rengiyle çizilen çizgi ikon oldu. *Gerekçe:* turkuaz geniş yüzeyden
@@ -256,5 +257,4 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   *Gözden geçirilecek:* bütçe gzip üzerinden tanımlanmalı.
 
 - ~~**KARAR (Faz 11):** Yasal sayfa banner'ında üç sayfa için tek görsel.~~ —
-  sonra her sayfaya kendi görseli verildi, Faz 12'de banner fotoğrafları
-  tamamen kaldırıldı. Geçersiz.
+  sonra her sayfaya kendi görseli verildi. Geçersiz.

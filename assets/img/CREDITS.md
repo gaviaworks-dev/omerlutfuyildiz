@@ -48,12 +48,12 @@ tutulur; repoda yalnızca WebP çıktılar bulunur.
 | `cta-treatment-room-768.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | KULLANILMIYOR (Faz 12) — eski durum: GEÇİCİ — değişecek |
 | `cta-treatment-room-1440.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | KULLANILMIYOR (Faz 12) — eski durum: GEÇİCİ — değişecek |
 | `cta-treatment-room-1920.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | KULLANILMIYOR (Faz 12) — eski durum: GEÇİCİ — değişecek |
-| `banner-kvkk-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/3.jpg | — | müşteriye ait | KULLANILMIYOR (Faz 12) — eski durum: MÜŞTERİ GÖRSELİ |
-| `banner-kvkk-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/3.jpg | — | müşteriye ait | KULLANILMIYOR (Faz 12) — eski durum: MÜŞTERİ GÖRSELİ |
-| `banner-gizlilik-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/6.jpg | — | müşteriye ait | KULLANILMIYOR (Faz 12) — eski durum: MÜŞTERİ GÖRSELİ |
-| `banner-gizlilik-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/6.jpg | — | müşteriye ait | KULLANILMIYOR (Faz 12) — eski durum: MÜŞTERİ GÖRSELİ |
-| `banner-cerez-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/4.jpg | — | müşteriye ait | KULLANILMIYOR (Faz 12) — eski durum: MÜŞTERİ GÖRSELİ |
-| `banner-cerez-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/4.jpg | — | müşteriye ait | KULLANILMIYOR (Faz 12) — eski durum: MÜŞTERİ GÖRSELİ |
+| `banner-kvkk-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/3.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-kvkk-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/3.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-gizlilik-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/6.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-gizlilik-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/6.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-cerez-500.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/4.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `banner-cerez-1000.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/4.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
 
 ## Değiştirilecek görseller
 
@@ -79,7 +79,6 @@ geçerlidir.
 | Dosya | Neden kullanılmadı |
 |---|---|
 | `cta-treatment-room-{768,1440,1920}.webp` | Faz 12'de Randevu CTA bandı açık gri zemine geçti, fotoğraf ve koyu katman kaldırıldı. Dosyalar bant tekrar fotoğraflı istenirse duruyor. |
-| `banner-{kvkk,gizlilik,cerez}-{500,1000}.webp` | Faz 12'de yasal sayfa banner'ları açık gri banda dönüştü. Kliniğin kendi fotoğrafları, silinmedi. |
 | `images/misc/3a.jpg` | Resepsiyon aynasında bulanık insan yansıması var. Aynı salon `portfolio-2/4` ve `portfolio-2/6` görsellerinde insansız mevcut. |
 | `images/background/3.jpg` | Kliniğin gerçek bekleme salonu, 1920x1080. Hero'da "otel lobisi" okuduğu için kullanılmadı; aynı mekân `clinic-lounge` olarak aydınlık ve daha net hâliyle yayında. |
 
