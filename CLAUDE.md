@@ -18,19 +18,28 @@ renk/metin/görsel DEĞİL)
 - `main.css` içinde ham hex / ham px spacing / ham gölge YASAK.
 - Inline style YASAK.
 
-### Palet (mevcut siteden korundu)
+### Palet — hibrit koyu (Faz 10)
 | Token | Değer | Kullanım |
 |---|---|---|
-| `--color-primary` | `#10afa0` | Dolgu, ikon, buton zemini. **Metin için kullanılmaz** |
-| `--color-primary-text` | `#0b7c71` | Beyaz üstünde metin/link (AA 5.1:1) |
-| `--color-primary-dark` | `#0c8a7e` | Hover, koyu turkuaz blok |
-| `--color-primary-deep` | `#08635a` | Hero overlay tabanı |
-| `--color-ink` | `#2b313f` | Başlık, koyu bölüm zemini |
-| `--color-ink-soft` | `#35404e` | Footer zemini |
-| `--color-text` | `#515c6a` | Gövde metni |
-| `--color-surface` | `#f6f6f6` | Bölüm arka planı |
-| `--color-surface-alt` | `#eef8f7` | Turkuaz tonlu açık zemin |
-| `--color-border` | `#e3e8eb` | Ayırıcı |
+| `--color-ink` | `#15171a` | Kömür siyahı — ana koyu zemin |
+| `--color-ink-soft` | `#1c1f23` | Koyu zeminde kart/ayrım yüzeyi |
+| `--color-ink-line` | `rgb(255 255 255 / .12)` | Koyu zeminde ayırıcı |
+| `--color-text` | `#2a2d32` | Açık bölümlerde gövde metni |
+| `--color-text-inverse` | `#ffffff` | Koyu zeminde metin |
+| `--color-text-inverse-muted` | `rgb(255 255 255 / .72)` | Koyu zeminde ikincil metin |
+| `--color-primary` | `#10afa0` | **KISILDI.** Yalnızca aktif nav çizgisi, odak halkası, akordeon +, hover, eyebrow çizgisi. Koyu zeminde metin olabilir (6.55:1), açık zeminde olamaz (2.74:1) |
+| `--color-primary-text` | `#0b7c71` | Açık zeminde turkuaz metin gerekirse (5.08:1) |
+| `--color-surface` | `#f6f6f6` | Açık bölüm zemini |
+| `--color-surface-alt` | `#eef8f7` | Açık turkuaz tonlu zemin |
+
+**Koyu bölümler:** header, hero, Hakkımda, Tedavi Süreci, Randevu CTA, footer,
+çerez bildirimi. **Açık bölümler:** Tedaviler, Klinik, İletişim ve üç yasal
+sayfanın gövdesi.
+
+Yüzeye göre değişen değerler `.section--dark` üzerindeki lokal token'larla
+verilir (`--surface-fg`, `--surface-heading`, `--surface-line`,
+`--surface-card`, `--surface-icon`, `--surface-accent`); bileşen kuralları
+iki kez yazılmaz.
 
 Yeni renk eklenmez; gerekiyorsa önce sorulur.
 
@@ -70,8 +79,9 @@ kontrast ≥ 4.5:1, `prefers-reduced-motion` desteği.
 
 ## Performans
 Hero preload + `fetchpriority="high"`, diğerleri lazy, her görselde
-width/height, JS < 8 KB, 6 kırılımda yatay taşma sıfır
-(1440/1280/1024/768/390/360).
+width/height, 6 kırılımda yatay taşma sıfır (1440/1280/1024/768/390/360).
+JS bütçesi: ham dosya 8 KB'yi aşıyor (bkz. Açık işler); gzip'li boyut
+izlenir.
 
 ## Git
 Conventional Commits (İngilizce). `git add -A` ve `git add .` YASAK.
@@ -175,3 +185,28 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   renginden dokulu bir blok kuruldu. *Gerekçe:* kliniğin sınırlı sayıdaki
   gerçek fotoğrafını hukuki metin başlığına harcamamak ve yeni stok görsel
   eklememek. *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 10):** Turkuaz kart ikonu dolguları kaldırıldı; ikonlar yüzey
+  rengiyle çizilen çizgi ikon oldu. *Gerekçe:* turkuaz geniş yüzeyden
+  çekilirken 3 rem'lik dolu kutular en büyük turkuaz alan hâline geliyordu.
+  *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 10):** Kaydırınca header beyaz cam yerine kömür siyahına
+  oturuyor. *Gerekçe:* hibrit koyu kurguda açık header, altındaki koyu
+  Hakkımda bölümüyle çarpışıyordu. *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 11):** Slider sütun genişlikleri `minmax(0, %)` değil sabit
+  yüzde. *Gerekçe:* `minmax(0, …)` kartların küçülmesine izin verdiği için
+  beş kart ekrana sığıyor ve kaydırma hiç oluşmuyordu.
+  *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 11):** JS bütçesi 10.44 KB (ham), gzip'li 3.11 KB. Slider
+  eklendikçe ham dosya 8 KB hedefinden uzaklaştı. *Gerekçe:* kütüphane
+  kullanılmadı, kaydırma tamamen CSS scroll-snap; JS yalnızca ok butonlarını
+  sürüyor. Alternatif bir slider kütüphanesi en az 10 katı olurdu.
+  *Gözden geçirilecek:* bütçe gzip üzerinden tanımlanmalı.
+
+- **KARAR (Faz 11):** Yasal sayfa banner'ında üç sayfa için tek görsel.
+  *Gerekçe:* tek varlık, tutarlı görünüm, düşük yük. Dekoratif olduğu için
+  `alt=""`. *Gözden geçirilecek:* evet, müşteri kendi mekân fotoğrafını
+  verirse değişir.
