@@ -1489,3 +1489,196 @@ ul {
     width: 100%;
   }
 }
+
+/* ==========================================================================
+   16. Alt sayfa banner'ı
+   ========================================================================== */
+
+/* Yasal sayfalarda fotoğraf kullanılmaz — banner marka renginden kurulur,
+   böylece klinik görselleri hukuki metinlerin başlığına indirgenmez. */
+.page-banner {
+  position: relative;
+  display: grid;
+  align-items: end;
+  padding-block: calc(var(--header-total) + var(--space-2xl)) var(--space-xl);
+  background-color: var(--color-primary-deep);
+  color: var(--color-text-inverse);
+  isolation: isolate;
+}
+
+.page-banner__pattern {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: repeating-linear-gradient(
+      115deg,
+      rgb(255 255 255 / 0.045) 0 1px,
+      transparent 1px 26px
+    ),
+    radial-gradient(circle at 84% 20%, rgb(16 175 160 / 0.4), transparent 60%);
+}
+
+.page-banner__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-block-end: var(--space-2xs);
+  color: var(--color-text-inverse-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+}
+
+.page-banner__eyebrow::before {
+  content: '';
+  width: var(--space-md);
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-pill);
+}
+
+.page-banner__title {
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-2xl);
+}
+
+.page-banner :focus-visible {
+  outline-color: var(--color-focus-inverse);
+}
+
+/* ==========================================================================
+   17. Yasal sayfa düzeni — makale + yan panel
+   ========================================================================== */
+
+.article__grid {
+  display: grid;
+  gap: var(--space-2xl);
+}
+
+@media (min-width: 64rem) {
+  .article__grid {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    gap: var(--space-3xl);
+    align-items: start;
+  }
+}
+
+/* Grid çocuğu varsayılan olarak min-content'in altına inmez; içerideki uzun
+   bölünemez dizeler (tablodaki depolama anahtarı gibi) sütunu genişletip
+   dar ekranda taşmaya yol açıyordu. */
+.article {
+  min-width: 0;
+}
+
+.article > * + * {
+  margin-block-start: var(--space-sm);
+}
+
+.article code {
+  font-size: var(--font-size-sm);
+  overflow-wrap: anywhere;
+}
+
+.article__heading {
+  margin-block-start: var(--space-xl);
+  margin-block-end: var(--space-sm);
+  font-size: var(--font-size-xl);
+}
+
+.article > .legal-updated + .article__heading {
+  margin-block-start: 0;
+}
+
+.article ul {
+  display: grid;
+  gap: var(--space-2xs);
+  padding-inline-start: var(--space-md);
+  list-style: disc;
+}
+
+.article li::marker {
+  color: var(--color-primary);
+}
+
+.legal-updated {
+  display: inline-block;
+  padding: var(--space-3xs) var(--space-xs);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+}
+
+.table-wrap {
+  margin-block-start: var(--space-sm);
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.legal-table th,
+.legal-table td {
+  padding: var(--space-2xs) var(--space-sm);
+  text-align: start;
+  vertical-align: top;
+}
+
+.legal-table tbody tr + tr th,
+.legal-table tbody tr + tr td {
+  border-block-start: 1px solid var(--color-border);
+}
+
+.legal-table tbody th {
+  width: 12rem;
+  color: var(--color-ink);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-medium);
+}
+
+.sidebar {
+  padding: var(--space-lg) var(--space-md);
+  background-color: var(--color-surface-alt);
+  border-radius: var(--radius-xl);
+}
+
+@media (min-width: 64rem) {
+  .sidebar {
+    position: sticky;
+    inset-block-start: calc(var(--header-total) + var(--space-md));
+  }
+}
+
+.sidebar__title {
+  font-size: var(--font-size-lg);
+}
+
+.sidebar__list {
+  display: grid;
+  gap: var(--space-3xs);
+  margin-block: var(--space-sm);
+}
+
+.sidebar__list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+.sidebar__list a:hover,
+.sidebar__list a[aria-current='page'] {
+  text-decoration: underline;
+}
+
+.sidebar__note {
+  padding-block-start: var(--space-sm);
+  border-block-start: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
