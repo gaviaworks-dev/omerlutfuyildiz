@@ -36,17 +36,33 @@ Sitede **iki zemin tonu** var: `--color-bg` (#ffffff) ve `--color-bg-alt`
 (#f5f5f5). Bölümler dönüşümlü:
 
 ```
-header alt · hero (fotoğraf) · Hakkımda alt · Tedaviler bg · Klinik alt
-Tedavi Süreci bg · Randevu CTA alt · İletişim bg · footer alt
+hero (fotoğraf) · Hakkımda alt · Tedaviler bg · Klinik alt
+Tedavi Süreci bg · Randevu CTA (fotoğraf) · İletişim bg · footer alt
 ```
 
 **Yeni bir bölüm eklerken:** komşusunun tersini ver — `.section--bg` ya da
 `.section--bg-alt`. Başka zemin sınıfı yok, üretilmesi de istenmiyor.
 
-**Koyu yüzey yalnızca fotoğraf üstünde:** hero ve yasal sayfa banner'ı.
-İkisinin de overlay tabanı siyah değil nötr koyu gri (42 45 50) — sayfanın
-kendi metin tonu. Gerçek pikseller üzerinde ölçüldü: hero beyaz 8.52:1 /
-%72 muted 5.36:1, banner beyaz 6.63:1 / %86 eyebrow 5.43:1.
+**Koyu yüzey yalnızca fotoğraf üstünde:** hero, yasal sayfa banner'ı ve
+Randevu CTA bandı. Üçünün de overlay tabanı siyah değil nötr koyu gri
+(42 45 50) — sayfanın kendi metin tonu. Gerçek pikseller üzerinde ölçüldü:
+
+| Yüzey | beyaz | ikincil |
+|---|---|---|
+| hero | 8.52:1 | %72 muted 5.36:1 |
+| yasal banner | 6.63:1 | %86 eyebrow 5.43:1 |
+| CTA bandı | 8.42:1 | %72 muted 5.31:1 |
+
+**Header** sayfa başındayken şeffaf, fotoğrafın üstünde yüzer; ~40px sonra
+`alt` zemine oturur. Renk `.site-header` üzerindeki altı lokal token'dan
+yürür (`--header-bg/-fg/-fg-muted/-accent/-rule/-shadow`); `--scrolled` ve
+`--menu-open` yalnızca bu değerleri değiştirir, bileşen kuralları sabit.
+Şeffaf durum `html.js` altında tanımlı — **JS yoksa header solid kalır**,
+yoksa beyaz metin açık bölümlerin üstünde kaybolurdu.
+
+Şeffaf header bandında ölçülen: hero üstü beyaz 9.61:1 / %72 5.92:1, banner
+üstü 7.59:1 / 4.88:1. Turkuaz metin orada 2.77'ye düştüğü için "Yıldız"
+aksanı şeffaf durumda beyaza döner.
 
 ---
 

@@ -35,9 +35,20 @@ Kömür siyahı (`#15171a`, `#1c1f23`) ve türevleri paletten **tamamen
 | `--color-primary-text` | `#0b7c71` | Turkuazın metin/odak/durum varyantı: aktif nav çizgisi ve metni, odak halkası, akordeon `+`, eyebrow metni, linkler (5.08 / 4.66) |
 
 **Bölüm akışı (beyaz / açık gri dönüşümlü):**
-header `alt` · hero (fotoğraf) · Hakkımda `alt` · Tedaviler `bg` ·
-Klinik `alt` · Tedavi Süreci `bg` · Randevu CTA `alt` · İletişim `bg` ·
-footer `alt`. Yasal sayfalar: banner `alt`, gövde `bg`.
+hero (fotoğraf) · Hakkımda `alt` · Tedaviler `bg` · Klinik `alt` ·
+Tedavi Süreci `bg` · Randevu CTA (fotoğraf) · İletişim `bg` · footer `alt`.
+Yasal sayfalar: banner (fotoğraf), gövde `bg`.
+
+**Header** sayfa başındayken şeffaftır, fotoğrafın üstünde yüzer; kaydırınca
+`alt` zemine oturur. Renk `.site-header` üzerindeki `--header-bg`,
+`--header-fg`, `--header-fg-muted`, `--header-accent`, `--header-rule`,
+`--header-shadow` token'larından yürür; solid duruma geçiş yalnızca bu
+değerleri değiştirir.
+
+**Fotoğraf zeminli üç yüzey** (hero, yasal banner, CTA) tek istisnadır:
+beyaz metin için nötr koyu gri overlay taşırlar (`--overlay-hero`,
+`--overlay-banner`, `--overlay-cta`). Alfalar gerçek pikseller üzerinde
+ölçülmeden değiştirilmez.
 
 Sınıflar yalnızca `.section--bg` ve `.section--bg-alt`. Koyu bölüm kalmadığı
 için yüzeye göre değişen lokal token katmanı (`--surface-*`) kaldırıldı;
@@ -112,10 +123,12 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 - **Stok görseller müşterinin gerçek klinik fotoğraflarıyla değişecek.**
   Değişecek dosyaların listesi `assets/img/CREDITS.md` içinde, Durum sütunu
   "GEÇİCİ — değişecek" olan satırlar.
-- **Üç görsel Faz 12'den beri kullanılmıyor** (`cta-treatment-room-*`).
-  Silinmediler; CTA bandına fotoğraf geri istenirse hazırlar.
-- **Logo dosyası müşteriden istenecek**; şimdilik tipografik yazmarka
-  (Poppins, "Yıldız" turkuaz aksanlı).
+- **Monogram geçici — müşteriden gerçek logo dosyası gelince değişecek.**
+  Header ve footer'daki "Ö" monogramı inline SVG olarak çizildi (yuvarlak
+  köşeli kare + geometrik Ö); `favicon.svg` de aynı marka. Logo gelince üç
+  yerde birden değişir.
+- **Logo dosyası müşteriden istenecek**; şimdilik monogram + tipografik
+  yazmarka (Poppins, "Yıldız" turkuaz aksanlı).
 - **Çalışma saatleri bilgisi yok**, İletişim bölümünde konmadı.
 - **Tedavi süreci akordeon metinleri** mevcut sitede yok; prosedürel ve
   garantisiz yazıldı, müşteri onayı bekliyor.
@@ -146,10 +159,11 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   Eyebrow %72 yerine %86 beyaz — %72 bu görsellerde 4.37:1'de kalıyordu.
   *Gözden geçirilecek:* hayır.
 
-- **KARAR (Faz 12):** Randevu CTA bandındaki fotoğraf ve doku katmanı
-  kaldırıldı. *Gerekçe:* talimatta "Randevu CTA → #f5f5f5" açıkça yazıyordu;
-  fotoğraf + koyu katman açık gri zeminle bağdaşmıyor.
-  *Gözden geçirilecek:* hayır, talimat açık.
+- **KARAR (Faz 13):** Randevu CTA bandı **fotoğraflı kalır.** Faz 12'de açık
+  gri zemine çevrilmişti, müşteri geri istedi. Hero ve yasal banner ile aynı
+  kurgu: kliniğin tedavi odası karesi + nötr koyu gri overlay
+  (`--overlay-cta`). Gerçek pikseller üzerinde beyaz 8.42:1, %72 muted
+  5.31:1. *Gözden geçirilecek:* hayır.
 
 - **KARAR (Faz 12):** Başlık rengi ayrı bir koyu ton değil, gövde metniyle
   aynı `#2a2d32`. *Gerekçe:* siyah tamamen kalktı, daha koyu bir başlık tonu
