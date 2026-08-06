@@ -18,10 +18,11 @@ renk/metin/görsel DEĞİL)
 - `main.css` içinde ham hex / ham px spacing / ham gölge YASAK.
 - Inline style YASAK.
 
-### Palet — açık, iki zemin tonu (Faz 12)
+### Palet — açık, iki zemin tonu (Faz 12–13)
 
 Kömür siyahı (`#15171a`, `#1c1f23`) ve türevleri paletten **tamamen
-çıkarıldı**. Sitede koyu blok yoktur; tek istisna hero fotoğrafının overlay'i.
+çıkarıldı**. Sitede solid koyu blok yoktur; koyu yüzey yalnızca üç fotoğraflı
+yüzeyin overlay'idir (hero, yasal banner, Randevu CTA).
 
 | Token | Değer | Kullanım |
 |---|---|---|
@@ -29,7 +30,7 @@ Kömür siyahı (`#15171a`, `#1c1f23`) ve türevleri paletten **tamamen
 | `--color-bg-alt` | `#f5f5f5` | Açık gri zemin |
 | `--color-text` | `#2a2d32` | Gövde metni **ve** başlık (13.82 / 12.67) |
 | `--color-text-muted` | `#5a6169` | İkincil metin: spot, etiket, alt yazı, footer (6.27 / 5.75) |
-| `--color-text-inverse` | `#ffffff` | Yalnızca hero overlay'i üstünde ve koyu buton içinde |
+| `--color-text-inverse` | `#ffffff` | Fotoğraf overlay'i üstünde (hero, banner, CTA), şeffaf header ve koyu buton içinde |
 | `--color-line` | `#e6e6e6` | Tek ayırıcı çizgi rengi |
 | `--color-primary` | `#10afa0` | **KISIK ve yalnızca dekoratif dolgu:** eyebrow çizgisi, kart ikonu, madde imi, hover vurgusu, footer ayracı. Açık zeminde metin ya da durum göstergesi OLAMAZ (2.74 / 2.51) |
 | `--color-primary-text` | `#0b7c71` | Turkuazın metin/odak/durum varyantı: aktif nav çizgisi ve metni, odak halkası, akordeon `+`, eyebrow metni, linkler (5.08 / 4.66) |
@@ -93,8 +94,8 @@ kontrast ≥ 4.5:1, `prefers-reduced-motion` desteği.
 ## Performans
 Hero preload + `fetchpriority="high"`, diğerleri lazy, her görselde
 width/height, 6 kırılımda yatay taşma sıfır (1440/1280/1024/768/390/360).
-JS bütçesi: ham dosya 8 KB'yi aşıyor (bkz. Açık işler); gzip'li boyut
-izlenir.
+JS bütçesi: hedef 8 KB'di, ham dosya 10.6 KB — gzip'li 3.2 KB. Gerekçe
+KARAR listesinde; bütçenin gzip üzerinden tanımlanması öneriliyor.
 
 ## Git
 Conventional Commits (İngilizce). `git add -A` ve `git add .` YASAK.
@@ -132,7 +133,8 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 - **Çalışma saatleri bilgisi yok**, İletişim bölümünde konmadı.
 - **Tedavi süreci akordeon metinleri** mevcut sitede yok; prosedürel ve
   garantisiz yazıldı, müşteri onayı bekliyor.
-- ~~`og:image` mutlak URL'e çevrilecek~~ — yapıldı (Pages adresi).
+- ~~`og:image` mutlak URL'e çevrilecek~~ — yapıldı; **şu an Pages adresini
+  gösteriyor, gerçek alan adına taşınırken güncellenecek.**
 - **Tedavi kartı fotoğrafları stok.** Faz 11'de nesne/model/ekipman karesi
   eklendi (renk skalası, 3B model, implant, artikülatör, kaplama). Müşterinin
   kendi vaka fotoğrafları gelince değişecek — `CREDITS.md`'de "GEÇİCİ".
@@ -164,6 +166,34 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   kurgu: kliniğin tedavi odası karesi + nötr koyu gri overlay
   (`--overlay-cta`). Gerçek pikseller üzerinde beyaz 8.42:1, %72 muted
   5.31:1. *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 13):** Header sayfa başında şeffaf, ~40px sonra solid.
+  Şeffaf durum `html.js` altında tanımlı. *Gerekçe:* JS çalışmazsa
+  `--scrolled` sınıfı hiç gelmez; header sonsuza dek şeffaf kalır ve beyaz
+  metin açık bölümlerin üstünde kaybolurdu. JS yoksa header baştan solid.
+  Ayrıca hero ve banner'ın üst boşluğundan header yüksekliği çıkarıldı —
+  header yüzdüğü için boşluk iki kez sayılıyordu.
+  *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 13):** Nav'daki "Anasayfa" maddesi metin değil **ev ikonu**.
+  Faz 12'de tamamen kaldırılmıştı, o yanlıştı. Masaüstünde yalnız ikon,
+  mobil menüde ikon + metin; etiket her durumda ekran okuyucuda kalır.
+  Yasal sayfalarda `aria-current` taşımaz — orada ana sayfa açık değil.
+  *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 13):** Monogram inline SVG, geometrik "Ö" (elips + iki nokta),
+  `text` etiketi kullanılmadı. *Gerekçe:* `text` etiketi font yüklenmezse
+  başka türlü çiziliyor; geometri her yerde aynı. Tamamı `currentColor`,
+  böylece şeffaf header'da beyaz, solid header'da koyu oluyor — ikinci kural
+  gerekmiyor. `favicon.svg` aynı geometriden, turkuaz zemin + beyaz mark.
+  **Geçici**, logo gelince üç yerde birden değişir. *Gözden geçirilecek:* evet.
+
+- **KARAR (Faz 13):** Çerez bildirimindeki "Reddet" kalıcı kayıt bırakmaz:
+  kabul `localStorage`, ret `sessionStorage`. *Gerekçe:* reddeden kullanıcının
+  cihazında kalıcı iz bırakmamak. Sitede izleme aracı olmadığı için ret
+  hiçbir özelliği kapatmıyor; fark yalnızca tercihin ne kadar hatırlandığı.
+  `cerez-politikasi.html` iki durumu da tablo hâlinde anlatıyor.
+  *Gözden geçirilecek:* hayır.
 
 - **KARAR (Faz 12):** Başlık rengi ayrı bir koyu ton değil, gövde metniyle
   aynı `#2a2d32`. *Gerekçe:* siyah tamamen kalktı, daha koyu bir başlık tonu
@@ -200,14 +230,14 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   karartıldı; overlay yalnızca marka tonu veriyor.
   *Gerekçe:* orijinal parlaklıkta beyaz metni AA'da tutmak için overlay alpha
   0.88 gerekiyordu, bu da görseli tamamen yutup "diş kliniği" mesajını yok
-  ediyordu. Karartılmış dosyanın gerçek pikselleri üzerinde en kötü durum
-  5.8:1. *Gözden geçirilecek:* müşterinin kendi hero fotoğrafı gelince.
+  ediyordu. Karartılmış dosyanın gerçek pikselleri üzerinde en kötü durum,
+  Faz 12'nin nötr gri overlay'iyle beyaz metinde **8.52:1**.
+  *Gözden geçirilecek:* müşterinin kendi hero fotoğrafı gelince.
 
-- **KARAR:** Hero'daki iki buton beyaz dolgulu + beyaz kenarlıklı cam; "koyu
-  dolu + turkuaz outline" ikilisi hero'da kullanılmadı.
-  *Gerekçe:* hero overlay'i koyu turkuaz; hem `#08635a` dolgu hem `#10afa0`
-  kenarlık aynı renk ailesinden olduğu için zeminden ayrışmıyordu. İstenen
-  ikili açık zeminli bölümlerde geçerli. *Gözden geçirilecek:* evet.
+- **KARAR:** Hero'daki iki buton beyaz dolgulu + beyaz kenarlıklı şeffaf;
+  turkuaz outline hero'da kullanılmadı. *Gerekçe:* turkuaz overlay üzerinde
+  zeminden ayrışmıyordu. Faz 12'de cam dolgu tamamen kaldırıldı, ikincil
+  buton düz şeffaf oldu. *Gözden geçirilecek:* hayır.
 
 - **KARAR:** Odak halkası `#10afa0` yerine `#0b7c71`.
   *Gerekçe:* `#10afa0` beyaz üstünde 2.74:1; WCAG 1.4.11'in UI bileşeni için
@@ -222,10 +252,10 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   ifadeleri çıkarıldı. *Gerekçe:* hiçbir kaynakta doğrulanmıyor.
   *Gözden geçirilecek:* müşteri doğrularsa eklenebilir.
 
-- **KARAR:** Tedavi kartları fotoğrafsız, ikon + metin.
-  *Gerekçe:* bu başlıkların stok karşılıkları neredeyse tamamen öncesi/sonrası
-  ve hasta ağzı görselleri; görsel politikası bunları yasaklıyor.
-  *Gözden geçirilecek:* müşterinin kendi vaka fotoğrafları gelirse.
+- ~~**KARAR:** Tedavi kartları fotoğrafsız, ikon + metin.~~ — Faz 11'de
+  **nesne/model/ekipman** karesi bulunup eklendi (renk skalası, 3B model,
+  implant, artikülatör, kaplama). Kuralın kendisi geçerli: öncesi/sonrası ve
+  hasta ağzı görseli hiçbir koşulda konmaz.
 
 - **KARAR:** `background/3.jpg` (kliniğin gerçek bekleme salonu) hero'da
   kullanılmadı. *Gerekçe:* "otel lobisi" okuyor, ilk ekranda diş hekimliği
@@ -242,7 +272,8 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   *Gerekçe:* ölçüm ve ekran görüntüsü araçları; public Pages adresinde
   durmamalı. *Gözden geçirilecek:* hayır.
 
-- **KARAR:** JS bütçesi 8 KB'den 9.03 KB'ye çıktı (ham). *Gerekçe:* çerez
+- **KARAR (Faz 11'de aşıldı, aşağıya bakınız):** JS bütçesi 8 KB'den
+  9.03 KB'ye çıktı (ham). *Gerekçe:* çerez
   bildirimi sonradan istendi; bütçeye sığdırmanın tek yolu scrollspy'ı
   (`aria-current`) silmek ya da yorumları tamamen boşaltmaktı. İkisi de
   çalışan bir a11y davranışını veya okunabilirliği feda ediyordu. Dosya
@@ -254,14 +285,15 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   renginden dokulu bir blok kuruldu.~~ — Faz 11'de fotoğraflı banner'a
   dönüldü. Geçersiz.
 
-- **KARAR (Faz 10):** Turkuaz kart ikonu dolguları kaldırıldı; ikonlar yüzey
-  rengiyle çizilen çizgi ikon oldu. *Gerekçe:* turkuaz geniş yüzeyden
-  çekilirken 3 rem'lik dolu kutular en büyük turkuaz alan hâline geliyordu.
+- **KARAR (Faz 10, Faz 12'de güncellendi):** Turkuaz kart ikonu **dolguları**
+  kaldırıldı — 3 rem'lik dolu kutular turkuazı geniş yüzeye taşıyordu. İkonlar
+  çizgi ikon; Faz 12'de çizgi rengi `--color-primary` oldu (dekoratif, yanında
+  aynı bilgiyi taşıyan başlık var). Dolu turkuaz kutu geri gelmez.
   *Gözden geçirilecek:* hayır.
 
-- **KARAR (Faz 10):** Kaydırınca header beyaz cam yerine kömür siyahına
-  oturuyor. *Gerekçe:* hibrit koyu kurguda açık header, altındaki koyu
-  Hakkımda bölümüyle çarpışıyordu. *Gözden geçirilecek:* hayır.
+- ~~**KARAR (Faz 10):** Kaydırınca header beyaz cam yerine kömür siyahına
+  oturuyor.~~ — Faz 12'de siyah kalktı, Faz 13'te header sayfa başında şeffaf
+  olup kaydırınca `--color-bg-alt`'a oturur oldu. Geçersiz.
 
 - **KARAR (Faz 11):** Slider sütun genişlikleri `minmax(0, %)` değil sabit
   yüzde. *Gerekçe:* `minmax(0, …)` kartların küçülmesine izin verdiği için
