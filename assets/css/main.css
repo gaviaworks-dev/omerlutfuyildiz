@@ -20,7 +20,17 @@ html {
   scroll-padding-top: var(--header-total);
 }
 
+/* Yüzey lokal token'ları. Varsayılan açık zemin; .section--dark bunları
+   koyu değerlerle ezer, böylece bileşen kuralları iki kez yazılmaz. */
 body {
+  --surface-bg: var(--color-background);
+  --surface-fg: var(--color-text);
+  --surface-heading: var(--color-ink);
+  --surface-line: var(--color-border);
+  --surface-card: var(--color-background);
+  --surface-icon: var(--color-ink);
+  --surface-accent: var(--color-primary-text);
+
   margin: 0;
   background-color: var(--color-background);
   color: var(--color-text);
@@ -46,7 +56,7 @@ h2,
 h3,
 h4 {
   margin: 0;
-  color: var(--color-ink);
+  color: var(--surface-heading, var(--color-ink));
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-heading);
@@ -206,48 +216,48 @@ ul {
   stroke-linejoin: round;
 }
 
-/* Birincil — koyu turkuaz zemin, beyaz metin. Ölçülen: 7.14:1.
-   Zemin #10afa0 veya #0c8a7e YAPILMAZ (2.74:1 ve 4.24:1, AA geçmez). */
+/* Birincil — AÇIK zeminde: kömür dolgu, beyaz metin. Ölçülen 17.96:1. */
 .button--primary {
-  background-color: var(--color-primary-deep);
+  background-color: var(--color-ink);
   color: var(--color-text-inverse);
   box-shadow: var(--shadow-sm);
 }
 
 .button--primary:hover {
-  background-color: var(--color-ink);
+  background-color: var(--color-ink-soft);
   box-shadow: var(--shadow-md);
 }
 
-/* İkincil — beyaz zemin, turkuaz kenarlık, koyu turkuaz metin.
-   Metin #0b7c71 beyaz üstünde 5.08:1. Kenarlık marka turkuazı #10afa0:
-   dolgu görevi görür, metin taşımaz. */
+/* Birincil — KOYU zeminde ters çevrilir: beyaz dolgu, kömür metin. 17.96:1.
+   .section--dark ve header/hero/cta/footer içinde bu kural geçerlidir. */
+.section--dark .button--primary,
+.site-top--scrolled .button--primary,
+.hero .button--primary,
+.cta .button--primary,
+.site-footer .button--primary {
+  background-color: var(--color-text-inverse);
+  color: var(--color-ink);
+}
+
+.section--dark .button--primary:hover,
+.site-top--scrolled .button--primary:hover,
+.hero .button--primary:hover,
+.cta .button--primary:hover,
+.site-footer .button--primary:hover {
+  background-color: var(--color-surface);
+}
+
+/* İkincil — şeffaf zemin, bulunduğu yüzeyin rengine göre kenarlık ve metin.
+   Açık zeminde kömür (17.96:1), koyu zeminde beyaz (17.96:1). */
 .button--outline {
-  border-color: var(--color-primary);
-  background-color: var(--color-background);
-  color: var(--color-primary-text);
+  border-color: var(--surface-line-strong, var(--color-border-strong));
+  background-color: transparent;
+  color: var(--surface-heading, var(--color-ink));
 }
 
 .button--outline:hover {
-  border-color: var(--color-primary-deep);
-  background-color: var(--color-surface-alt);
-  color: var(--color-primary-deep);
-}
-
-/* Koyu zemin üzerinde (CTA bandı, footer) — beyaz dolgu, koyu turkuaz metin */
-.button--on-dark {
-  background-color: var(--color-background);
-  color: var(--color-primary-deep);
-  box-shadow: var(--shadow-md);
-}
-
-.button--on-dark:hover {
-  background-color: var(--color-surface-alt);
-}
-
-/* Koyu zeminde odak halkası beyaz olur */
-.button--on-dark:focus-visible {
-  outline-color: var(--color-focus-inverse);
+  border-color: var(--surface-heading, var(--color-ink));
+  background-color: var(--surface-hover, var(--color-surface));
 }
 
 /* ==========================================================================
@@ -270,14 +280,15 @@ ul {
     box-shadow var(--transition-slow) var(--ease);
 }
 
+/* Kaydırınca header kömür siyahına oturur — beyaz cam değil. */
 .site-top--scrolled,
 .site-top--menu-open {
-  --header-fg: var(--color-ink);
-  --header-rule: var(--color-border);
+  --header-fg: var(--color-text-inverse);
+  --header-rule: var(--color-ink-line);
 
-  background-color: var(--surface-glass);
-  backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: var(--shadow-sm);
+  background-color: rgb(21 23 26 / 0.94);
+  backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: var(--shadow-md);
 }
 
 .site-header {
@@ -321,10 +332,8 @@ ul {
   color: var(--color-primary);
 }
 
-.site-top:not(.site-top--scrolled):not(.site-top--menu-open)
-  .site-header__logo-accent {
-  color: var(--color-text-inverse);
-}
+/* Şeffaf header koyu fotoğraf üzerindeyken de turkuaz okunur (6.55:1),
+   bu yüzden ayrı bir beyaza dönme kuralı gerekmez. */
 
 .site-header__logo-role {
   font-size: var(--font-size-xs);
@@ -377,8 +386,8 @@ ul {
   transform: scaleX(1);
 }
 
-.site-top--scrolled .site-nav__link[aria-current='true'] {
-  color: var(--color-primary-text);
+.site-nav__link[aria-current='true'] {
+  color: var(--color-primary);
 }
 
 /* --- Sağdaki aksiyon --- */
@@ -470,8 +479,8 @@ ul {
     max-height: calc(100svh - var(--header-total));
     padding: var(--space-md) 0 var(--space-xl);
     overflow-y: auto;
-    background-color: var(--color-background);
-    border-block-end: 1px solid var(--color-border);
+    background-color: var(--color-ink);
+    border-block-end: 1px solid var(--color-ink-line);
     box-shadow: var(--shadow-lg);
     visibility: hidden;
     opacity: 0;
@@ -494,12 +503,12 @@ ul {
   }
 
   .site-nav__item + .site-nav__item {
-    border-block-start: 1px solid var(--color-border);
+    border-block-start: 1px solid var(--color-ink-line);
   }
 
   .site-nav__link {
     padding: var(--space-sm) var(--container-pad);
-    color: var(--color-ink);
+    color: var(--color-text-inverse);
     font-size: var(--font-size-lg);
   }
 
@@ -508,7 +517,7 @@ ul {
   }
 
   .site-nav__link[aria-current='true'] {
-    color: var(--color-primary-text);
+    color: var(--color-primary);
   }
 
   .site-header__cta {
@@ -738,6 +747,27 @@ ul {
   background-color: var(--color-surface-alt);
 }
 
+/* Koyu bölüm. Lokal token'ları ezer; altındaki bileşen kuralları
+   değişmeden koyu zemine uyar. */
+.section--dark {
+  --surface-bg: var(--color-ink);
+  --surface-fg: var(--color-text-inverse-muted);
+  --surface-heading: var(--color-text-inverse);
+  --surface-line: var(--color-ink-line);
+  --surface-line-strong: var(--color-rule-inverse);
+  --surface-card: var(--color-ink-soft);
+  --surface-icon: var(--color-text-inverse);
+  --surface-accent: var(--color-primary);
+  --surface-hover: var(--color-ink-soft);
+
+  background-color: var(--color-ink);
+  color: var(--color-text-inverse-muted);
+}
+
+.section--dark :focus-visible {
+  outline-color: var(--color-primary);
+}
+
 /* Eyebrow: marka turkuazı çizgisi + koyu turkuaz metin.
    Metin #0b7c71 (AA), çizgi #10afa0 (dolgu). */
 .eyebrow {
@@ -745,7 +775,7 @@ ul {
   align-items: center;
   gap: var(--space-2xs);
   margin-block-end: var(--space-xs);
-  color: var(--color-primary-text);
+  color: var(--surface-accent, var(--color-primary-text));
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-eyebrow);
@@ -784,7 +814,7 @@ ul {
 
 .section__lead {
   margin-block-start: var(--space-sm);
-  color: var(--color-text);
+  color: var(--surface-fg, var(--color-text));
   font-size: var(--font-size-lg);
 }
 
@@ -838,8 +868,9 @@ ul {
   display: grid;
   gap: var(--space-3xs);
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-primary-deep);
+  background-color: var(--color-ink-soft);
   color: var(--color-text-inverse);
+  border: 1px solid var(--color-ink-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
 }
@@ -875,7 +906,7 @@ ul {
   gap: var(--space-md);
   margin-block: var(--space-lg);
   padding-block: var(--space-lg);
-  border-block: 1px solid var(--color-border);
+  border-block: 1px solid var(--surface-line, var(--color-border));
 }
 
 @media (min-width: 30rem) {
@@ -892,7 +923,10 @@ ul {
 }
 
 .about__fact-value {
-  color: var(--color-ink);
+  color: var(--surface-heading, var(--color-ink));
+}
+
+.about__fact-value {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
@@ -907,11 +941,11 @@ ul {
   display: grid;
   gap: var(--space-3xs);
   padding-inline-start: var(--space-md);
-  border-inline-start: 1px solid var(--color-border);
+  border-inline-start: 1px solid var(--surface-line, var(--color-border));
 }
 
 .about__signature-name {
-  color: var(--color-ink);
+  color: var(--surface-heading, var(--color-ink));
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
 }
@@ -1023,14 +1057,14 @@ ul {
   gap: var(--space-2xs);
 }
 
-/* Madde işareti marka turkuazı */
+/* Madde işareti yüzey rengiyle çizilir */
 .clinic__list-icon {
   flex-shrink: 0;
   width: 1.25rem;
   height: 1.25rem;
   margin-block-start: 0.2em;
   fill: none;
-  stroke: var(--color-primary);
+  stroke: var(--surface-icon, var(--color-ink));
   stroke-width: 2.25;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1094,11 +1128,11 @@ ul {
 
 .accordion {
   margin-block-start: var(--space-lg);
-  border-block-start: 1px solid var(--color-border);
+  border-block-start: 1px solid var(--surface-line, var(--color-border));
 }
 
 .accordion__item {
-  border-block-end: 1px solid var(--color-border);
+  border-block-end: 1px solid var(--surface-line, var(--color-border));
 }
 
 .accordion__heading {
@@ -1125,12 +1159,12 @@ ul {
 }
 
 .accordion__trigger:hover {
-  color: var(--color-primary-text);
+  color: var(--color-primary);
 }
 
 .accordion__index {
   flex-shrink: 0;
-  color: var(--color-primary-text);
+  color: var(--surface-accent, var(--color-primary-text));
   font-family: var(--font-family-heading);
   font-variant-numeric: tabular-nums;
   font-weight: var(--font-weight-medium);
@@ -1138,7 +1172,7 @@ ul {
 
 .accordion__label {
   flex: 1;
-  color: var(--color-ink);
+  color: var(--surface-heading, var(--color-ink));
   font-family: var(--font-family-heading);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
@@ -1206,8 +1240,8 @@ ul {
 .cta {
   position: relative;
   padding-block: var(--space-section);
-  background-color: var(--color-primary-deep);
-  color: var(--color-text-inverse);
+  background-color: var(--color-ink);
+  color: var(--color-text-inverse-muted);
   isolation: isolate;
   text-align: center;
 }
@@ -1222,7 +1256,7 @@ ul {
       rgb(255 255 255 / 0.045) 0 1px,
       transparent 1px 26px
     ),
-    radial-gradient(circle at 82% 18%, rgb(16 175 160 / 0.42), transparent 58%);
+    radial-gradient(circle at 82% 18%, rgb(16 175 160 / 0.16), transparent 58%);
 }
 
 .cta__title {
@@ -1273,8 +1307,8 @@ ul {
   align-content: start;
   gap: var(--space-2xs);
   padding: var(--space-lg) var(--space-md);
-  background-color: var(--color-background);
-  border: 1px solid var(--color-border);
+  background-color: var(--surface-card, var(--color-background));
+  border: 1px solid var(--surface-line, var(--color-border));
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
 }
@@ -1285,7 +1319,7 @@ ul {
   width: 2.75rem;
   height: 2.75rem;
   margin-block-end: var(--space-2xs);
-  background-color: var(--color-primary);
+  border: 1px solid var(--surface-line, var(--color-border));
   border-radius: var(--radius-md);
 }
 
@@ -1293,7 +1327,7 @@ ul {
   width: 1.375rem;
   height: 1.375rem;
   fill: none;
-  stroke: var(--color-text-inverse);
+  stroke: var(--surface-icon, var(--color-ink));
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1399,7 +1433,7 @@ ul {
   gap: var(--space-2xs);
   width: 100%;
   padding-block-start: var(--space-md);
-  border-block-start: 1px solid rgb(255 255 255 / 0.14);
+  border-block-start: 1px solid var(--color-ink-line);
   font-size: var(--font-size-xs);
 }
 
@@ -1453,6 +1487,10 @@ ul {
 }
 
 .cookie__inner {
+  --surface-heading: var(--color-text-inverse);
+  --surface-line-strong: var(--color-rule-inverse);
+  --surface-hover: var(--color-ink);
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1461,14 +1499,23 @@ ul {
   max-width: var(--container-max);
   margin-inline: auto;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-background);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-ink-soft);
+  border: 1px solid var(--color-ink-line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
+  color: var(--color-text-inverse-muted);
+}
+
+.cookie__inner a {
+  color: var(--color-primary);
+}
+
+.cookie__inner :focus-visible {
+  outline-color: var(--color-primary);
 }
 
 .cookie__title {
-  color: var(--color-ink);
+  color: var(--color-text-inverse);
   font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
 }
@@ -1500,10 +1547,39 @@ ul {
   position: relative;
   display: grid;
   align-items: end;
+  min-height: 34svh;
   padding-block: calc(var(--header-total) + var(--space-2xl)) var(--space-xl);
-  background-color: var(--color-primary-deep);
+  background-color: var(--color-ink);
   color: var(--color-text-inverse);
   isolation: isolate;
+}
+
+.page-banner__media,
+.page-banner__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.page-banner__media {
+  z-index: -2;
+}
+
+.page-banner__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Banner overlay — kömür tabanlı, başlık her fotoğrafta okunur kalsın. */
+.page-banner__overlay {
+  z-index: -1;
+  background-image: linear-gradient(
+    180deg,
+    rgb(21 23 26 / 0.72) 0%,
+    rgb(21 23 26 / 0.66) 45%,
+    rgb(21 23 26 / 0.82) 100%
+  );
 }
 
 .page-banner__pattern {
@@ -1515,7 +1591,7 @@ ul {
       rgb(255 255 255 / 0.045) 0 1px,
       transparent 1px 26px
     ),
-    radial-gradient(circle at 84% 20%, rgb(16 175 160 / 0.4), transparent 60%);
+    radial-gradient(circle at 84% 20%, rgb(16 175 160 / 0.14), transparent 60%);
 }
 
 .page-banner__eyebrow {
