@@ -45,6 +45,9 @@ tutulur; repoda yalnızca WebP çıktılar bulunur.
 | `treatment-veneer-720.webp` | Pexels | https://www.pexels.com/photo/dental-mold-with-artificial-teeth-on-black-surface-33748062/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 | `legal-banner-768.webp` | Pexels | https://www.pexels.com/photo/detailed-dental-mold-on-black-background-33748049/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 | `legal-banner-1440.webp` | Pexels | https://www.pexels.com/photo/detailed-dental-mold-on-black-background-33748049/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `cta-treatment-room-768.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `cta-treatment-room-1440.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `cta-treatment-room-1920.webp` | Pexels | https://www.pexels.com/photo/view-of-clinic-305568/ | Fr3nks | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 
 ## Değiştirilecek görseller
 
@@ -61,6 +64,7 @@ korunursa `index.html` içinde değişiklik gerekmez.
 | `treatment-smile-design-{480,720}.webp` | Tedavi kartı — Gülüş Tasarımı | Klinikte hazırlanan alçı/mum model |
 | `treatment-veneer-{480,720}.webp` | Tedavi kartı — Diş Estetiği | Klinikte hazırlanan kaplama örnekleri |
 | `legal-banner-{768,1440}.webp` | Yasal sayfa banner'ı | Kliniğin kendi mekânından yatay, geniş bir kare |
+| `cta-treatment-room-{768,1440,1920}.webp` | Randevu CTA bandı | Kliniğin tedavi odasından geniş, yatay kare |
 
 Tedavi kartı görselleri **nesne/model/ekipman** karesidir: hasta ağzı, öncesi
 sonrası, yüz gören insan ve kadın fotoğrafı yoktur. Değiştirilirken aynı kural
