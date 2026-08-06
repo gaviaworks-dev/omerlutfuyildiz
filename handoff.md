@@ -1,6 +1,6 @@
 # Devir notu — omerlutfuyildiz
 
-Son güncelleme: 6 Ağustos 2026 · `main` = `83dbc9c` · 45 commit · Faz 0–13 bitti
+Son güncelleme: 6 Ağustos 2026 · 48 commit · Faz 0–13 bitti
 
 Bu dosya **projeyi hiç bilmeyen birinin** okuyup devam edebilmesi için
 yazıldı. Kalıcı kurallar `CLAUDE.md`'de, görsel kaynak kaydı
