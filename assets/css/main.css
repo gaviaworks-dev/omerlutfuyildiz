@@ -324,16 +324,30 @@ html.js
   min-height: var(--header-height);
 }
 
-/* --- Tipografik yazmarka (logo dosyası yok) --- */
+/* --- Monogram + tipografik yazmarka ---
+   Müşteriden logo dosyası gelmedi; monogram inline SVG olarak çizildi:
+   yuvarlak köşeli kare, içinde "Ö" (geometri, text etiketi değil).
+   Tamamı currentColor — şeffaf header'da beyaz, solid header'da koyu. */
 
 .site-header__logo {
-  display: grid;
+  display: flex;
   flex-shrink: 0;
-  align-content: center;
-  gap: var(--space-3xs);
+  align-items: center;
+  gap: var(--space-2xs);
   min-height: var(--tap-target);
   color: var(--header-fg);
   text-decoration: none;
+}
+
+.site-header__logo-mark {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.site-header__logo-text {
+  display: grid;
+  gap: var(--space-3xs);
 }
 
 .site-header__logo-name {
@@ -1472,11 +1486,21 @@ html.js
   gap: var(--space-md);
 }
 
+/* Footer markası header'daki monogramın aynısını kullanır. */
 .site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
   color: var(--color-text);
   font-family: var(--font-family-heading);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
+}
+
+.site-footer__brand-mark {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
 }
 
 /* Marka turkuazı ayraç */
