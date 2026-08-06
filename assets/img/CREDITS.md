@@ -33,6 +33,18 @@ tutulur; repoda yalnızca WebP çıktılar bulunur.
 | `process-treatment-room-760.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/2.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
 | `process-operatory-420.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/5.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
 | `process-operatory-760.webp` | mevcut site | https://omerlutfuyildiz.com/images/portfolio-2/5.jpg | — | müşteriye ait | MÜŞTERİ GÖRSELİ |
+| `treatment-whitening-480.webp` | Pexels | https://www.pexels.com/photo/close-up-of-teeth-veneers-6627599/ | Karola G | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-whitening-720.webp` | Pexels | https://www.pexels.com/photo/close-up-of-teeth-veneers-6627599/ | Karola G | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-digital-480.webp` | Pexels | https://www.pexels.com/photo/3d-printed-dental-models-on-reflective-surface-33800637/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-digital-720.webp` | Pexels | https://www.pexels.com/photo/3d-printed-dental-models-on-reflective-surface-33800637/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-implant-480.webp` | Pexels | https://www.pexels.com/photo/dental-implants-with-screw-on-table-in-clinic-4687905/ | Jonathan Borba | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-implant-720.webp` | Pexels | https://www.pexels.com/photo/dental-implants-with-screw-on-table-in-clinic-4687905/ | Jonathan Borba | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-smile-design-480.webp` | Pexels | https://www.pexels.com/photo/dental-model-on-articulator-for-dental-lab-33748023/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-smile-design-720.webp` | Pexels | https://www.pexels.com/photo/dental-model-on-articulator-for-dental-lab-33748023/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-veneer-480.webp` | Pexels | https://www.pexels.com/photo/dental-mold-with-artificial-teeth-on-black-surface-33748062/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `treatment-veneer-720.webp` | Pexels | https://www.pexels.com/photo/dental-mold-with-artificial-teeth-on-black-surface-33748062/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `legal-banner-768.webp` | Pexels | https://www.pexels.com/photo/detailed-dental-mold-on-black-background-33748049/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
+| `legal-banner-1440.webp` | Pexels | https://www.pexels.com/photo/detailed-dental-mold-on-black-background-33748049/ | Tarik Bayram | Pexels License — ticari kullanıma açık, atıf zorunlu değil | GEÇİCİ — değişecek |
 
 ## Değiştirilecek görseller
 
@@ -43,6 +55,16 @@ korunursa `index.html` içinde değişiklik gerekmez.
 | Dosya ailesi | Slot | Aranan fotoğraf |
 |---|---|---|
 | `hero-dental-unit-{768,1080,1440,1920}.webp` | Hero | Kliniğin kendi tedavi odasından, en az 1920px genişliğinde, yatay, insansız kare |
+| `treatment-whitening-{480,720}.webp` | Tedavi kartı — Diş Beyazlatma | Klinikte kullanılan renk skalası |
+| `treatment-digital-{480,720}.webp` | Tedavi kartı — Dijital Gülüş Tasarımı | Klinikteki tarayıcı ya da dijital planlama ekranı |
+| `treatment-implant-{480,720}.webp` | Tedavi kartı — Dental İmplant | Klinikteki implant seti ya da model |
+| `treatment-smile-design-{480,720}.webp` | Tedavi kartı — Gülüş Tasarımı | Klinikte hazırlanan alçı/mum model |
+| `treatment-veneer-{480,720}.webp` | Tedavi kartı — Diş Estetiği | Klinikte hazırlanan kaplama örnekleri |
+| `legal-banner-{768,1440}.webp` | Yasal sayfa banner'ı | Kliniğin kendi mekânından yatay, geniş bir kare |
+
+Tedavi kartı görselleri **nesne/model/ekipman** karesidir: hasta ağzı, öncesi
+sonrası, yüz gören insan ve kadın fotoğrafı yoktur. Değiştirilirken aynı kural
+geçerlidir.
 
 ## Kullanılmayan kaynaklar
 
