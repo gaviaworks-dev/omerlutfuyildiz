@@ -1536,22 +1536,49 @@ ul {
    16. Alt sayfa banner'ı
    ========================================================================== */
 
-/* Yasal sayfa başlık bandı. Fotoğraf ve koyu katman kullanılmaz: hero
-   dışında koyu blok bırakılmadı, banner da açık gri zemine oturdu. */
+/* Yasal sayfa başlık bandı — kliniğin kendi mekân fotoğrafı üzerinde beyaz
+   başlık. Hero ile aynı kurgu: overlay nötr koyu griden türetilir, sayfanın
+   geri kalanı açık kalır. */
 .page-banner {
+  position: relative;
   display: grid;
   align-items: end;
+  min-height: 34svh;
   padding-block: calc(var(--header-total) + var(--space-2xl)) var(--space-xl);
-  background-color: var(--color-bg-alt);
-  border-block-end: 1px solid var(--color-line);
+  color: var(--color-text-inverse);
+  isolation: isolate;
 }
 
+.page-banner__media,
+.page-banner__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.page-banner__media {
+  z-index: -2;
+}
+
+.page-banner__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.page-banner__overlay {
+  z-index: -1;
+  background-image: var(--overlay-banner);
+}
+
+/* Eyebrow %72 yerine %86 beyaz: %72 bu görsellerde 4.37:1'de kalıyordu,
+   %86 ile 5.43:1. */
 .page-banner__eyebrow {
   display: flex;
   align-items: center;
   gap: var(--space-2xs);
   margin-block-end: var(--space-2xs);
-  color: var(--color-primary-text);
+  color: var(--color-text-inverse-subtle);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   letter-spacing: var(--letter-spacing-eyebrow);
@@ -1567,7 +1594,13 @@ ul {
 }
 
 .page-banner__title {
+  color: var(--color-text-inverse);
   font-size: var(--font-size-2xl);
+}
+
+/* Koyu overlay üzerinde odak halkası beyaz — hero'daki gerekçenin aynısı. */
+.page-banner :focus-visible {
+  outline-color: var(--color-focus-inverse);
 }
 
 /* ==========================================================================

@@ -134,6 +134,18 @@
     rgb(42 45 50 / 0.72) 100%
   );
 
+  /* --- Yasal sayfa banner overlay'i --------------------------------------
+     Aynı nötr koyu gri taban. Banner görselleri hero gibi karartılmadığı için
+     alfalar biraz daha yüksek. Üç banner'ın GERÇEK pikselleri üzerinde en
+     kötü durum: beyaz başlık 6.63:1, %86 eyebrow 5.43:1 — ikisi de AA.
+     ---------------------------------------------------------------------- */
+  --overlay-banner: linear-gradient(
+    180deg,
+    rgb(42 45 50 / 0.74) 0%,
+    rgb(42 45 50 / 0.66) 45%,
+    rgb(42 45 50 / 0.82) 100%
+  );
+
   /* --- Spacing ölçeği ---------------------------------------------------- */
   --space-3xs: 0.25rem;
   --space-2xs: 0.5rem;
