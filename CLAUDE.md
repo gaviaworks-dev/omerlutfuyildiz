@@ -18,28 +18,30 @@ renk/metin/görsel DEĞİL)
 - `main.css` içinde ham hex / ham px spacing / ham gölge YASAK.
 - Inline style YASAK.
 
-### Palet — hibrit koyu (Faz 10)
+### Palet — açık, iki zemin tonu (Faz 12)
+
+Kömür siyahı (`#15171a`, `#1c1f23`) ve türevleri paletten **tamamen
+çıkarıldı**. Sitede koyu blok yoktur; tek istisna hero fotoğrafının overlay'i.
+
 | Token | Değer | Kullanım |
 |---|---|---|
-| `--color-ink` | `#15171a` | Kömür siyahı — ana koyu zemin |
-| `--color-ink-soft` | `#1c1f23` | Koyu zeminde kart/ayrım yüzeyi |
-| `--color-ink-line` | `rgb(255 255 255 / .12)` | Koyu zeminde ayırıcı |
-| `--color-text` | `#2a2d32` | Açık bölümlerde gövde metni |
-| `--color-text-inverse` | `#ffffff` | Koyu zeminde metin |
-| `--color-text-inverse-muted` | `rgb(255 255 255 / .72)` | Koyu zeminde ikincil metin |
-| `--color-primary` | `#10afa0` | **KISILDI.** Yalnızca aktif nav çizgisi, odak halkası, akordeon +, hover, eyebrow çizgisi. Koyu zeminde metin olabilir (6.55:1), açık zeminde olamaz (2.74:1) |
-| `--color-primary-text` | `#0b7c71` | Açık zeminde turkuaz metin gerekirse (5.08:1) |
-| `--color-surface` | `#f6f6f6` | Açık bölüm zemini |
-| `--color-surface-alt` | `#eef8f7` | Açık turkuaz tonlu zemin |
+| `--color-bg` | `#ffffff` | Beyaz zemin |
+| `--color-bg-alt` | `#f5f5f5` | Açık gri zemin |
+| `--color-text` | `#2a2d32` | Gövde metni **ve** başlık (13.82 / 12.67) |
+| `--color-text-muted` | `#5a6169` | İkincil metin: spot, etiket, alt yazı, footer (6.27 / 5.75) |
+| `--color-text-inverse` | `#ffffff` | Yalnızca hero overlay'i üstünde ve koyu buton içinde |
+| `--color-line` | `#e6e6e6` | Tek ayırıcı çizgi rengi |
+| `--color-primary` | `#10afa0` | **KISIK ve yalnızca dekoratif dolgu:** eyebrow çizgisi, kart ikonu, madde imi, hover vurgusu, footer ayracı. Açık zeminde metin ya da durum göstergesi OLAMAZ (2.74 / 2.51) |
+| `--color-primary-text` | `#0b7c71` | Turkuazın metin/odak/durum varyantı: aktif nav çizgisi ve metni, odak halkası, akordeon `+`, eyebrow metni, linkler (5.08 / 4.66) |
 
-**Koyu bölümler:** header, hero, Hakkımda, Tedavi Süreci, Randevu CTA, footer,
-çerez bildirimi. **Açık bölümler:** Tedaviler, Klinik, İletişim ve üç yasal
-sayfanın gövdesi.
+**Bölüm akışı (beyaz / açık gri dönüşümlü):**
+header `alt` · hero (fotoğraf) · Hakkımda `alt` · Tedaviler `bg` ·
+Klinik `alt` · Tedavi Süreci `bg` · Randevu CTA `alt` · İletişim `bg` ·
+footer `alt`. Yasal sayfalar: banner `alt`, gövde `bg`.
 
-Yüzeye göre değişen değerler `.section--dark` üzerindeki lokal token'larla
-verilir (`--surface-fg`, `--surface-heading`, `--surface-line`,
-`--surface-card`, `--surface-icon`, `--surface-accent`); bileşen kuralları
-iki kez yazılmaz.
+Sınıflar yalnızca `.section--bg` ve `.section--bg-alt`. Koyu bölüm kalmadığı
+için yüzeye göre değişen lokal token katmanı (`--surface-*`) kaldırıldı;
+bileşenler doğrudan `--color-*` okur.
 
 Yeni renk eklenmez; gerekiyorsa önce sorulur.
 
@@ -106,6 +108,9 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
 - **Stok görseller müşterinin gerçek klinik fotoğraflarıyla değişecek.**
   Değişecek dosyaların listesi `assets/img/CREDITS.md` içinde, Durum sütunu
   "GEÇİCİ — değişecek" olan satırlar.
+- **Dokuz görsel Faz 12'den beri kullanılmıyor** (`cta-treatment-room-*`,
+  `banner-*`). Silinmediler; CTA bandına ya da yasal banner'lara fotoğraf
+  geri istenirse hazırlar. Karar verilince ya kullanılacak ya silinecek.
 - **Logo dosyası müşteriden istenecek**; şimdilik tipografik yazmarka
   (Poppins, "Yıldız" turkuaz aksanlı).
 - **Çalışma saatleri bilgisi yok**, İletişim bölümünde konmadı.
@@ -128,6 +133,49 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   toplanmıyor) ancak **yayına alınmadan önce avukat incelemesi gerekir**.
 
 ### Verilen kararlar (gözden geçirilecek)
+
+- **KARAR (Faz 12):** Yasal sayfa banner'larından fotoğraf kaldırıldı; banner
+  açık gri bant oldu. *Gerekçe:* "hero tek istisna" talimatı. Fotoğraf +
+  koyu overlay, hero ile aynı kurgu olduğu için tartışmalıydı; talimatın
+  lafzı tek istisna dediği için banner'lar açığa çekildi. `banner-*.webp`
+  dosyaları repoda duruyor, geri istenirse tek commit'lik iş.
+  *Gözden geçirilecek:* evet.
+
+- **KARAR (Faz 12):** Randevu CTA bandındaki fotoğraf ve doku katmanı
+  kaldırıldı. *Gerekçe:* talimatta "Randevu CTA → #f5f5f5" açıkça yazıyordu;
+  fotoğraf + koyu katman açık gri zeminle bağdaşmıyor.
+  *Gözden geçirilecek:* hayır, talimat açık.
+
+- **KARAR (Faz 12):** Başlık rengi ayrı bir koyu ton değil, gövde metniyle
+  aynı `#2a2d32`. *Gerekçe:* siyah tamamen kalktı, daha koyu bir başlık tonu
+  yeni renk demekti. Hiyerarşi Poppins 600 + punto ile kuruluyor.
+  *Gözden geçirilecek:* evet, başlık için biraz daha koyu bir ton istenirse
+  önce sorulur.
+
+- **KARAR (Faz 12):** Turkuazın "durum gösteren" görevleri `#0b7c71`'e
+  taşındı: aktif nav çizgisi ve metni, akordeon `+`, yazmarka soyadı.
+  *Gerekçe:* `#10afa0` açık gri üzerinde 2.51:1; WCAG 1.4.11 durum
+  göstergesi için 3:1, metin için 4.5:1 istiyor. Dekoratif turkuaz
+  (eyebrow çizgisi, kart ikonu, madde imi, hover) `#10afa0` kaldı.
+  *Gözden geçirilecek:* hayır, ölçüm kesin.
+
+- **KARAR (Faz 12):** Birincil butonun hover'ı için yeni renk üretilmedi;
+  paletteki ikincil metin tonu (`#5a6169`) dolgu olarak kullanıldı — beyaz
+  metinle 6.27:1. Outline buton hover'da koyu dolguya dönüyor, çünkü
+  "beyaza dolma" açık gri bölümlerde görünmüyordu.
+  *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 12):** Yazmarkanın `aria-label`'ı "Ana sayfa" değil
+  "Dt. Ömer Lütfü Yıldız — Ana sayfa". *Gerekçe:* WCAG 2.5.3 (Label in Name)
+  görünen metnin erişilebilir adın içinde geçmesini istiyor; yalnız
+  "Ana sayfa" yazıldığında sesle kontrol kullanan biri marka adını
+  söyleyerek linki tetikleyemiyordu. *Gözden geçirilecek:* hayır.
+
+- **KARAR (Faz 12):** `theme-color` `#10afa0` yerine `#f5f5f5`.
+  *Gerekçe:* mobil tarayıcı çubuğu header'ın hemen üstünde geniş bir turkuaz
+  yüzey oluyordu; turkuazın geniş zeminden çekilmesi kararıyla çelişiyor.
+  *Gözden geçirilecek:* evet, marka rengi tarayıcı çubuğunda istenirse geri
+  alınır.
 
 - **KARAR:** Hero görseli Pexels'ten (Fr3nks, 305567), export'ta 0.45 parlaklığa
   karartıldı; overlay yalnızca marka tonu veriyor.
@@ -183,10 +231,9 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   boyut **2.70 KB**. *Gözden geçirilecek:* bütçe ham dosya yerine gzip
   üzerinden tanımlanabilir.
 
-- **KARAR:** Yasal sayfaların banner'ında fotoğraf kullanılmadı; marka
-  renginden dokulu bir blok kuruldu. *Gerekçe:* kliniğin sınırlı sayıdaki
-  gerçek fotoğrafını hukuki metin başlığına harcamamak ve yeni stok görsel
-  eklememek. *Gözden geçirilecek:* hayır.
+- ~~**KARAR:** Yasal sayfaların banner'ında fotoğraf kullanılmadı; marka
+  renginden dokulu bir blok kuruldu.~~ — Faz 11'de fotoğraflı banner'a
+  dönüldü, Faz 12'de banner tamamen açık gri bant oldu. Geçersiz.
 
 - **KARAR (Faz 10):** Turkuaz kart ikonu dolguları kaldırıldı; ikonlar yüzey
   rengiyle çizilen çizgi ikon oldu. *Gerekçe:* turkuaz geniş yüzeyden
@@ -208,7 +255,6 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   sürüyor. Alternatif bir slider kütüphanesi en az 10 katı olurdu.
   *Gözden geçirilecek:* bütçe gzip üzerinden tanımlanmalı.
 
-- **KARAR (Faz 11):** Yasal sayfa banner'ında üç sayfa için tek görsel.
-  *Gerekçe:* tek varlık, tutarlı görünüm, düşük yük. Dekoratif olduğu için
-  `alt=""`. *Gözden geçirilecek:* evet, müşteri kendi mekân fotoğrafını
-  verirse değişir.
+- ~~**KARAR (Faz 11):** Yasal sayfa banner'ında üç sayfa için tek görsel.~~ —
+  sonra her sayfaya kendi görseli verildi, Faz 12'de banner fotoğrafları
+  tamamen kaldırıldı. Geçersiz.

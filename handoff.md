@@ -1,6 +1,6 @@
 # Devir notu — omerlutfuyildiz
 
-Son güncelleme: 6 Ağustos 2026 · Son commit: `753576e`
+Son güncelleme: 6 Ağustos 2026 · Faz 12 (açık palet revizyonu)
 
 Bu dosya oturum devri içindir. Kalıcı kurallar `CLAUDE.md`'de, görsel kaynak
 kaydı `assets/img/CREDITS.md`'de. Burada **durum, gerekçeler ve tuzaklar** var.
@@ -12,12 +12,12 @@ kaydı `assets/img/CREDITS.md`'de. Burada **durum, gerekçeler ve tuzaklar** var
 **Canlı:** https://gaviaworks-dev.github.io/omerlutfuyildiz/
 **Repo:** `gaviaworks-dev/omerlutfuyildiz` (public) · Pages: `main` / root
 
-Tek sayfa (`index.html`) + üç yasal sayfa. 29 commit. Faz 0–11 bitti.
+Tek sayfa (`index.html`) + üç yasal sayfa. Faz 0–12 bitti.
 
 | Sayfa | Durum |
 |---|---|
 | `index.html` | Hero · Hakkımda · Tedaviler (slider) · Klinik · Tedavi Süreci · Randevu CTA · İletişim |
-| `kvkk.html` · `gizlilik-politikasi.html` · `cerez-politikasi.html` | Yasal metinler, kendi banner'ları |
+| `kvkk.html` · `gizlilik-politikasi.html` · `cerez-politikasi.html` | Yasal metinler, açık gri başlık bandı |
 
 **Varlıklar:** 37 WebP (~956 KB), 4 woff2 (88 KB), `main.css` 44 KB,
 `main.js` 10.7 KB (gzip 3.1 KB), `tokens.css` 8.6 KB.
@@ -26,35 +26,35 @@ Tek sayfa (`index.html`) + üç yasal sayfa. 29 commit. Faz 0–11 bitti.
 
 ## 2. Mimarinin anlaşılması gereken tek yeri
 
-Renk, yüzeye göre **lokal custom property** ile değişir — bileşen kuralları
-iki kez yazılmaz. `body` açık zemin varsayılanlarını kurar:
+**Faz 12'de site tamamen açığa çekildi.** Kömür siyahı ve türevleri paletten
+silindi, koyu bölüm kalmadı. Bu yüzden yüzeye göre değişen lokal token
+katmanı (`--surface-*`, `--header-fg`, `--header-rule`) de kaldırıldı —
+bileşenler doğrudan `--color-*` okuyor.
+
+Sitede **iki zemin tonu** var: `--color-bg` (#ffffff) ve `--color-bg-alt`
+(#f5f5f5). Bölümler dönüşümlü:
 
 ```
---surface-fg  --surface-heading  --surface-line
---surface-card  --surface-icon  --surface-accent
+header alt · hero (fotoğraf) · Hakkımda alt · Tedaviler bg · Klinik alt
+Tedavi Süreci bg · Randevu CTA alt · İletişim bg · footer alt
 ```
 
-`.section--dark` bunları koyu değerlerle ezer. Header aynı deseni
-`--header-fg` / `--header-rule` ile kullanır.
+**Yeni bir bölüm eklerken:** komşusunun tersini ver — `.section--bg` ya da
+`.section--bg-alt`. Başka zemin sınıfı yok, üretilmesi de istenmiyor.
 
-**Yeni bir bölüm eklerken:** `.section--dark` ya da `--light/--surface/--alt`
-sınıfını ver, bileşenin rengini `var(--surface-*)` üzerinden oku. Koyu ve
-açık için ayrı kural yazma ihtiyacı duyuyorsan desen yanlış kurulmuştur.
-
-**Koyu:** header, hero, Hakkımda, Tedavi Süreci, Randevu CTA, footer, çerez.
-**Açık:** Tedaviler, Klinik, İletişim, yasal sayfa gövdeleri.
-Gerekçe: klinik fotoğrafları açık ve altın tonlu, koyu zeminde delik gibi
-duruyor; uzun hukuki metin açık zeminde daha okunaklı.
+**Tek koyu yüzey hero overlay'i.** Tabanı siyah değil nötr koyu gri
+(42 45 50) — sayfanın kendi metin tonu. Overlay üzerindeki beyaz metin,
+karartılmış fotoğrafın gerçek pikselleri üzerinde 8.52:1, %72 muted 5.36:1.
 
 ---
 
 ## 3. Pazarlık dışı kurallar (ihlal edilirse iş geri döner)
 
-1. **Turkuaz `#10afa0` açık zeminde metin ya da metin zemini değildir** —
-   beyaz üstünde 2.74:1. Koyu zeminde 6.55:1, orada metin olabilir.
-   Açık zeminde turkuaz metin gerekirse `--color-primary-text` (#0b7c71).
-   Turkuaz artık sadece: aktif nav çizgisi, odak halkası, akordeon `+`,
-   hover vurgusu, eyebrow çizgisi.
+1. **Turkuaz `#10afa0` metin, metin zemini ya da durum göstergesi değildir** —
+   beyaz üstünde 2.74:1, açık gri üstünde 2.51:1. Koyu zemin kalmadığı için
+   artık hiçbir yerde metin olamaz. Metin/odak/durum gerekiyorsa
+   `--color-primary-text` (#0b7c71). `#10afa0` yalnızca dekoratif dolgu:
+   eyebrow çizgisi, kart ikonu, madde imi, hover vurgusu, footer ayracı.
 2. **`main.css` içinde ham hex / ham spacing px / inline style yok.**
    İzinli tek istisna: 1–3px çizim ölçüsü (hairline, odak halkası kalınlığı).
 3. **`index.html` içinde açıklama/durum/TODO yorumu yok** — kaynak public.
@@ -73,11 +73,11 @@ Bu ortamda ölçüm araçları defalarca yalan söyledi. Zaman kaybetmemek için
 
 | Tuzak | Gerçek | Çözüm |
 |---|---|---|
-| Chrome headless `--window-size=390` | **500px'in altına inmiyor**, 500'de render edip küçültüyor. 390 ekran görüntüsü sahte "kesik" gösteriyor | Dar genişlik için `<iframe width="390">` içeren geçici çerçeve sayfası |
+| Chrome headless `--window-size=390` | **500px'in altına inmiyor**, 500'de render edip küçültüyor. 390 ekran görüntüsü sahte "kesik" gösteriyor | Bu ortamda `npx playwright` (1.62, chromium kurulu) 360/390'da doğru render ediyor — iframe hilesine gerek yok |
 | `scrollWidth <= clientWidth` taşma testi | `overflow-x: clip` taşmayı **gizler**, scrollWidth hep clientWidth'e eşit çıkar | Eleman bazlı: `getBoundingClientRect().right > clientWidth` |
 | `--virtual-time-budget` + `--dump-dom` | Hero'daki sonsuz CSS animasyonu virtual-time'ı bitirmiyor, Chrome **takılıyor** | Süreci arka planda başlat, süre dolunca öldür (`shot.py` deseni) |
 | iframe içinde JS davranış testi | iframe render edilmiyor: `scrollTo` çalışmıyor, IntersectionObserver tetiklenmiyor, geçişler ilerlemiyor | Davranışı iframe'de test etme; düzen ölçümü iframe'de doğru |
-| `data-reveal` bölümleri ekran görüntüsünde boş | Reveal IO ile açılıyor, görüntü load anında alınıyor | `--force-prefers-reduced-motion` ile çek |
+| `data-reveal` bölümleri ekran görüntüsünde boş | Reveal IO ile açılıyor, görüntü load anında alınıyor | Playwright'ta `reducedMotion: 'reduce'` context'i ile çek |
 | headless `localStorage` | Süreç öldürülünce diske yazılmıyor, iki aşamalı test çalışmıyor | Bu yolla test etme |
 | `git add -p` | Etkileşimli, bu ortamda yok | Ara dosya durumu kur: `git show HEAD:dosya` ile eski hâli al, splice et, commit et, tam hâli geri yaz |
 | `timeout` komutu | macOS'ta yok | Python `subprocess` + manuel kill |
@@ -119,8 +119,9 @@ silinen varlıklar 404.
 | 7 | **Sosyal medya** doğrulanmadı | Eski sitedeki 4 ikonun href'i boştu |
 | 8 | **İletişim formu yok** | `email.php` Pages'te çalışmaz; harici servis onay ister |
 
-Yasal sayfa banner'ları ve Klinik galerisi **müşterinin kendi fotoğrafları** —
-kalıcı, değişmesi gerekmiyor.
+Klinik galerisi, Hakkımda ve Tedavi Süreci görselleri **müşterinin kendi
+fotoğrafları** — kalıcı. Yasal sayfa banner'ları Faz 12'de kaldırıldı;
+dosyalar `KULLANILMIYOR` olarak repoda duruyor.
 
 ---
 
@@ -131,15 +132,17 @@ kalıcı, değişmesi gerekmiyor.
   yorumları boşaltmaktı; ikisi de çalışan bir şeyi feda ediyordu. Kütüphane
   kullanılmadı, kaydırma tamamen CSS. **Gzip'li 3.1 KB** — bütçenin gzip
   üzerinden tanımlanması öneriliyor.
-- **Yasal banner'lar 1000px**, en geniş ekranda ~1440 CSS px'e yayılıyor.
-  Tarayıcı hafifçe büyütüyor; %60–78 overlay altında görünmüyor. Dosyayı
-  yapay büyütmekten ve jenerik stok kullanmaktan iyi bulundu.
-- **Hero ve CTA görselleri export'ta karartıldı** (0.45 / 0.5). Overlay'i
-  ağırlaştırmak fotoğrafı tamamen yutuyordu. Alfaları düşürecek olan,
-  karartmayı da birlikte gözden geçirmeli — ikisi tek sistem.
+- **Dokuz görsel kullanılmıyor** (`cta-treatment-room-*`, `banner-*`).
+  Faz 12'de CTA bandı ve yasal banner'lar fotoğrafsız kurgulandı. Dosyalar
+  silinmedi; karar netleşince ya geri konur ya silinir.
+- **Hero görseli export'ta karartıldı** (0.45). Overlay'i ağırlaştırmak
+  fotoğrafı tamamen yutuyordu. Alfaları düşürecek olan, karartmayı da
+  birlikte gözden geçirmeli — ikisi tek sistem.
+- **Başlık ve gövde metni aynı renkte** (#2a2d32). Siyah kalktığı için
+  başlığa ayrı bir koyu ton kalmadı; hiyerarşi punto ve Poppins 600 ile.
 
-`CLAUDE.md` sonunda 11 adet `KARAR:` satırı var, her biri gerekçesi ve
-"gözden geçirilecek mi" notuyla.
+`CLAUDE.md` sonunda `KARAR:` satırları var, her biri gerekçesi ve
+"gözden geçirilecek mi" notuyla. Faz 12'nin kararları listenin başında.
 
 ---
 
