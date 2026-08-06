@@ -249,7 +249,7 @@ dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
   beş kart ekrana sığıyor ve kaydırma hiç oluşmuyordu.
   *Gözden geçirilecek:* hayır.
 
-- **KARAR (Faz 11):** JS bütçesi 10.44 KB (ham), gzip'li 3.11 KB. Slider
+- **KARAR (Faz 11):** JS bütçesi 10.6 KB (ham), gzip'li 3.2 KB. Slider
   eklendikçe ham dosya 8 KB hedefinden uzaklaştı. *Gerekçe:* kütüphane
   kullanılmadı, kaydırma tamamen CSS scroll-snap; JS yalnızca ok butonlarını
   sürüyor. Alternatif bir slider kütüphanesi en az 10 katı olurdu.

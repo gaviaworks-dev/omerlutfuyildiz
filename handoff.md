@@ -19,8 +19,9 @@ Tek sayfa (`index.html`) + üç yasal sayfa. Faz 0–12 bitti.
 | `index.html` | Hero · Hakkımda · Tedaviler (slider) · Klinik · Tedavi Süreci · Randevu CTA · İletişim |
 | `kvkk.html` · `gizlilik-politikasi.html` · `cerez-politikasi.html` | Yasal metinler, açık gri başlık bandı |
 
-**Varlıklar:** 37 WebP (~956 KB), 4 woff2 (88 KB), `main.css` 44 KB,
-`main.js` 10.7 KB (gzip 3.1 KB), `tokens.css` 8.6 KB.
+**Varlıklar:** 37 WebP (~932 KB, 9'u Faz 12'den beri kullanılmıyor),
+4 woff2 (88 KB), `main.css` 39.4 KB, `main.js` 10.6 KB (gzip 3.2 KB),
+`tokens.css` 8.4 KB.
 
 ---
 
