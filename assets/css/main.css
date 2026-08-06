@@ -252,24 +252,68 @@ ul {
    4. Header ve navigasyon
    ========================================================================== */
 
-/* Header her durumda açık gri. Kaydırınca koyulaşmaz; içerikten ayrımı ince
-   alt çizgi, kaydırıldığında ek olarak hafif gölge verir. */
+/* Header sayfa başındayken şeffaf, hero/banner fotoğrafının üstünde yüzer;
+   kaydırınca açık gri zemine oturur. Renk değişimi yalnızca .site-header
+   üzerindeki lokal token'lardan yürür — altındaki bileşen kuralları iki kez
+   yazılmaz.
+
+   Şeffaf durumdaki kontrast gerçek pikseller üzerinde ölçüldü:
+     hero üst bandı      beyaz 9.61:1  ·  %72 beyaz 5.92:1
+     yasal banner üstü   beyaz 7.59:1  ·  %72 beyaz 4.88:1
+   İkisi de AA üstünde, bu yüzden header'a ayrıca gradyan konmadı.
+   Turkuaz metin bu zeminde 2.77'de kalıyor: şeffaf durumda aksan beyaza
+   döner. */
 .site-top {
   position: fixed;
   inset-block-start: 0;
   inset-inline: 0;
   z-index: var(--z-header);
-  background-color: var(--color-bg-alt);
-  transition: box-shadow var(--transition-slow) var(--ease);
-}
-
-.site-top--scrolled,
-.site-top--menu-open {
-  box-shadow: var(--shadow-sm);
 }
 
 .site-header {
-  border-block-end: 1px solid var(--color-line);
+  --header-bg: transparent;
+  --header-fg: var(--color-text-inverse);
+  --header-fg-muted: var(--color-text-inverse-muted);
+  --header-accent: var(--color-text-inverse);
+  --header-rule: transparent;
+  --header-shadow: none;
+
+  background-color: var(--header-bg);
+  border-block-end: 1px solid var(--header-rule);
+  box-shadow: var(--header-shadow);
+  color: var(--header-fg);
+  transition: background-color var(--transition-slow) var(--ease),
+    border-color var(--transition-slow) var(--ease),
+    box-shadow var(--transition-slow) var(--ease),
+    color var(--transition-slow) var(--ease);
+}
+
+/* Solid durum: kaydırıldığında, mobil menü açıkken ve JS yokken.
+   JS yoksa `.js` sınıfı hiç eklenmez; header şeffaf kalırsa beyaz metin
+   açık bölümlerin üstünde kaybolurdu. */
+.site-top--scrolled .site-header,
+.site-top--menu-open .site-header,
+html:not(.js) .site-header {
+  --header-bg: var(--color-bg-alt);
+  --header-fg: var(--color-text);
+  --header-fg-muted: var(--color-text-muted);
+  --header-accent: var(--color-primary-text);
+  --header-rule: var(--color-line);
+  --header-shadow: var(--shadow-sm);
+}
+
+/* Şeffaf header koyu fotoğrafın üstünde: odak halkası beyaz */
+.site-top:not(.site-top--scrolled):not(.site-top--menu-open) :focus-visible {
+  outline-color: var(--color-focus-inverse);
+}
+
+/* Randevu butonu da şeffaf durumda ters çevrilir — koyu dolgu koyu
+   fotoğraftan ayrışmıyor. Beyaz dolgu + koyu metin 13.82:1. */
+html.js
+  .site-top:not(.site-top--scrolled):not(.site-top--menu-open)
+  .site-header__cta {
+  background-color: var(--color-text-inverse);
+  color: var(--color-text);
 }
 
 .site-header__inner {
@@ -280,9 +324,7 @@ ul {
   min-height: var(--header-height);
 }
 
-/* --- Tipografik yazmarka (logo dosyası yok) ---
-   Yazmarka aynı zamanda ana sayfa linkidir; nav'da ayrı "Anasayfa" maddesi
-   yoktur. */
+/* --- Tipografik yazmarka (logo dosyası yok) --- */
 
 .site-header__logo {
   display: grid;
@@ -290,7 +332,7 @@ ul {
   align-content: center;
   gap: var(--space-3xs);
   min-height: var(--tap-target);
-  color: var(--color-text);
+  color: var(--header-fg);
   text-decoration: none;
 }
 
@@ -304,17 +346,25 @@ ul {
 }
 
 /* Soyadı turkuaz. Metin olduğu için marka turkuazı değil AA geçen varyant
-   kullanılır — #10afa0 açık gri üzerinde 2.51:1. */
+   kullanılır — #10afa0 açık gri üzerinde 2.51:1. Şeffaf header'da fotoğraf
+   üstünde turkuaz 2.77'ye düştüğü için orada beyaza döner. */
 .site-header__logo-accent {
-  color: var(--color-primary-text);
+  color: var(--header-accent);
 }
 
 .site-header__logo-role {
-  color: var(--color-text-muted);
+  color: var(--header-fg-muted);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-regular);
   letter-spacing: var(--letter-spacing-eyebrow);
   text-transform: uppercase;
+}
+
+/* En dar ekranda yalnızca ikon + isim kalır, unvan satırı düşer. */
+@media (max-width: 23.4375rem) {
+  .site-header__logo-role {
+    display: none;
+  }
 }
 
 /* --- Navigasyon --- */
@@ -332,7 +382,7 @@ ul {
   /* Dokunma hedefi 44x44 — yalnızca padding ile 42px'te kalıyordu */
   min-height: var(--tap-target);
   padding-block: var(--space-2xs);
-  color: var(--color-text);
+  color: var(--header-fg);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   text-decoration: none;
@@ -340,9 +390,10 @@ ul {
   transition: color var(--transition-base) var(--ease);
 }
 
-/* Alt çizgi + aktif renk aynı turkuaz olmalı: ikisi birlikte "aktif bölüm"
-   durumunu gösterdiği için WCAG 1.4.11'e göre 3:1 gerekiyor. #10afa0 açık
-   gri üzerinde 2.51:1 kalıyor, bu yüzden koyu varyant kullanılır (4.66:1). */
+/* Alt çizgi + aktif renk aynı tonu kullanır: ikisi birlikte "aktif bölüm"
+   durumunu gösterdiği için WCAG 1.4.11'e göre 3:1 gerekiyor. Solid header'da
+   #10afa0 2.51:1'de kaldığından koyu varyant (4.66:1), şeffaf header'da
+   fotoğraf üstünde beyaz. İkisi de --header-accent üzerinden gelir. */
 .site-nav__link::after {
   content: '';
   position: absolute;
@@ -350,7 +401,7 @@ ul {
   inset-inline-start: 0;
   width: 100%;
   height: 2px;
-  background-color: var(--color-primary-text);
+  background-color: var(--header-accent);
   border-radius: var(--radius-pill);
   transform: scaleX(0);
   transform-origin: left center;
@@ -363,7 +414,7 @@ ul {
 }
 
 .site-nav__link[aria-current='true'] {
-  color: var(--color-primary-text);
+  color: var(--header-accent);
 }
 
 /* --- Sağdaki aksiyon --- */
@@ -392,7 +443,7 @@ ul {
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   background-color: transparent;
-  color: var(--color-text);
+  color: var(--header-fg);
   cursor: pointer;
   transition: color var(--transition-base) var(--ease),
     background-color var(--transition-base) var(--ease);
@@ -523,8 +574,10 @@ ul {
 /* Boşluk hero'ya değil iç sarmalayıcıya verilir: absolute konumlanan
    .hero__media parent'ın padding box'ına göre yerleşir, hero'da padding
    olsaydı görsel aşağı kayardı. */
+/* Header artık içeriğin üstünde yüzüyor; boşluğa ayrıca header yüksekliği
+   eklenmez, yoksa çift boşluk oluşur. */
 .hero__inner {
-  padding-block: calc(var(--header-total) + var(--space-2xl)) var(--space-3xl);
+  padding-block: var(--space-2xl) var(--space-3xl);
 }
 
 .hero__media,
@@ -1539,12 +1592,15 @@ ul {
 /* Yasal sayfa başlık bandı — kliniğin kendi mekân fotoğrafı üzerinde beyaz
    başlık. Hero ile aynı kurgu: overlay nötr koyu griden türetilir, sayfanın
    geri kalanı açık kalır. */
+/* Üst boşluğa header yüksekliği eklenmez — header üstte yüzüyor. Alt
+   sınır, kısa ekranda başlığın header'ın altına girmemesi için: 34svh
+   500px'lik bir pencerede 170px'e düşüyor, 15rem taban onu tutuyor. */
 .page-banner {
   position: relative;
   display: grid;
   align-items: end;
-  min-height: 34svh;
-  padding-block: calc(var(--header-total) + var(--space-2xl)) var(--space-xl);
+  min-height: max(34svh, 15rem);
+  padding-block: var(--space-3xl) var(--space-xl);
   color: var(--color-text-inverse);
   isolation: isolate;
 }
