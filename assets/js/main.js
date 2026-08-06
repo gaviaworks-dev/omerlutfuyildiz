@@ -282,6 +282,66 @@
     });
   }
 
+  /* 7. Tedavi şeridi — kaydırma CSS scroll-snap ile; JS yalnızca ok
+     butonlarını sürer ve uçlarda devre dışı bırakır. */
+  function initSlider() {
+    var track = document.querySelector('[data-slider-track]');
+    var prev = document.querySelector('[data-slider-prev]');
+    var next = document.querySelector('[data-slider-next]');
+    if (!track || !prev || !next) return;
+
+    var reduced =
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* Bir kart + aradaki boşluk kadar mesafe */
+    function step() {
+      var first = track.firstElementChild;
+      if (!first) return track.clientWidth;
+      var second = first.nextElementSibling;
+      return second
+        ? second.offsetLeft - first.offsetLeft
+        : first.getBoundingClientRect().width;
+    }
+
+    function sync() {
+      var max = track.scrollWidth - track.clientWidth;
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft >= max - 1;
+    }
+
+    function go(dir) {
+      track.scrollBy({
+        left: dir * step(),
+        behavior: reduced ? 'auto' : 'smooth'
+      });
+    }
+
+    prev.addEventListener('click', function () {
+      go(-1);
+    });
+    next.addEventListener('click', function () {
+      go(1);
+    });
+
+    var ticking = false;
+    track.addEventListener(
+      'scroll',
+      function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          sync();
+          ticking = false;
+        });
+      },
+      { passive: true }
+    );
+
+    window.addEventListener('resize', sync);
+    sync();
+  }
+
   function init() {
     document.documentElement.classList.add('js');
     initHeaderState();
@@ -290,6 +350,7 @@
     initScrollSpy();
     initReveal();
     initCookieNotice();
+    initSlider();
   }
 
   if (document.readyState === 'loading') {

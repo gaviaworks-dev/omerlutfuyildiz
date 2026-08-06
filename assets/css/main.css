@@ -955,66 +955,144 @@ ul {
 }
 
 /* ==========================================================================
-   8. Tedaviler
+   8. Tedaviler — yatay scroll-snap slider
    ========================================================================== */
 
-.treatments__grid {
-  display: grid;
+.treatments__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
   gap: var(--space-md);
 }
 
+.treatments__head .section__head {
+  flex: 1 1 24rem;
+  margin-block-end: 0;
+}
+
+/* Ok butonları yalnızca kaydırmanın fare ile yapıldığı genişliklerde. */
+.slider__controls {
+  display: none;
+  gap: var(--space-2xs);
+}
+
+@media (min-width: 48rem) {
+  .slider__controls {
+    display: flex;
+  }
+}
+
+.slider__button {
+  display: grid;
+  place-items: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  padding: 0;
+  border: 1px solid var(--surface-line, var(--color-border));
+  border-radius: var(--radius-pill);
+  background-color: transparent;
+  color: var(--surface-heading, var(--color-ink));
+  cursor: pointer;
+  transition: border-color var(--transition-base) var(--ease),
+    background-color var(--transition-base) var(--ease),
+    opacity var(--transition-base) var(--ease);
+}
+
+.slider__button:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.slider__button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.slider__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Şerit: kaydırma YALNIZCA bu konteynerin içinde olur; html/body üzerindeki
+   overflow-x: clip kuralına dokunulmaz. */
+.treatments__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 82%;
+  gap: var(--space-md);
+  margin-block-start: var(--space-xl);
+  padding-block-end: var(--space-2xs);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: 0;
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
+}
+
 @media (min-width: 40rem) {
-  .treatments__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .treatments__track {
+    grid-auto-columns: 46%;
   }
 }
 
 @media (min-width: 64rem) {
-  .treatments__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .treatments__track {
+    grid-auto-columns: 31%;
   }
 }
 
-/* Kartlar detay sayfasına gitmiyor (detay sayfası yok), bu yüzden <a> değil.
-   Ölü link konmaz. */
+.treatments__track > li {
+  scroll-snap-align: start;
+}
+
 .treatment-card {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   height: 100%;
-  padding: var(--space-lg) var(--space-md);
-  background-color: var(--color-background);
-  border: 1px solid var(--color-border);
+  padding: var(--space-md);
+  background-color: var(--surface-card, var(--color-background));
+  border: 1px solid var(--surface-line, var(--color-border));
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
   transition: border-color var(--transition-base) var(--ease),
-    transform var(--transition-base) var(--ease),
     box-shadow var(--transition-base) var(--ease);
 }
 
-/* Hover'da kenarlık marka turkuazına döner */
 .treatment-card:hover {
-  transform: translateY(-4px);
   border-color: var(--color-primary);
   box-shadow: var(--shadow-lg);
 }
 
-/* İkon kutusu — marka turkuazı dolgu, içindeki simge beyaz.
-   Simge metin değil, çizim; kontrast kuralı metne uygulanır. */
+.treatment-card__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+/* İkon kutusu — turkuaz dolgu kaldırıldı. İkon, bulunduğu yüzeyin
+   rengiyle çizilir: açık zeminde kömür, koyu zeminde beyaz. */
 .treatment-card__icon-box {
   display: grid;
   place-items: center;
-  width: 3rem;
-  height: 3rem;
-  background-color: var(--color-primary);
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--surface-line, var(--color-border));
   border-radius: var(--radius-md);
 }
 
 .treatment-card__icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
   fill: none;
-  stroke: var(--color-text-inverse);
+  stroke: var(--surface-icon, var(--color-ink));
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1026,6 +1104,12 @@ ul {
 
 .treatment-card__text {
   font-size: var(--font-size-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .treatments__track {
+    scroll-behavior: auto;
+  }
 }
 
 /* ==========================================================================
