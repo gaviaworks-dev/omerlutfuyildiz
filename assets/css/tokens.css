@@ -65,38 +65,43 @@
      Kaynak: mevcut sitenin scheme-01.css dosyası (--primary-color: #10afa0)
      ve style.css içindeki #2b313f / #35404e / #515c6a / #f6f6f6 değerleri.
 
-     ÖLÇÜLEN KONTRAST DEĞERLERİ — beyaz (#ffffff) üzerinde:
-       #10afa0   2.74:1   METİN VE METİN ZEMİNİ OLARAK KULLANILAMAZ
-       #0c8a7e   4.24:1   METİN ZEMİNİ OLARAK KULLANILAMAZ (AA sınırı 4.5)
-       #0b7c71   5.08:1   AA geçer — turkuaz metin/link/kenarlık burada
-       #08635a   7.14:1   AA geçer — beyaz metinli buton ve koyu blok zemini
-       #515c6a   6.80:1   AA geçer — gövde metni
-       #2b313f  13.01:1   AA geçer — başlık
-       #35404e  10.53:1   AA geçer
+     ÖLÇÜLEN KONTRAST DEĞERLERİ (hepsi hesaplanarak doğrulandı)
+
+     Koyu zemin #15171a üzerinde:
+       beyaz                17.96:1   AA
+       beyaz %72 muted       9.65:1   AA
+       #10afa0 turkuaz       6.55:1   AA — koyu zeminde METİN OLARAK DA kullanılabilir
+
+     Açık zemin (beyaz / #f6f6f6 / #eef8f7) üzerinde:
+       #2a2d32 gövde        13.8 / 12.8 / 12.8   AA
+       #15171a başlık       18.0 / 16.6 / 16.6   AA
+       #0b7c71 turkuaz      5.08 / 4.70 / 4.69   AA
+       #10afa0 turkuaz       2.74               GEÇMEZ — açık zeminde metin değil
+
+     Butonlar:
+       koyu zeminde: beyaz dolgu + #15171a metin   17.96:1
+       açık zeminde: #15171a dolgu + beyaz metin   17.96:1
 
      Bu sayılar ölçülerek yazıldı. "Biraz açalım" denirse önce yeniden ölçülür.
      ---------------------------------------------------------------------- */
 
-  /* Marka turkuazı. Sayfanın baskın rengidir: eyebrow çizgileri, kart
-     ikonları, başlık altı vurgu çizgileri, kart hover kenarlığı, akordeon
-     + işareti, footer ayracı, outline buton kenarlığı. ASLA metin rengi
-     ve ASLA metin taşıyan zemin değil. */
-  --color-primary: #10afa0;
+  /* Kömür siyahı — ana koyu zemin. Nötr ton, mavi kaçık yok. */
+  --color-ink: #15171a;
+  /* İkincil koyu blok — koyu zemindeki kart ve ayrım yüzeyleri */
+  --color-ink-soft: #1c1f23;
+  /* Koyu zeminde ayırıcı çizgi */
+  --color-ink-line: rgb(255 255 255 / 0.12);
 
-  /* Turkuazın metin/link/ince-kenarlık için AA geçen varyantı */
+  /* Marka turkuazı — KISILDI. Geniş yüzeyde kullanılmaz. Kalan yerler:
+     aktif nav alt çizgisi, odak halkası, akordeon + işareti, hover vurgusu,
+     eyebrow çizgisi. Açık zeminde metin olarak kullanılmaz (2.74:1). */
+  --color-primary: #10afa0;
+  /* Açık zeminde turkuaz metin/link gerektiğinde AA geçen varyant */
   --color-primary-text: #0b7c71;
 
-  /* Koyu turkuaz — hover ve orta koyulukta turkuaz bloklar.
-     Beyaz metin ALTINA konmaz (4.24:1). */
-  --color-primary-dark: #0c8a7e;
-
-  /* En koyu turkuaz — beyaz metinli buton zemini, koyu turkuaz CTA bandı,
-     hero overlay tabanı, footer. Beyaz metin 7.14:1. */
-  --color-primary-deep: #08635a;
-
-  --color-ink: #2b313f;
-  --color-ink-soft: #35404e;
-  --color-text: #515c6a;
+  /* Açık bölümlerde gövde metni. Eski #515c6a mavi hissi veriyordu; nötr
+     siyaha çekildi. */
+  --color-text: #2a2d32;
 
   --color-background: #ffffff;
   --color-surface: #f6f6f6;
@@ -107,13 +112,13 @@
 
   --color-text-inverse: #ffffff;
 
-  /* Odak halkası. #10afa0 beyaz üstünde 2.74:1 — WCAG 1.4.11'in UI bileşeni
-     için istediği 3:1'i geçmiyor, bu yüzden halka turkuazın koyu varyantı. */
+  /* Odak halkası — turkuazın kalan görevlerinden biri. Açık zeminde koyu
+     varyant (5.08:1), koyu zeminde marka turkuazı doğrudan (6.55:1). */
   --color-focus: var(--color-primary-text);
   --color-focus-inverse: #ffffff;
 
-  /* Koyu görsel üzerindeki metin ve cam yüzeyler */
-  --color-text-inverse-muted: rgb(255 255 255 / 0.9);
+  /* Koyu zemin üzerindeki metin ve cam yüzeyler */
+  --color-text-inverse-muted: rgb(255 255 255 / 0.72);
   --color-text-inverse-subtle: rgb(255 255 255 / 0.86);
   --color-rule-inverse: rgb(255 255 255 / 0.28);
   --glass-fill: rgb(255 255 255 / 0.1);
@@ -122,22 +127,18 @@
   --surface-glass: rgb(255 255 255 / 0.93);
 
   /* --- Hero overlay -------------------------------------------------------
-     Kaynak fotoğraf çok parlak. Tek başına overlay ile güvenli kontrast için
-     alpha 0.88 gerekiyordu, o da fotoğrafı tamamen yutuyordu. Bunun yerine
-     karartma export'ta yapılıyor (hero WebP'leri 0.45 parlaklıkla üretildi),
-     overlay yalnızca marka tonunu veriyor.
+     Taban artık turkuaz-deep değil kömür siyahı. Hero WebP'leri zaten 0.45
+     parlaklıkla üretildi; overlay yalnızca kontrastı ve kurumsal koyu tonu
+     veriyor.
 
      Karartılmış fotoğrafın GERÇEK pikselleri üzerinde ölçüldü (en kötü piksel):
-       alpha 0.42 → 5.81:1   ·   alpha 0.50 → 6.01:1
-     Aşağıdaki üç durak bu aralıkta; en kötü durum ~5.8:1, AA sınırının
-     (4.5) belirgin üstünde. Alfalar düşürülecekse hero WebP'nin karartması
-     da birlikte gözden geçirilmeli — ikisi tek sistem.
+       alpha 0.40 → 8.19:1   ·   alpha 0.45 → 8.81:1   ·   alpha 0.52 → ~9.7:1
      ---------------------------------------------------------------------- */
   --overlay-hero: linear-gradient(
     180deg,
-    rgb(8 99 90 / 0.5) 0%,
-    rgb(8 99 90 / 0.42) 45%,
-    rgb(8 99 90 / 0.52) 100%
+    rgb(21 23 26 / 0.45) 0%,
+    rgb(21 23 26 / 0.38) 45%,
+    rgb(21 23 26 / 0.52) 100%
   );
 
   /* --- Spacing ölçeği ---------------------------------------------------- */
@@ -187,10 +188,10 @@
   --radius-xl: 1.75rem;
   --radius-pill: 999px;
 
-  /* --- Gölge — ink renginden türetildi (43 49 63) --------------------------- */
-  --shadow-sm: 0 1px 2px rgb(43 49 63 / 0.05), 0 2px 8px rgb(43 49 63 / 0.05);
-  --shadow-md: 0 2px 4px rgb(43 49 63 / 0.05), 0 8px 24px rgb(43 49 63 / 0.09);
-  --shadow-lg: 0 4px 8px rgb(43 49 63 / 0.06), 0 18px 48px rgb(43 49 63 / 0.14);
+  /* --- Gölge — ink renginden türetildi (21 23 26) --------------------------- */
+  --shadow-sm: 0 1px 2px rgb(21 23 26 / 0.05), 0 2px 8px rgb(21 23 26 / 0.05);
+  --shadow-md: 0 2px 4px rgb(21 23 26 / 0.05), 0 8px 24px rgb(21 23 26 / 0.09);
+  --shadow-lg: 0 4px 8px rgb(21 23 26 / 0.06), 0 18px 48px rgb(21 23 26 / 0.14);
 
   /* --- Geçiş ---------------------------------------------------------------- */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
