@@ -93,16 +93,27 @@ için taşma sayılmaz — prob bunu `closest('[data-slider-track]')` ile eler.
 ## 5. Deploy
 
 ```
-git push origin main          # Actions workflow kendiliğinden çalışır
+git push origin main          # .github/workflows/pages.yml çalışır
 ```
 
-**`gh api -X POST .../pages/builds` ÇAĞIRMA.** Legacy build tetikliyor ve
-çalışmakta olan Actions workflow'unu iptal ettiriyor ("Deployment
-cancelled"). Bir kez bu yüzden build hata verdi. Takılırsa:
-`gh run rerun <id>`.
+Yayın **legacy (branch) build değil**, `actions/deploy-pages` ile yapılır.
+Faz 12'de geçildi: legacy `pages-build-deployment` çalışmaları kilitlendi,
+build her seferinde başarılıyken deploy adımı `deployment_queued` durumunda
+10 dakika bekleyip zaman aşımına düştü; iki çalışma GitHub'ın kendisinin bile
+iptal edemediği bir duruma girip deployment kilidini tuttu.
+
+**Tuzaklar — sırayla yaşandı:**
+
+| Tuzak | Gerçek |
+|---|---|
+| `gh api -X POST .../pages/builds` | Legacy build tetikler, çalışan workflow'u iptal ettirir. Çağırma. |
+| `gh run rerun <id>` | Pages çalışmalarında rerun, run'ı "queued" durumunda kilitleyebiliyor; sonra `force-cancel` bile "Cannot cancel a workflow re-run that has not yet queued" diyor. Rerun yerine **yeni commit** at. |
+| `POST .../pages/deployments/{sha}/cancel` | Kuyruğu açar ama deployment ID commit sha'sıdır: **aynı sha ile yeniden deploy edilemez**, anında "Deployment cancelled" alır. İptalden sonra yeni sha gerekir. |
+| Pages API `status: "errored"` | Site bozuk durumda demek; kuyruk temizlenip yeni sha ile deploy geçince düzelir. |
 
 Build 1–8 dakika sürebilir. Doğrulama: dört sayfa 200, yeni varlıklar 200,
-silinen varlıklar 404.
+silinen varlıklar 404. En kesin kontrol canlı `tokens.css` içinde beklenen
+token'ı aramak — HTTP 200 eski sürüm için de dönüyor.
 
 ---
 

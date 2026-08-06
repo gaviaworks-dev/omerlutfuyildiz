@@ -96,6 +96,11 @@ Ayrı concern = ayrı commit. Commit/push yalnızca kullanıcı isteyince.
 GitHub Pages, `gaviaworks-dev/omerlutfuyildiz` public repo, `main` / root,
 kökte `.nojekyll`. Yayın: https://gaviaworks-dev.github.io/omerlutfuyildiz/
 
+Yayın `.github/workflows/pages.yml` üzerinden `actions/deploy-pages` ile
+yapılır — legacy branch build kilitlendiği için Faz 12'de geçildi. Bu dosya
+sitenin build'i değildir; repo kökünü olduğu gibi taşır, "build step yok"
+kuralı geçerliliğini korur. Tuzaklar `handoff.md` §5'te.
+
 ## Çalışma disiplini
 Faz faz ilerlenir, her faz sonunda DUR + onay. Faz atlanmaz. Faz kapsamı
 dışına çıkılmaz. Belirsizlik çıkarsa uydurma yerine SOR.
