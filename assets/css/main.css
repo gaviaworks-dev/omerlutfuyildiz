@@ -1682,3 +1682,29 @@ ul {
   border-block-start: 1px solid var(--color-border);
   font-size: var(--font-size-sm);
 }
+
+/* ==========================================================================
+   18. Footer yasal navigasyonu
+   ========================================================================== */
+
+.site-footer__legal ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 var(--space-md);
+}
+
+.site-footer__legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  padding-inline: var(--space-2xs);
+  color: var(--color-text-inverse-muted);
+  font-size: var(--font-size-xs);
+  text-decoration: none;
+}
+
+.site-footer__legal a:hover {
+  color: var(--color-text-inverse);
+  text-decoration: underline;
+}
